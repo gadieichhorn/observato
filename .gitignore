@@ -1,1 +1,5 @@
 /.idea/
+/target/
+/schema/target/
+/core/target/
+/api/target/
