@@ -1,4 +1,4 @@
-package com.rds.observato.api;
+package com.rds.observato.api.model;
 
 public interface Location {
 

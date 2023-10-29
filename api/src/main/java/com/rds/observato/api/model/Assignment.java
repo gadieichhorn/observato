@@ -1,4 +1,4 @@
-package com.rds.observato.api;
+package com.rds.observato.api.model;
 
 import java.time.Duration;
 import java.time.Instant;
