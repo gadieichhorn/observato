@@ -4,11 +4,10 @@ import com.rds.observato.api.model.*;
 import java.util.Map;
 import java.util.Set;
 
-public record InternalAgent(
-    Account account,
-    String key,
-    Location base,
+public record Job(
+    Calendar calendar,
+    Location location,
     Map<Skill, Integer> skills,
     Set<Tool> tools,
-    Calendar calendar)
-    implements Agent {}
+    String description)
+    implements Task {}

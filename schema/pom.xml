@@ -13,6 +13,16 @@
 
     <name>Observato :: Schema</name>
 
-    <dependencies></dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.rds</groupId>
+            <artifactId>api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hashids</groupId>
+            <artifactId>hashids</artifactId>
+        </dependency>
+    </dependencies>
     <build></build>
 </project>

@@ -5,6 +5,10 @@ import java.util.Set;
 
 public interface Agent {
 
+  Account account();
+
+  String key();
+
   Location base();
 
   Calendar calendar();

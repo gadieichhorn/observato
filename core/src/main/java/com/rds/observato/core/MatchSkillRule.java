@@ -8,10 +8,12 @@ import io.vavr.control.Either;
 
 public record MatchSkillRule() implements Rule {
 
-  Either<Error, Boolean> test(Task task, Agent agent) {
-    //    Try.of(() -> task.skills().forEach((skill, level) -> {
-    //      boolean b = agent.skills().containsKey(skill);
-    //    })).toEither();
-    return Either.right(false);
+  @Override
+  public Either<Error, Boolean> test(Task task, Agent agent) {
+//    task.skills().forEach((s,l)-> agent.skills().computeIfPresent(s, (ss,ll) -> {
+//      if(l > ll) return false;
+//        return ll;
+//    });
+    return Either.right(agent.skills().keySet().containsAll(task.skills().keySet()));
   }
 }
