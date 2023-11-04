@@ -10,10 +10,10 @@ public record MatchSkillRule() implements Rule {
 
   @Override
   public Either<Error, Boolean> test(Task task, Agent agent) {
-//    task.skills().forEach((s,l)-> agent.skills().computeIfPresent(s, (ss,ll) -> {
-//      if(l > ll) return false;
-//        return ll;
-//    });
+    //    task.skills().forEach((s,l)-> agent.skills().computeIfPresent(s, (ss,ll) -> {
+    //      if(l > ll) return false;
+    //        return ll;
+    //    });
     return Either.right(agent.skills().keySet().containsAll(task.skills().keySet()));
   }
 }

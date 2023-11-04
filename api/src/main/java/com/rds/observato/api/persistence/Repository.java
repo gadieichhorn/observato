@@ -1,23 +1,23 @@
 package com.rds.observato.api.persistence;
 
+import com.rds.observato.api.Error;
 import com.rds.observato.api.model.Account;
-import com.rds.observato.api.model.Agent;
-import com.rds.observato.api.model.Assignment;
-import com.rds.observato.api.model.Task;
+import com.rds.observato.api.request.CreateAccountRequest;
 import io.vavr.control.Either;
-import java.util.Optional;
 
 public interface Repository {
 
-  String key(Account account);
+  //  Either<Error, String> key(Account account);
+  //
+  //  Either<Error, String> key(Account account, Task task);
+  //
+  //  Either<Error, String> key(Account account, Agent agent);
+  //
+  //  Either<Error, String> key(Account account, Assignment assignment);
+  //
+  //  Either<Error, Task> create(Task task);
 
-  String key(Account account, Task task);
+  //  Either<Error, Optional<Task>> find(String id);
 
-  String key(Account account, Agent agent);
-
-  String key(Account account, Assignment assignment);
-
-  Either<java.lang.Error, Task> create(Task task);
-
-  Either<java.lang.Error, Optional<Task>> find(String id);
+  Either<Error, Account> create(CreateAccountRequest request);
 }

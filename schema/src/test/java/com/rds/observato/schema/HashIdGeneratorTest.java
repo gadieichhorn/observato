@@ -9,10 +9,10 @@ class HashIdGeneratorTest {
 
   @Test
   void encode() {
-      HashIdGenerator agent = HashIdGenerator.create("agent");
-      String encode = agent.encode(1000);
-      long decode = agent.decode(encode);
+    HashIdGenerator agent = HashIdGenerator.create("agent");
+    String encode = agent.encode(1000);
+    long decode = agent.decode(encode);
     System.out.println(encode);
-      Assertions.assertThat(decode).isEqualTo(1000);
+    Assertions.assertThat(decode).isEqualTo(1000);
   }
 }

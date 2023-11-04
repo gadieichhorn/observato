@@ -18,7 +18,13 @@ class MatchSkillRuleTest {
                         ImmutableMap.of(new SimpleSKill("A", "A"), 1),
                         ImmutableSet.of(),
                         ""),
-                    new Technician(null, null, ImmutableMap.of(new SimpleSKill("A", "A"), 1), null))
+                    new Technician(
+                        null,
+                        null,
+                        null,
+                        null,
+                        ImmutableMap.of(new SimpleSKill("A", "A"), 1),
+                        null))
                 .get())
         .isTrue();
   }
@@ -35,6 +41,8 @@ class MatchSkillRuleTest {
                         ImmutableSet.of(),
                         ""),
                     new Technician(
+                        null,
+                        null,
                         null,
                         null,
                         ImmutableMap.of(new SimpleSKill("A", "A"), 1, new SimpleSKill("B", "B"), 1),
@@ -55,6 +63,8 @@ class MatchSkillRuleTest {
                         ImmutableSet.of(),
                         ""),
                     new Technician(
+                        null,
+                        null,
                         null,
                         null,
                         ImmutableMap.of(new SimpleSKill("A", "A"), 1, new SimpleSKill("B", "B"), 1),
