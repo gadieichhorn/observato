@@ -1,0 +1,12 @@
+version: '2.4'
+
+services:
+
+  observato:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: observato
+      POSTGRES_PASSWORD: observato
+      POSTGRES_DB: observato
+    ports:
+      - "5432:5432"
