@@ -13,7 +13,9 @@ public class MigrationBundle implements ConfiguredBundle<ObservatoConfiguration>
         new Flyway(
             Flyway.configure()
                 .dataSource(
-                    configuration.getDataSourceFactory().build(environment.metrics(), "observato"))
+                    configuration.getDataSourceFactory().getUrl(),
+                    configuration.getDataSourceFactory().getUser(),
+                    configuration.getDataSourceFactory().getPassword())
                 .loggers("slf4j")
                 .locations("db/migrations"));
     flyway.migrate();

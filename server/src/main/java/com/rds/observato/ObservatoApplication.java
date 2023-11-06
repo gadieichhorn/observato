@@ -5,6 +5,7 @@ import com.rds.observato.extentions.AuthBundle;
 import com.rds.observato.extentions.EnvironmentBundle;
 import com.rds.observato.extentions.MigrationBundle;
 import com.rds.observato.extentions.ObjectMapperBundle;
+import com.rds.observato.persistence.GenerateUsersTask;
 import com.rds.observato.persistence.RepositoryDao;
 import com.rds.observato.server.controller.AccountController;
 import com.rds.observato.server.controller.AccountsController;
@@ -53,5 +54,7 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
 
     environment.jersey().register(new AccountController(repository));
     environment.jersey().register(new AccountsController(repository));
+
+    environment.admin().addTask(new GenerateUsersTask(repository));
   }
 }

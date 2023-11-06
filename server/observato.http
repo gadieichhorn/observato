@@ -17,3 +17,9 @@ Accept: application/json
 Content-Type: application/json
 
 ###
+
+POST localhost:8081/tasks/users
+Accept: application/json
+Content-Type: application/json
+
+###
