@@ -1,7 +1,7 @@
 package com.rds.observato;
 
 import com.rds.observato.persistence.DatabaseConfiguration;
-import com.rds.observato.persistence.view.AccountView;
+import com.rds.observato.persistence.accounts.AccountView;
 import java.sql.Connection;
 import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;

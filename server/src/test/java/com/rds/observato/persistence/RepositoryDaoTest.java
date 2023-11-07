@@ -2,10 +2,10 @@ package com.rds.observato.persistence;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.api.request.CreateAccountRequest;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import org.assertj.vavr.api.VavrAssertions;
+import org.assertj.core.api.Assertions;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,18 +22,14 @@ class RepositoryDaoTest extends DatabaseTestBase {
 
   @Test
   void create() {
-    VavrAssertions.assertThat(
-            repository.createAccount(new CreateAccountRequest("hilla", "hilla@observato.com")))
-        .containsRightInstanceOf(Long.class);
+    Assertions.assertThat(repository.accounts().create("hilla", "hilla@observato.com"))
+        .isGreaterThan(0);
   }
 
   @Test
   void duplicate() {
-    repository.createAccount(new CreateAccountRequest("gadi", "gadi@observato.com"));
-    VavrAssertions.assertThat(
-            repository.createAccount(new CreateAccountRequest("gadi", "gadi@observato.com")))
-        .isLeft()
-        .containsLeftInstanceOf(SqlError.class);
-    //        .containsOnLeft(new SqlError("blah"));
+    repository.accounts().create("gadi", "gadi@observato.com");
+    Assertions.assertThatThrownBy(() -> repository.accounts().create("gadi", "gadi@observato.com"))
+        .isInstanceOf(UnableToExecuteStatementException.class);
   }
 }

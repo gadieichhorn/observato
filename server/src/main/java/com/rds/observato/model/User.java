@@ -1,3 +1,5 @@
-// package com.rds.observato.model;
-//
-// public record User(String name) {}
+package com.rds.observato.model;
+
+public interface User {
+  String name();
+}

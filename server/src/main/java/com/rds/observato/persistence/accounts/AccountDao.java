@@ -1,7 +1,7 @@
-package com.rds.observato.persistence;
+package com.rds.observato.persistence.accounts;
 
-import com.rds.observato.persistence.view.AccountView;
 import java.util.Optional;
+import java.util.Set;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -20,4 +20,9 @@ public interface AccountDao {
           select * from accounts.accounts where id = :id
           """)
   Optional<AccountView> findById(@Bind("id") long id);
+
+  @SqlQuery("""
+          select id,name,owner from accounts.accounts
+          """)
+  Set<AccountView> getAll();
 }

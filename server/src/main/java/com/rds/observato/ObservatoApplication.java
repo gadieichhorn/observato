@@ -1,14 +1,17 @@
 package com.rds.observato;
 
 import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.auth.AuthService;
+import com.rds.observato.controller.account.AccountController;
+import com.rds.observato.controller.account.AccountsController;
+import com.rds.observato.controller.users.UserController;
+import com.rds.observato.controller.users.UsersController;
 import com.rds.observato.extentions.AuthBundle;
 import com.rds.observato.extentions.EnvironmentBundle;
+import com.rds.observato.extentions.GenerateUsersTask;
 import com.rds.observato.extentions.MigrationBundle;
 import com.rds.observato.extentions.ObjectMapperBundle;
-import com.rds.observato.persistence.GenerateUsersTask;
 import com.rds.observato.persistence.RepositoryDao;
-import com.rds.observato.server.controller.AccountController;
-import com.rds.observato.server.controller.AccountsController;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
@@ -46,12 +49,14 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
   }
 
   @Override
-  public void run(ObservatoConfiguration configuration, Environment environment) throws Exception {
+  public void run(ObservatoConfiguration configuration, Environment environment) {
     DataSourceFactory dataSourceFactory = configuration.getDataSourceFactory();
 
     Jdbi jdbi = new JdbiFactory().build(environment, dataSourceFactory, "observato");
     Repository repository = RepositoryDao.create(jdbi);
-
+    AuthService auth = AuthService.create();
+    environment.jersey().register(new UserController(repository));
+    environment.jersey().register(new UsersController(repository, auth));
     environment.jersey().register(new AccountController(repository));
     environment.jersey().register(new AccountsController(repository));
 

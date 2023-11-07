@@ -1,7 +1,8 @@
 package com.rds.observato.persistence;
 
 import com.rds.observato.DatabaseTestBase;
-import com.rds.observato.persistence.view.AccountView;
+import com.rds.observato.persistence.accounts.AccountDao;
+import com.rds.observato.persistence.accounts.AccountView;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.assertj.core.api.Assertions;

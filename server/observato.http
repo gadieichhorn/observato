@@ -18,6 +18,23 @@ Content-Type: application/json
 
 ###
 
+POST localhost:8080/users
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "aaaa",
+  "password": "sdfwexfaerfcsref"
+}
+###
+
+
+GET localhost:8080/users/1
+Accept: application/json
+Content-Type: application/json
+
+###
+
 POST localhost:8081/tasks/users
 Accept: application/json
 Content-Type: application/json

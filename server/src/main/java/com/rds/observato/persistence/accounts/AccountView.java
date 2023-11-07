@@ -1,4 +1,4 @@
-package com.rds.observato.persistence.view;
+package com.rds.observato.persistence.accounts;
 
 import com.rds.observato.api.model.Account;
 
