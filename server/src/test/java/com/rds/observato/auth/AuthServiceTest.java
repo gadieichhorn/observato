@@ -28,7 +28,7 @@ class AuthServiceTest {
   void saltNotSame() {
     byte[] salt1 = service.salt();
     byte[] salt2 = service.salt();
-//    assertThat(Arrays.compare(salt1, salt1)).isEqualTo(0);
+    //    assertThat(Arrays.compare(salt1, salt1)).isEqualTo(0);
     assertThat(Arrays.compare(salt1, salt2)).isNotEqualTo(0);
   }
 

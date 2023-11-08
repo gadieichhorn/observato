@@ -3,7 +3,7 @@ package com.rds.observato.controller.users;
 import com.codahale.metrics.annotation.Timed;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.request.UserLoginRequest;
-import com.rds.observato.model.User;
+import com.rds.observato.persistence.users.UserView;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public record LoginController(Repository repository) {
   private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
   @POST
-  public Optional<User> login(UserLoginRequest request) {
+  public Optional<UserView> login(UserLoginRequest request) {
     return null;
   }
 }

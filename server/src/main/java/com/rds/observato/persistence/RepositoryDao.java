@@ -20,8 +20,8 @@ public record RepositoryDao(AccountDao accounts, UsersDao users) implements Repo
         .installPlugin(new SqlObjectPlugin())
         .installPlugin(new Jackson2Plugin())
         .installPlugin(new GuavaPlugin())
-            .registerRowMapper(ConstructorMapper.factory(UserView.class))
-            .registerRowMapper(ConstructorMapper.factory(LoginView.class))
+        .registerRowMapper(ConstructorMapper.factory(UserView.class))
+        .registerRowMapper(ConstructorMapper.factory(LoginView.class))
         .registerRowMapper(ConstructorMapper.factory(AccountView.class));
 
     return new RepositoryDao(jdbi.onDemand(AccountDao.class), jdbi.onDemand(UsersDao.class));
