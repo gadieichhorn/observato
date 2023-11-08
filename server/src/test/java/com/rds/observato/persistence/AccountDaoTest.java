@@ -4,7 +4,6 @@ import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.persistence.accounts.AccountDao;
 import com.rds.observato.persistence.accounts.AccountView;
 import java.sql.SQLException;
-import javax.sql.DataSource;
 import org.assertj.core.api.Assertions;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,9 +15,7 @@ class AccountDaoTest extends DatabaseTestBase {
 
   @BeforeEach
   void setUp() throws SQLException {
-    DataSource datasource = datasource();
-    migrate(datasource);
-    dao = jdbi(datasource.getConnection()).onDemand(AccountDao.class);
+    dao = jdbi().onDemand(AccountDao.class);
   }
 
   @Test

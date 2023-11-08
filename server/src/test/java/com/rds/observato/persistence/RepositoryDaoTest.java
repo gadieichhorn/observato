@@ -3,7 +3,6 @@ package com.rds.observato.persistence;
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.api.persistence.Repository;
 import java.sql.SQLException;
-import javax.sql.DataSource;
 import org.assertj.core.api.Assertions;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,9 +14,7 @@ class RepositoryDaoTest extends DatabaseTestBase {
 
   @BeforeEach
   void setUp() throws SQLException {
-    DataSource datasource = datasource();
-    migrate(datasource);
-    repository = RepositoryDao.create(jdbi(datasource.getConnection()));
+    repository = RepositoryDao.create(jdbi());
   }
 
   @Test
