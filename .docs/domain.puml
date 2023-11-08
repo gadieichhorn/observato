@@ -1,0 +1,25 @@
+
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface Task
+interface Resource
+interface Assignment
+interface Account
+interface User
+interface Project
+
+User *--> Account
+
+Assignment -up-> Account
+Task -up-> Account
+Resource -up-> Account
+Project -> Account
+
+
+Assignment -right-> Task
+Assignment *-left-> Resource
+
+Project *---> Task
+
+@enduml

@@ -1,0 +1,24 @@
+
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface Demand
+interface Assignment
+interface Skill
+interface Tool
+interface Location
+interface Calendar
+
+class Task
+
+Demand <|--Task
+
+Demand .up.> Calendar
+Demand .up.> Location
+
+Assignment *-left-> Demand
+
+Demand *--> Skill
+Demand *--> Tool
+
+@enduml

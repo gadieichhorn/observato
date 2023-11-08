@@ -1,0 +1,26 @@
+
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface Resource
+interface Assignment
+interface Skill
+interface Tool
+interface Location
+interface Calendar
+
+class Vehicle
+class Technician
+
+Resource <|--Vehicle
+Resource <|--Technician
+
+Resource .up.> Calendar
+Resource .up.> Location
+
+Assignment *-left-> Resource
+
+Resource *--> Skill
+Resource *--> Tool
+
+@enduml
