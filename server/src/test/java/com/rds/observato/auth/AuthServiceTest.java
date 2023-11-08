@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,8 @@ class AuthServiceTest {
   void saltNotSame() {
     byte[] salt1 = service.salt();
     byte[] salt2 = service.salt();
-    assertThat(salt1).isNotEqualTo(salt2);
+//    assertThat(Arrays.compare(salt1, salt1)).isEqualTo(0);
+    assertThat(Arrays.compare(salt1, salt2)).isNotEqualTo(0);
   }
 
   @Test

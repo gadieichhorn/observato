@@ -2,8 +2,13 @@ package com.rds.observato.persistence.users;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.auth.AuthService;
 import com.rds.observato.persistence.RepositoryDao;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.util.Optional;
+import java.util.UUID;
 import org.assertj.core.api.Assertions;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,13 +45,44 @@ class UsersDaoTest extends DatabaseTestBase {
   }
 
   @Test
-  void createAndGet() {
+  void createAndGet() throws InvalidKeySpecException, NoSuchAlgorithmException {
     long id =
         repository.users().create("account3", "gadi@observato.com".getBytes(), "secret".getBytes());
-    Assertions.assertThat(repository.users().findById(id))
+    Optional<UserView> user = repository.users().findById(id);
+    Assertions.assertThat(user)
         .isPresent()
         .get()
         .isInstanceOf(UserView.class)
         .hasFieldOrPropertyWithValue("name", "account3");
+  }
+
+  @Test
+  void login() {
+    long id = repository.users().create("user123123", "salt".getBytes(), "password".getBytes());
+    Optional<LoginView> login = repository.users().findByName("user123123");
+
+    Assertions.assertThat(login)
+        .isPresent()
+        .get()
+        .isInstanceOf(LoginView.class)
+        .hasFieldOrPropertyWithValue("id", id)
+        .hasFieldOrPropertyWithValue("name", "user123123");
+  }
+
+  @Test
+  void loginNotFound() {
+    Optional<LoginView> login = repository.users().findByName("4352452d45234523");
+    Assertions.assertThat(login).isEmpty();
+  }
+
+  @Test
+  void loginVerify() throws InvalidKeySpecException, NoSuchAlgorithmException {
+    AuthService auth = AuthService.create();
+    String password = UUID.randomUUID().toString();
+    byte[] salt = auth.salt();
+    repository.users().create("user45234532", salt, auth.hash(salt, password));
+
+    LoginView view = repository.users().findByName("user45234532").get();
+    Assertions.assertThat(auth.verify(view.salt(), view.secret(), password)).isTrue();
   }
 }
