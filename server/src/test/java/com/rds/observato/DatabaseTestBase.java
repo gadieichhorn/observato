@@ -3,7 +3,6 @@ package com.rds.observato;
 import com.rds.observato.persistence.DatabaseConfiguration;
 import com.rds.observato.persistence.accounts.AccountView;
 import java.sql.SQLException;
-import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
 // import org.jdbi.v3.postgres.PostgresPlugin;
@@ -29,10 +28,6 @@ public class DatabaseTestBase {
         new Flyway(
             Flyway.configure().dataSource(dataSource).loggers("slf4j").locations("db/migrations"));
     flyway.migrate();
-  }
-
-  public DataSource datasource() {
-    return dataSource;
   }
 
   public Jdbi jdbi() throws SQLException {

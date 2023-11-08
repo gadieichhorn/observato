@@ -35,7 +35,7 @@ Content-Type: application/json
 
 ###
 
-POST localhost:8081/tasks/users
+POST localhost:8081/tasks/demo
 Accept: application/json
 Content-Type: application/json
 
