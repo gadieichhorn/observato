@@ -9,7 +9,7 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 public interface TasksDao {
   @SqlUpdate(
       """
-                      insert into tasks (account_id, name, description) values(:account, :name, :description)
+                      insert into obs.tasks (account_id, name, description) values(:account, :name, :description)
               """)
   @GetGeneratedKeys
   long create(
@@ -19,15 +19,15 @@ public interface TasksDao {
 
   @SqlQuery(
       """
-                    select id , account_id , name , description  from tasks where account_id = :account
+                    select id , account_id , name , description  from obs.tasks where account_id = :account
               """)
   Set<TaskView> findAll(@Bind("account") long account);
 
   @SqlQuery(
       """
                   select t.id, t.account_id, t.name, t.description
-                  from project_tasks pt
-                           join tasks t on pt.task_id = t.id
+                  from obs.project_tasks pt
+                           join obs.tasks t on pt.task_id = t.id
                   where t.account_id = :account
                     and pt.project_id = :project
                                     """)

@@ -1,6 +1,4 @@
--- CREATE SCHEMA IF NOT EXISTS acc;
-
-CREATE TABLE IF NOT EXISTS accounts
+CREATE TABLE IF NOT EXISTS obs.accounts
 (
     id    BIGSERIAL PRIMARY KEY,
     name  TEXT NOT NULL,
@@ -8,10 +6,10 @@ CREATE TABLE IF NOT EXISTS accounts
     UNIQUE (name)
 );
 
-CREATE TABLE IF NOT EXISTS account_users
+CREATE TABLE IF NOT EXISTS obs.account_users
 (
-    user_id    BIGINT NOT NULL REFERENCES users (id) ,
-    account_id BIGINT NOT NULL REFERENCES accounts (id) ,
+    user_id    BIGINT NOT NULL REFERENCES obs.users (id) ,
+    account_id BIGINT NOT NULL REFERENCES obs.accounts (id) ,
     role       TEXT   NOT NULL,
     UNIQUE (user_id, account_id, role)
 );
