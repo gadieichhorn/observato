@@ -3,6 +3,7 @@ package com.rds.observato.persistence;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.persistence.accounts.AccountDao;
 import com.rds.observato.persistence.accounts.AccountView;
+import com.rds.observato.persistence.accounts.UserAccountView;
 import com.rds.observato.persistence.projects.ProjectView;
 import com.rds.observato.persistence.projects.ProjectsDao;
 import com.rds.observato.persistence.tasks.TaskView;
@@ -30,7 +31,8 @@ public record RepositoryDao(
         .registerRowMapper(ConstructorMapper.factory(UserView.class))
         .registerRowMapper(ConstructorMapper.factory(LoginView.class))
         .registerRowMapper(ConstructorMapper.factory(ProjectView.class))
-        .registerRowMapper(ConstructorMapper.factory(AccountView.class));
+        .registerRowMapper(ConstructorMapper.factory(AccountView.class))
+        .registerRowMapper(ConstructorMapper.factory(UserAccountView.class));
 
     return new RepositoryDao(
         jdbi.onDemand(AccountDao.class),

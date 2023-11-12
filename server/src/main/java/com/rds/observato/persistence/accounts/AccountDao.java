@@ -30,4 +30,22 @@ public interface AccountDao {
           select id,name,owner from obs.accounts
           """)
   Set<AccountView> getAllAccountByUser(@Bind("user") long user);
+
+  @SqlUpdate(
+      """
+          insert into obs.account_users (user_id, account_id, role) values ( :user, :account, 'ADMIN')
+          """)
+  void assignUserToAccount(@Bind("user") long user, @Bind("account") long account);
+
+  @SqlQuery(
+      """
+          select user_id,account_id, role from obs.account_users where  user_id = :user
+          """)
+  Set<UserAccountView> getAccountByUser(@Bind("user") long user);
+
+  @SqlQuery(
+      """
+          select user_id,account_id, role from obs.account_users where  account_id = :account
+          """)
+  Set<UserAccountView> getUsersByAccount(@Bind("account") long account);
 }
