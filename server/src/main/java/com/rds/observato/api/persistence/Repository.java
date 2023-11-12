@@ -2,6 +2,7 @@ package com.rds.observato.api.persistence;
 
 import com.rds.observato.persistence.accounts.AccountDao;
 import com.rds.observato.persistence.projects.ProjectsDao;
+import com.rds.observato.persistence.tasks.TasksDao;
 import com.rds.observato.persistence.users.UsersDao;
 
 public interface Repository {
@@ -11,4 +12,6 @@ public interface Repository {
   UsersDao users();
 
   ProjectsDao projects();
+
+  TasksDao tasks();
 }

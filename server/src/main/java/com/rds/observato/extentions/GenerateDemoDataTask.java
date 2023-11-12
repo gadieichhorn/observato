@@ -1,8 +1,11 @@
 package com.rds.observato.extentions;
 
+import com.rds.observato.api.Error;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.AuthService;
+import com.rds.observato.persistence.SqlError;
 import io.dropwizard.servlets.tasks.Task;
+import io.vavr.control.Either;
 import io.vavr.control.Try;
 import java.io.PrintWriter;
 import java.util.List;
@@ -25,24 +28,35 @@ public class GenerateDemoDataTask extends Task {
 
   @Override
   public void execute(Map<String, List<String>> parameters, PrintWriter output) throws Exception {
+    user()
+        .flatMap(this::account)
+        .flatMap(this::tasks)
+        .peekLeft(
+            throwable -> log.warn("Failed to create user with error: {}", throwable.message()));
+  }
+
+  private Either<Error, Long> user() {
     String password = UUID.randomUUID().toString().replace("-", "");
     System.out.println(password);
-
     byte[] salt = auth.salt();
-    byte[] hash = auth.hash(salt, password);
 
-    Try.of(() -> repository.users().create("gadi", salt, hash))
+    return Try.of(() -> auth.hash(salt, password))
+        .map(hash -> repository.users().create("gadi", salt, hash))
         .toEither()
-        .peek(id -> log.info("User [{}] created with password: {}", id, password))
-        .peekLeft(
-            throwable -> log.warn("Failed to create user with error: {}", throwable.getMessage()));
+        .mapLeft(SqlError::from);
+  }
 
-    Try.of(() -> repository.accounts().create("observato", "gadi@rds.com"))
+  private Either<Error, Long> account(long user) {
+    return Try.of(() -> repository.accounts().create("acc001", "account"))
         .toEither()
-        .peekLeft(
-            throwable ->
-                log.warn("Failed to create account with error: {}", throwable.getMessage()));
+        .peek(account -> log.info("Account created: {}", account))
+        .mapLeft(SqlError::from);
+  }
 
-    //    Try.of(()-> repository.accounts().)
+  private Either<Error, Long> tasks(long account) {
+    return Try.of(() -> repository.tasks().create(account, "tsk001", "a task"))
+        .toEither()
+        .peek(task -> log.info("Task created: {} -> {}", account, task))
+        .mapLeft(SqlError::from);
   }
 }

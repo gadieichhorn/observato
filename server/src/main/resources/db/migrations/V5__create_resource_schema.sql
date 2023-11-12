@@ -1,14 +1,10 @@
-CREATE SCHEMA IF NOT EXISTS resources;
+-- CREATE SCHEMA IF NOT EXISTS rsc;
 
-CREATE TABLE IF NOT EXISTS resources.resources
+CREATE TABLE IF NOT EXISTS resources
 (
-    id          SERIAL PRIMARY KEY,
-    account_id  BIGINT NOT NULL,
-    key         TEXT   NOT NULL,
+    id          BIGSERIAL PRIMARY KEY,
+    account_id  BIGINT NOT NULL REFERENCES accounts (id),
     name        TEXT   NOT NULL,
     description TEXT   NOT NULL,
-    UNIQUE (account_id, key),
-    CONSTRAINT fk_account
-        FOREIGN KEY (account_id)
-            REFERENCES accounts.accounts (id)
+    UNIQUE (account_id, name)
 );

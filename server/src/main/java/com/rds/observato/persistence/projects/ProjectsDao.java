@@ -11,23 +11,30 @@ public interface ProjectsDao {
 
   @SqlUpdate(
       """
-              insert into projects.projects (account_id, name, description) values(:account, :name, :description)
+              insert into projects (account_id, name, description) values(:account, :name, :description)
               """)
   @GetGeneratedKeys
   long create(
-      @Bind("account") Long account,
+      @Bind("account") long account,
       @Bind("name") String name,
       @Bind("description") String description);
 
   @SqlQuery(
       """
-                      select id , account_id , name , description  from projects.projects where account_id = :account and name = :name
+                      select id , account_id , name , description  from projects where account_id = :account and name = :name
               """)
   Optional<ProjectView> findByName(@Bind("account") long account, @Bind("name") String name);
 
   @SqlQuery(
       """
-                          select id , account_id , name , description  from projects.projects where account_id = :account
+                          select id , account_id , name , description  from projects where account_id = :account
                   """)
   Set<ProjectView> findAll(@Bind("account") long account);
+
+  @SqlUpdate(
+      """
+                          insert into project_tasks (account_id, project_id, task_id) values(:account, :project, :task)
+                  """)
+  void assignTaskToProject(
+      @Bind("account") long account, @Bind("task") long task, @Bind("project") long project);
 }

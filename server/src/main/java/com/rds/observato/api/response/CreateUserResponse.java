@@ -1,6 +1,3 @@
 package com.rds.observato.api.response;
 
-public record CreateUserResponse(long id) {
-
-  public CreateUserResponse {}
-}
+public record CreateUserResponse(long id) {}

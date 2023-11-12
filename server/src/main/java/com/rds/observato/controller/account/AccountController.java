@@ -16,7 +16,7 @@ import java.util.Optional;
 public record AccountController(Repository repository) {
 
   @GET
-  public Optional<Account> getOne(@Auth User user, @PathParam("id") Long id) {
+  public Optional<Account> getOne(@Auth User user, @PathParam("id") long id) {
     return repository.accounts().findById(id).map(AccountView::to);
   }
 }

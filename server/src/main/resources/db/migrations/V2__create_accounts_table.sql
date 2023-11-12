@@ -1,23 +1,17 @@
-CREATE SCHEMA IF NOT EXISTS accounts;
+-- CREATE SCHEMA IF NOT EXISTS acc;
 
-CREATE TABLE IF NOT EXISTS accounts.accounts
+CREATE TABLE IF NOT EXISTS accounts
 (
-    id    SERIAL PRIMARY KEY,
+    id    BIGSERIAL PRIMARY KEY,
     name  TEXT NOT NULL,
     owner TEXT NOT NULL,
     UNIQUE (name)
 );
 
-CREATE TABLE IF NOT EXISTS accounts.users
+CREATE TABLE IF NOT EXISTS account_users
 (
-    user_id    BIGINT NOT NULL,
-    account_id BIGINT NOT NULL,
+    user_id    BIGINT NOT NULL REFERENCES users (id) ,
+    account_id BIGINT NOT NULL REFERENCES accounts (id) ,
     role       TEXT   NOT NULL,
-    UNIQUE (user_id, account_id, role),
-    CONSTRAINT fk_account
-        FOREIGN KEY (account_id)
-            REFERENCES accounts.accounts (id),
-    CONSTRAINT fk_task
-        FOREIGN KEY (user_id)
-            REFERENCES users.users (id)
+    UNIQUE (user_id, account_id, role)
 );

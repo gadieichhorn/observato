@@ -1,31 +1,20 @@
-CREATE SCHEMA IF NOT EXISTS projects;
+-- CREATE SCHEMA IF NOT EXISTS prj;
 
-CREATE TABLE IF NOT EXISTS projects.projects
+CREATE TABLE IF NOT EXISTS projects
 (
-    id          SERIAL PRIMARY KEY,
-    account_id  BIGINT NOT NULL,
+    id          BIGSERIAL PRIMARY KEY,
+    account_id  BIGINT NOT NULL REFERENCES accounts (id),
     name        TEXT   NOT NULL,
     description TEXT   NOT NULL,
-    UNIQUE (account_id, name),
-    CONSTRAINT fk_account
-        FOREIGN KEY (account_id)
-            REFERENCES accounts.accounts (id)
+    UNIQUE (account_id, name)
 );
 
-CREATE TABLE IF NOT EXISTS projects.tasks
+CREATE TABLE IF NOT EXISTS project_tasks
 (
-    account_id BIGINT NOT NULL,
-    project_id BIGINT NOT NULL,
-    task_id    BIGINT NOT NULL,
-    UNIQUE (account_id, task_id, project_id),
-    CONSTRAINT fk_account
-        FOREIGN KEY (account_id)
-            REFERENCES accounts.accounts (id),
-    CONSTRAINT fk_task
-        FOREIGN KEY (task_id)
-            REFERENCES tasks.tasks (id),
-    CONSTRAINT fk_project
-        FOREIGN KEY (project_id)
-            REFERENCES projects.projects (id)
+    account_id BIGINT NOT NULL REFERENCES accounts (id),
+    project_id BIGINT NOT NULL REFERENCES projects (id),
+    task_id    BIGINT NOT NULL REFERENCES tasks (id)
+--     UNIQUE (account_id, task_id),
+--     UNIQUE (account_id, task_id, project_id)
 )
 

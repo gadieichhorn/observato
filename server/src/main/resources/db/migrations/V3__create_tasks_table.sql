@@ -1,12 +1,10 @@
-CREATE SCHEMA IF NOT EXISTS tasks;
+-- CREATE SCHEMA IF NOT EXISTS tsk;
 
-CREATE TABLE IF NOT EXISTS tasks.tasks
+CREATE TABLE IF NOT EXISTS tasks
 (
-    id         SERIAL PRIMARY KEY,
-    account_id BIGINT NOT NULL,
-    name       TEXT   NOT NULL,
-    UNIQUE (account_id, name),
-    CONSTRAINT fk_account
-        FOREIGN KEY (account_id)
-            REFERENCES accounts.accounts (id)
+    id          BIGSERIAL PRIMARY KEY,
+    account_id  BIGINT NOT NULL REFERENCES accounts (id),
+    name        TEXT   NOT NULL,
+    description TEXT   NOT NULL,
+    UNIQUE (account_id, name)
 );
