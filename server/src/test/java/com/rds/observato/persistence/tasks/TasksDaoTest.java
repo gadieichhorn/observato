@@ -48,29 +48,32 @@ class TasksDaoTest extends DatabaseTestBase {
 
   @Test
   void duplicate() {
-    String name = faker.company().name();
-    String phrase = faker.company().catchPhrase();
-    tasksDao.create(account, name, phrase);
-    Assertions.assertThatThrownBy(() -> tasksDao.create(account, name, phrase))
+    tasksDao.create(account, "t006", "projects");
+    Assertions.assertThatThrownBy(() -> tasksDao.create(account, "t006", "projects"))
         .isInstanceOf(UnableToExecuteStatementException.class);
   }
 
   @Test
   void getAll() {
-    long id = tasksDao.create(account, "proj005", "find all");
+    long id = tasksDao.create(account, "p005", "projects");
     Assertions.assertThat(tasksDao.findAll(account))
         .hasSizeGreaterThan(0)
-        .contains(new TaskView(id, account, "proj005", "find all"));
+        .contains(new TaskView(id, account, "p005", "projects"));
   }
 
   //  @RepeatedTest(10)
   @Test
   void getProjectTasks() {
-    final long project = projectsDao.create(account, "proj12123", "find all");
-    final long task = tasksDao.create(account, "tsk123123", "tasks");
-    projectsDao.assignTaskToProject(account, task, project);
+    final long project = projectsDao.create(account, "p001", "tasks");
+    final long task1 = tasksDao.create(account, "t001", "tasks");
+    final long task2 = tasksDao.create(account, "t002", "tasks");
+    final long task3 = tasksDao.create(account, "t003", "tasks");
+    projectsDao.assignTaskToProject(account, task1, project);
+    projectsDao.assignTaskToProject(account, task2, project);
     Assertions.assertThat(tasksDao.findAllByProject(account, project))
-        .hasSizeGreaterThan(0)
-        .contains(new TaskView(task, account, "tsk123123", "tasks"));
+        .hasSize(2)
+        .contains(new TaskView(task1, account, "t001", "tasks"))
+        .contains(new TaskView(task2, account, "t002", "tasks"))
+        .doesNotContain(new TaskView(task3, account, "t003", "tasks"));
   }
 }
