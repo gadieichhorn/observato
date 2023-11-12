@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.persistence.accounts.AccountDao;
+import com.rds.observato.persistence.RepositoryDao;
 import java.sql.SQLException;
 import java.util.UUID;
 import org.assertj.core.api.Assertions;
@@ -14,29 +14,29 @@ import org.junit.jupiter.api.Test;
 
 class ProjectsDaoTest extends DatabaseTestBase {
 
-  private AccountDao accountDao;
-  private ProjectsDao projectsDao;
-
   private long account;
+  Repository repository;
 
   @BeforeEach
   void setUp() throws SQLException {
-    Repository repository = repository();
-    accountDao = repository.accounts();
-    projectsDao = repository.projects();
-    account = accountDao.create(UUID.randomUUID().toString(), "me");
+    repository = RepositoryDao.create(jdbi());
+    long user =
+        repository
+            .users()
+            .create(UUID.randomUUID().toString(), "salt".getBytes(), "hash".getBytes());
+    account = repository.accounts().create(UUID.randomUUID().toString(), user);
   }
 
   @Test
   void insert() {
-    long proj = projectsDao.create(account, "proj001", "some project");
+    long proj = repository.projects().create(account, "proj001", "some project");
     Assertions.assertThat(proj).isGreaterThan(0);
   }
 
   @Test
   void findByName() {
-    long proj = projectsDao.create(account, "proj004", "some project");
-    Assertions.assertThat(projectsDao.findByName(account, "proj004"))
+    repository.projects().create(account, "proj004", "some project");
+    Assertions.assertThat(repository.projects().findByName(account, "proj004"))
         .isPresent()
         .get()
         .isInstanceOf(ProjectView.class)
@@ -46,21 +46,22 @@ class ProjectsDaoTest extends DatabaseTestBase {
 
   @Test
   void wrongAccount() {
-    Assertions.assertThatThrownBy(() -> projectsDao.create(0l, "proj003", "some project"))
+    Assertions.assertThatThrownBy(() -> repository.projects().create(0l, "proj003", "some project"))
         .isInstanceOf(UnableToExecuteStatementException.class);
   }
 
   @Test
   void duplicate() {
-    projectsDao.create(account, "proj002", "some project");
-    Assertions.assertThatThrownBy(() -> projectsDao.create(account, "proj002", "some project"))
+    repository.projects().create(account, "proj002", "some project");
+    Assertions.assertThatThrownBy(
+            () -> repository.projects().create(account, "proj002", "some project"))
         .isInstanceOf(UnableToExecuteStatementException.class);
   }
 
   @Test
   void getAll() {
-    long id = projectsDao.create(account, "proj005", "find all");
-    Assertions.assertThat(projectsDao.findAll(account))
+    long id = repository.projects().create(account, "proj005", "find all");
+    Assertions.assertThat(repository.projects().findAll(account))
         .hasSizeGreaterThan(0)
         .contains(new ProjectView(id, account, "proj005", "find all"));
   }

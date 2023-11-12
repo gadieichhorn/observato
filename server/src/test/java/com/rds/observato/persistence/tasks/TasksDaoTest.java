@@ -2,11 +2,8 @@ package com.rds.observato.persistence.tasks;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.github.javafaker.Faker;
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.persistence.accounts.AccountDao;
-import com.rds.observato.persistence.projects.ProjectsDao;
 import java.sql.SQLException;
 import java.util.UUID;
 import org.assertj.core.api.Assertions;
@@ -17,60 +14,55 @@ import org.junit.jupiter.api.Test;
 
 class TasksDaoTest extends DatabaseTestBase {
 
-  private final Faker faker = new Faker();
-  private AccountDao accountDao;
-  private TasksDao tasksDao;
-  private ProjectsDao projectsDao;
-
   private long account;
+  private Repository repository;
 
   @BeforeEach
   void setUp() throws SQLException {
-    Repository repository = repository();
-    accountDao = repository.accounts();
-    tasksDao = repository.tasks();
-    projectsDao = repository.projects();
-    account = accountDao.create(UUID.randomUUID().toString(), "tasks");
+    repository = repository();
+    long user =
+        repository
+            .users()
+            .create(UUID.randomUUID().toString(), "salt".getBytes(), "hash".getBytes());
+    account = repository.accounts().create(UUID.randomUUID().toString(), user);
   }
 
   @Test
   void insert() {
-    long tsk = tasksDao.create(account, faker.company().name(), faker.company().catchPhrase());
+    long tsk = repository.tasks().create(account, "t030", "tasks");
     Assertions.assertThat(tsk).isGreaterThan(0);
   }
 
   @Test
   void wrongAccount() {
-    String name = faker.company().name();
-    String phrase = faker.company().catchPhrase();
-    Assertions.assertThatThrownBy(() -> tasksDao.create(0l, name, phrase))
+    Assertions.assertThatThrownBy(() -> repository.tasks().create(0l, "t003", "tasks"))
         .isInstanceOf(UnableToExecuteStatementException.class);
   }
 
   @Test
   void duplicate() {
-    tasksDao.create(account, "t006", "projects");
-    Assertions.assertThatThrownBy(() -> tasksDao.create(account, "t006", "projects"))
+    repository.tasks().create(account, "t006", "projects");
+    Assertions.assertThatThrownBy(() -> repository.tasks().create(account, "t006", "projects"))
         .isInstanceOf(UnableToExecuteStatementException.class);
   }
 
   @Test
   void getAll() {
-    long id = tasksDao.create(account, "p005", "projects");
-    Assertions.assertThat(tasksDao.findAll(account))
+    long id = repository.tasks().create(account, "p005", "projects");
+    Assertions.assertThat(repository.tasks().findAll(account))
         .hasSizeGreaterThan(0)
         .contains(new TaskView(id, account, "p005", "projects"));
   }
 
   @Test
   void getProjectTasks() {
-    final long project = projectsDao.create(account, "p001", "tasks");
-    final long task1 = tasksDao.create(account, "t001", "tasks");
-    final long task2 = tasksDao.create(account, "t002", "tasks");
-    final long task3 = tasksDao.create(account, "t003", "tasks");
-    projectsDao.assignTaskToProject(account, task1, project);
-    projectsDao.assignTaskToProject(account, task2, project);
-    Assertions.assertThat(tasksDao.findAllByProject(account, project))
+    final long project = repository.projects().create(account, "p001", "tasks");
+    final long task1 = repository.tasks().create(account, "t001", "tasks");
+    final long task2 = repository.tasks().create(account, "t002", "tasks");
+    final long task3 = repository.tasks().create(account, "t003", "tasks");
+    repository.projects().assignTaskToProject(account, task1, project);
+    repository.projects().assignTaskToProject(account, task2, project);
+    Assertions.assertThat(repository.tasks().findAllByProject(account, project))
         .hasSize(2)
         .contains(new TaskView(task1, account, "t001", "tasks"))
         .contains(new TaskView(task2, account, "t002", "tasks"))
@@ -80,21 +72,23 @@ class TasksDaoTest extends DatabaseTestBase {
   @Test
   @DisplayName("same task for same projects is not allowed")
   void duplicateRelations() {
-    final long project = projectsDao.create(account, "p002", "tasks");
-    final long task1 = tasksDao.create(account, "t005", "tasks");
-    projectsDao.assignTaskToProject(account, task1, project);
-    Assertions.assertThatThrownBy(() -> projectsDao.assignTaskToProject(account, task1, project))
+    final long project = repository.projects().create(account, "p002", "tasks");
+    final long task1 = repository.tasks().create(account, "t005", "tasks");
+    repository.projects().assignTaskToProject(account, task1, project);
+    Assertions.assertThatThrownBy(
+            () -> repository.projects().assignTaskToProject(account, task1, project))
         .isInstanceOf(UnableToExecuteStatementException.class);
   }
 
   @Test
   @DisplayName("same task for different projects is not allowed")
   void duplicateTaskRelations() {
-    final long project1 = projectsDao.create(account, "p003", "tasks");
-    final long project2 = projectsDao.create(account, "p004", "tasks");
-    final long task1 = tasksDao.create(account, "t006", "tasks");
-    projectsDao.assignTaskToProject(account, task1, project1);
-    Assertions.assertThatThrownBy(() -> projectsDao.assignTaskToProject(account, task1, project2))
+    final long project1 = repository.projects().create(account, "p003", "tasks");
+    final long project2 = repository.projects().create(account, "p004", "tasks");
+    final long task1 = repository.tasks().create(account, "t006", "tasks");
+    repository.projects().assignTaskToProject(account, task1, project1);
+    Assertions.assertThatThrownBy(
+            () -> repository.projects().assignTaskToProject(account, task1, project2))
         .isInstanceOf(UnableToExecuteStatementException.class);
   }
 }

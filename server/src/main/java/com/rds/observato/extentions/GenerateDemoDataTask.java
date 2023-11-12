@@ -47,7 +47,7 @@ public class GenerateDemoDataTask extends Task {
   }
 
   private Either<Error, Long> account(long user) {
-    return Try.of(() -> repository.accounts().create("acc001", "account"))
+    return Try.of(() -> repository.accounts().create("acc001", user))
         .toEither()
         .peek(account -> log.info("Account created: {}", account))
         .mapLeft(SqlError::from);

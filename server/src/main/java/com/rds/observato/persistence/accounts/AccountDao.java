@@ -11,10 +11,10 @@ public interface AccountDao {
 
   @SqlUpdate(
       """
-              insert into obs.accounts (name, owner) values(:name, :owner)
+              insert into obs.accounts (name, owner_id) values(:name, :owner)
               """)
   @GetGeneratedKeys
-  long create(@Bind("name") String name, @Bind("owner") String owner);
+  long create(@Bind("name") String name, @Bind("owner") long owner);
 
   @SqlQuery("""
           select * from obs.accounts where id = :id
@@ -22,12 +22,12 @@ public interface AccountDao {
   Optional<AccountView> findById(@Bind("id") long id);
 
   @SqlQuery("""
-          select id,name,owner from obs.accounts
+          select id,name,owner_id from obs.accounts
           """)
   Set<AccountView> getAll();
 
   @SqlQuery("""
-          select id,name,owner from obs.accounts
+          select id,name,owner_id from obs.accounts
           """)
   Set<AccountView> getAllAccountByUser(@Bind("user") long user);
 
