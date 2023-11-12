@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.assertj.core.api.Assertions;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class TasksDaoTest extends DatabaseTestBase {
@@ -61,7 +62,6 @@ class TasksDaoTest extends DatabaseTestBase {
         .contains(new TaskView(id, account, "p005", "projects"));
   }
 
-  //  @RepeatedTest(10)
   @Test
   void getProjectTasks() {
     final long project = projectsDao.create(account, "p001", "tasks");
@@ -75,5 +75,26 @@ class TasksDaoTest extends DatabaseTestBase {
         .contains(new TaskView(task1, account, "t001", "tasks"))
         .contains(new TaskView(task2, account, "t002", "tasks"))
         .doesNotContain(new TaskView(task3, account, "t003", "tasks"));
+  }
+
+  @Test
+  @DisplayName("same task for same projects is not allowed")
+  void duplicateRelations() {
+    final long project = projectsDao.create(account, "p002", "tasks");
+    final long task1 = tasksDao.create(account, "t005", "tasks");
+    projectsDao.assignTaskToProject(account, task1, project);
+    Assertions.assertThatThrownBy(() -> projectsDao.assignTaskToProject(account, task1, project))
+        .isInstanceOf(UnableToExecuteStatementException.class);
+  }
+
+  @Test
+  @DisplayName("same task for different projects is not allowed")
+  void duplicateTaskRelations() {
+    final long project1 = projectsDao.create(account, "p003", "tasks");
+    final long project2 = projectsDao.create(account, "p004", "tasks");
+    final long task1 = tasksDao.create(account, "t006", "tasks");
+    projectsDao.assignTaskToProject(account, task1, project1);
+    Assertions.assertThatThrownBy(() -> projectsDao.assignTaskToProject(account, task1, project2))
+        .isInstanceOf(UnableToExecuteStatementException.class);
   }
 }
