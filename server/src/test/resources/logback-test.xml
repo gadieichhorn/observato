@@ -10,7 +10,7 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="org.flywaydb" level="INFO" additivity="false">
+    <logger name="org.flywaydb" level="WARN" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 

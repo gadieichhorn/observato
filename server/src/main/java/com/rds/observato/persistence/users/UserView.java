@@ -1,3 +1,5 @@
 package com.rds.observato.persistence.users;
 
-public record UserView(long id, String name) {}
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
+
+public record UserView(@ColumnName("id") long id, @ColumnName("name") String name) {}

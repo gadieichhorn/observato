@@ -1,6 +1,5 @@
 package com.rds.observato.persistence.projects;
 
-import com.rds.observato.persistence.accounts.AccountView;
 import java.util.Optional;
 import java.util.Set;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -12,18 +11,23 @@ public interface ProjectsDao {
 
   @SqlUpdate(
       """
-              insert into accounts.accounts (name, owner) values(:name, :owner)
+              insert into projects.projects (account_id, name, description) values(:account, :name, :description)
               """)
   @GetGeneratedKeys
-  long create(@Bind("name") String name, @Bind("owner") String owner);
+  long create(
+      @Bind("account") Long account,
+      @Bind("name") String name,
+      @Bind("description") String description);
 
-  @SqlQuery("""
-          select * from accounts.accounts where id = :id
-          """)
-  Optional<AccountView> findById(@Bind("id") long id);
+  @SqlQuery(
+      """
+                      select id , account_id , name , description  from projects.projects where account_id = :account and name = :name
+              """)
+  Optional<ProjectView> findByName(@Bind("account") long account, @Bind("name") String name);
 
-  @SqlQuery("""
-          select id,name,owner from accounts.accounts
-          """)
-  Set<AccountView> getAll();
+  @SqlQuery(
+      """
+                          select id , account_id , name , description  from projects.projects where account_id = :account
+                  """)
+  Set<ProjectView> findAll(@Bind("account") long account);
 }

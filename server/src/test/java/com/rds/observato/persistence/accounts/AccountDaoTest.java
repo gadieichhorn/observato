@@ -1,6 +1,7 @@
 package com.rds.observato.persistence.accounts;
 
 import com.rds.observato.DatabaseTestBase;
+import com.rds.observato.persistence.RepositoryDao;
 import java.sql.SQLException;
 import org.assertj.core.api.Assertions;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
@@ -13,7 +14,7 @@ class AccountDaoTest extends DatabaseTestBase {
 
   @BeforeEach
   void setUp() throws SQLException {
-    dao = jdbi().onDemand(AccountDao.class);
+    dao = RepositoryDao.create(jdbi()).accounts();
   }
 
   @Test

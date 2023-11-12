@@ -1,3 +1,9 @@
 package com.rds.observato.persistence.users;
 
-public record LoginView(long id, String name, byte[] salt, byte[] secret) {}
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
+
+public record LoginView(
+    @ColumnName("id") long id,
+    @ColumnName("name") String name,
+    @ColumnName("salt") byte[] salt,
+    @ColumnName("secret") byte[] secret) {}

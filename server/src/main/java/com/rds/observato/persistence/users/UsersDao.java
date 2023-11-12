@@ -1,6 +1,7 @@
 package com.rds.observato.persistence.users;
 
 import java.util.Optional;
+import java.util.Set;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -25,4 +26,10 @@ public interface UsersDao {
           select id, name, salt, secret from users.users where name = :name
           """)
   Optional<LoginView> findByName(@Bind("name") String name);
+
+  @SqlQuery(
+      """
+              select id, name, salt, secret from users.users where name = :name
+              """)
+  Set<UserRoleView> userRoleByAccount(@Bind("user") String user, @Bind("account") long account);
 }

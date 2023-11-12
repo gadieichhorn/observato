@@ -3,6 +3,8 @@ package com.rds.observato.persistence;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.persistence.accounts.AccountDao;
 import com.rds.observato.persistence.accounts.AccountView;
+import com.rds.observato.persistence.projects.ProjectView;
+import com.rds.observato.persistence.projects.ProjectsDao;
 import com.rds.observato.persistence.users.LoginView;
 import com.rds.observato.persistence.users.UserView;
 import com.rds.observato.persistence.users.UsersDao;
@@ -13,7 +15,8 @@ import org.jdbi.v3.jackson2.Jackson2Plugin;
 import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
-public record RepositoryDao(AccountDao accounts, UsersDao users) implements Repository {
+public record RepositoryDao(AccountDao accounts, UsersDao users, ProjectsDao projects)
+    implements Repository {
 
   public static Repository create(Jdbi jdbi) {
     jdbi.installPlugin(new PostgresPlugin())
@@ -22,8 +25,12 @@ public record RepositoryDao(AccountDao accounts, UsersDao users) implements Repo
         .installPlugin(new GuavaPlugin())
         .registerRowMapper(ConstructorMapper.factory(UserView.class))
         .registerRowMapper(ConstructorMapper.factory(LoginView.class))
+        .registerRowMapper(ConstructorMapper.factory(ProjectView.class))
         .registerRowMapper(ConstructorMapper.factory(AccountView.class));
 
-    return new RepositoryDao(jdbi.onDemand(AccountDao.class), jdbi.onDemand(UsersDao.class));
+    return new RepositoryDao(
+        jdbi.onDemand(AccountDao.class),
+        jdbi.onDemand(UsersDao.class),
+        jdbi.onDemand(ProjectsDao.class));
   }
 }

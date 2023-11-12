@@ -1,6 +1,8 @@
 package com.rds.observato;
 
+import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.persistence.DatabaseConfiguration;
+import com.rds.observato.persistence.RepositoryDao;
 import com.rds.observato.persistence.accounts.AccountView;
 import java.sql.SQLException;
 import org.flywaydb.core.Flyway;
@@ -37,5 +39,9 @@ public class DatabaseTestBase {
             .installPlugin(new SqlObjectPlugin())
             .registerRowMapper(ConstructorMapper.factory(AccountView.class));
     return jdbi;
+  }
+
+  public Repository repository() throws SQLException {
+    return RepositoryDao.create(jdbi());
   }
 }

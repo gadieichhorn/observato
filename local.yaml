@@ -10,6 +10,7 @@ logging:
       logFormat: "%d{HH:mm:ss.SSS} %highlight(%-5level) [%10thread] %X{messageId:-unknown} %cyan(%-40logger{36}) - %msg%n"
 
 server:
+  rootPath: /api
   applicationConnectors:
     - type: http
       port: 8080

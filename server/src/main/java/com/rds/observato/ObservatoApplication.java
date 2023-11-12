@@ -1,12 +1,11 @@
 package com.rds.observato;
 
 import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.auth.AuthService;
-import com.rds.observato.auth.ObservatoAuthorizer;
-import com.rds.observato.auth.ObservatoBasicAuthenticator;
-import com.rds.observato.auth.User;
+import com.rds.observato.auth.*;
 import com.rds.observato.controller.account.AccountController;
 import com.rds.observato.controller.account.AccountsController;
+import com.rds.observato.controller.login.LoginController;
+import com.rds.observato.controller.projects.ProjectsController;
 import com.rds.observato.controller.users.UserController;
 import com.rds.observato.controller.users.UsersController;
 import com.rds.observato.extentions.*;
@@ -14,12 +13,12 @@ import com.rds.observato.persistence.RepositoryDao;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
-import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.jdbi3.JdbiFactory;
+import io.dropwizard.views.common.ViewBundle;
 import java.time.ZoneOffset;
 import java.util.TimeZone;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
@@ -44,10 +43,11 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     //    bootstrap.addBundle(new SwaggerBundle());
     //    bootstrap.addBundle(new ExceptionsBundle());
     //    bootstrap.addBundle(new PrometheusBundle());
+    bootstrap.addBundle(new ViewBundle<>());
     bootstrap.addBundle(new MigrationBundle());
     bootstrap.addBundle(new EnvironmentBundle());
     bootstrap.addBundle(new ObjectMapperBundle());
-    bootstrap.addBundle(new AssetsBundle("/swagger", "/gateway/swagger", "index.html", "docs"));
+    bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
   }
 
   @Override
@@ -68,7 +68,7 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
         .jersey()
         .register(
             new AuthDynamicFeature(
-                new BasicCredentialAuthFilter.Builder<User>()
+                new ObservatoAuthFilter.Builder()
                     .setAuthenticator(new ObservatoBasicAuthenticator(repository, auth))
                     .setAuthorizer(new ObservatoAuthorizer())
                     .setRealm("OBSERVATO")
@@ -77,10 +77,15 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     environment.jersey().register(RolesAllowedDynamicFeature.class);
     environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
+    // CONTROLLERS
     environment.jersey().register(new UserController(repository));
     environment.jersey().register(new UsersController(repository, auth));
+    environment.jersey().register(new ProjectsController(repository));
     environment.jersey().register(new AccountController(repository));
     environment.jersey().register(new AccountsController(repository));
+
+    // VIEWS
+    environment.jersey().register(new LoginController());
 
     environment.admin().addTask(new GenerateDemoDataTask(repository, auth));
   }

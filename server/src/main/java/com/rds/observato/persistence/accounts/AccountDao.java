@@ -25,4 +25,9 @@ public interface AccountDao {
           select id,name,owner from accounts.accounts
           """)
   Set<AccountView> getAll();
+
+  @SqlQuery("""
+          select id,name,owner from accounts.accounts
+          """)
+  Set<AccountView> getAllAccountByUser(@Bind("user") long user);
 }

@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS accounts.users
     user_id    BIGINT NOT NULL,
     account_id BIGINT NOT NULL,
     role       TEXT   NOT NULL,
-    UNIQUE (user_id, account_id),
+    UNIQUE (user_id, account_id, role),
     CONSTRAINT fk_account
         FOREIGN KEY (account_id)
             REFERENCES accounts.accounts (id),

@@ -27,6 +27,7 @@ public class GenerateDemoDataTask extends Task {
   public void execute(Map<String, List<String>> parameters, PrintWriter output) throws Exception {
     String password = UUID.randomUUID().toString().replace("-", "");
     System.out.println(password);
+
     byte[] salt = auth.salt();
     byte[] hash = auth.hash(salt, password);
 
@@ -41,5 +42,7 @@ public class GenerateDemoDataTask extends Task {
         .peekLeft(
             throwable ->
                 log.warn("Failed to create account with error: {}", throwable.getMessage()));
+
+    //    Try.of(()-> repository.accounts().)
   }
 }

@@ -1,0 +1,14 @@
+
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface User
+interface Account
+interface AccountUser
+enum Role
+
+AccountUser -> User
+AccountUser -left-> Account
+AccountUser --> Role
+
+@enduml
