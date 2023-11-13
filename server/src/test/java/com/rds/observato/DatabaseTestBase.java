@@ -32,16 +32,20 @@ public class DatabaseTestBase {
     flyway.migrate();
   }
 
-  public Jdbi jdbi() throws SQLException {
-    Jdbi jdbi =
-        Jdbi.create(dataSource.getConnection())
-            .installPlugin(new PostgresPlugin())
-            .installPlugin(new SqlObjectPlugin())
-            .registerRowMapper(ConstructorMapper.factory(AccountView.class));
-    return jdbi;
+  public static Jdbi jdbi() {
+    try {
+      Jdbi jdbi =
+          Jdbi.create(dataSource.getConnection())
+              .installPlugin(new PostgresPlugin())
+              .installPlugin(new SqlObjectPlugin())
+              .registerRowMapper(ConstructorMapper.factory(AccountView.class));
+      return jdbi;
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
 
-  public Repository repository() throws SQLException {
+  public static Repository repository() {
     return RepositoryDao.create(jdbi());
   }
 }

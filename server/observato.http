@@ -1,7 +1,7 @@
 
 ###
 
-POST localhost:8080/accounts
+POST localhost:8080/api/accounts
 Accept: application/json
 Content-Type: application/json
 
@@ -12,13 +12,13 @@ Content-Type: application/json
 
 ###
 
-GET localhost:8080/accounts/2
+GET localhost:8080/api/accounts/1
 Accept: application/json
 Content-Type: application/json
 
 ###
 
-POST localhost:8080/users
+POST localhost:8080/api/users
 Accept: application/json
 Content-Type: application/json
 
@@ -26,10 +26,23 @@ Content-Type: application/json
   "name": "aaaa",
   "password": "sdfwexfaerfcsref"
 }
+
 ###
 
 
-GET localhost:8080/users/1
+GET localhost:8080/api/users/1
+Accept: application/json
+Content-Type: application/json
+
+###
+
+GET localhost:8080/api/projects/2/2
+Accept: application/json
+Content-Type: application/json
+
+###
+
+GET localhost:8080/api/projects/2
 Accept: application/json
 Content-Type: application/json
 

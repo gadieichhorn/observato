@@ -10,10 +10,11 @@ import jakarta.ws.rs.PathParam;
 @Path("projects/{account}")
 public record ProjectsController(Repository repository) {
 
+  private static ProjectConverter converter = new ProjectConverter();
+
   @GET
   public ProjectsResponse getAll(@PathParam("account") long account) {
     // TODO access validation
-    ProjectConverter converter = new ProjectConverter();
     return new ProjectsResponse(
         repository.projects().findAll(account).stream()
             .map(converter::convert)

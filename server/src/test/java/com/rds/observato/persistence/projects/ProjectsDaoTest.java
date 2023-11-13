@@ -35,8 +35,8 @@ class ProjectsDaoTest extends DatabaseTestBase {
 
   @Test
   void findByName() {
-    repository.projects().create(account, "proj004", "some project");
-    Assertions.assertThat(repository.projects().findByName(account, "proj004"))
+    long project = repository.projects().create(account, "proj004", "some project");
+    Assertions.assertThat(repository.projects().findById(account, project))
         .isPresent()
         .get()
         .isInstanceOf(ProjectView.class)

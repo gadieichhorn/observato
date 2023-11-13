@@ -21,13 +21,9 @@ public interface AccountDao {
           """)
   Optional<AccountView> findById(@Bind("id") long id);
 
-  @SqlQuery("""
-          select id,name,owner_id from obs.accounts
-          """)
-  Set<AccountView> getAll();
-
-  @SqlQuery("""
-          select id,name,owner_id from obs.accounts
+  @SqlQuery(
+      """
+          select id,name,owner_id from obs.accounts where owner_id = :user
           """)
   Set<AccountView> getAllAccountByUser(@Bind("user") long user);
 

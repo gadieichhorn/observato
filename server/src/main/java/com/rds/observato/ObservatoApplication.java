@@ -5,6 +5,7 @@ import com.rds.observato.auth.*;
 import com.rds.observato.controller.account.AccountController;
 import com.rds.observato.controller.account.AccountsController;
 import com.rds.observato.controller.login.LoginController;
+import com.rds.observato.controller.projects.ProjectController;
 import com.rds.observato.controller.projects.ProjectsController;
 import com.rds.observato.controller.users.UserController;
 import com.rds.observato.controller.users.UsersController;
@@ -80,12 +81,13 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     // CONTROLLERS
     environment.jersey().register(new UserController(repository));
     environment.jersey().register(new UsersController(repository, auth));
+    environment.jersey().register(new ProjectController(repository));
     environment.jersey().register(new ProjectsController(repository));
     environment.jersey().register(new AccountController(repository));
     environment.jersey().register(new AccountsController(repository));
 
     // VIEWS
-    environment.jersey().register(new LoginController());
+    environment.jersey().register(new LoginController(repository));
 
     environment.admin().addTask(new GenerateDemoDataTask(repository, auth));
   }
