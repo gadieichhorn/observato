@@ -5,6 +5,7 @@ import com.rds.observato.accounts.AccountsDao;
 import com.rds.observato.accounts.UserAccountView;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.assignments.AssignmentDao;
+import com.rds.observato.assignments.AssignmentView;
 import com.rds.observato.projects.ProjectView;
 import com.rds.observato.projects.ProjectsDao;
 import com.rds.observato.resources.ResourceView;
@@ -51,6 +52,7 @@ public record RepositoryDao(
         .registerRowMapper(ConstructorMapper.factory(ProjectView.class))
         .registerRowMapper(ConstructorMapper.factory(AccountView.class))
         .registerRowMapper(ConstructorMapper.factory(ResourceView.class))
+        .registerRowMapper(ConstructorMapper.factory(AssignmentView.class))
         .registerRowMapper(ConstructorMapper.factory(UserAccountView.class));
 
     return new RepositoryDao(

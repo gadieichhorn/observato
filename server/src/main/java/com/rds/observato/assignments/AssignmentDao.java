@@ -25,7 +25,9 @@ public interface AssignmentDao {
 
   @SqlQuery(
       """
-          select id,account, task, resource, start_ from obs.assignments where account_id = :account
-          """)
+              select id,account_id, task_id, resource_id, start_time, end_time
+              from obs.assignments
+              where account_id = :account
+              """)
   Set<AssignmentView> getAll(@Bind("account") long account);
 }

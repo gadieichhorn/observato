@@ -41,4 +41,13 @@ class AssignmentDaoTest extends DatabaseTestBase {
                     .create(account, task, resource, Instant.now(), Instant.now()))
         .isInstanceOf(UnableToExecuteStatementException.class);
   }
+
+  @Test
+  void findAll() {
+    long account = Fixtures.createAccount(repository, user);
+    long task = Fixtures.createTask(repository, user);
+    long resource = Fixtures.createResource(repository, user);
+    repository.assignments().create(account, task, resource, Instant.now(), Instant.now());
+    Assertions.assertThat(repository.assignments().getAll(account)).isNotEmpty();
+  }
 }
