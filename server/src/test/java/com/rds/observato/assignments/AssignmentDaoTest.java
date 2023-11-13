@@ -1,10 +1,11 @@
 package com.rds.observato.assignments;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
 import com.rds.observato.api.persistence.Repository;
+import java.time.Instant;
+import org.assertj.core.api.Assertions;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.Test;
 
 class AssignmentDaoTest extends DatabaseTestBase {
@@ -14,7 +15,30 @@ class AssignmentDaoTest extends DatabaseTestBase {
 
   @Test
   void create() {
-    //    assertThatCode(() -> repository.assignments().create("a010",
-    // user)).doesNotThrowAnyException();
+    long account = Fixtures.createAccount(repository, user);
+    long task = Fixtures.createTask(repository, user);
+    long resource = Fixtures.createResource(repository, user);
+
+    Assertions.assertThatCode(
+            () ->
+                repository
+                    .assignments()
+                    .create(account, task, resource, Instant.now(), Instant.now()))
+        .doesNotThrowAnyException();
+  }
+
+  @Test
+  void duplicate() {
+    long account = Fixtures.createAccount(repository, user);
+    long task = Fixtures.createTask(repository, user);
+    long resource = Fixtures.createResource(repository, user);
+
+    repository.assignments().create(account, task, resource, Instant.now(), Instant.now());
+    Assertions.assertThatThrownBy(
+            () ->
+                repository
+                    .assignments()
+                    .create(account, task, resource, Instant.now(), Instant.now()))
+        .isInstanceOf(UnableToExecuteStatementException.class);
   }
 }

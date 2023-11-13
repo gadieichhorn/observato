@@ -31,6 +31,14 @@ class ResourcesDaoTest extends DatabaseTestBase {
   }
 
   @Test
+  void sameNameDifferentAccounts() {
+    long account1 = Fixtures.createAccount(repository, user);
+    long account2 = Fixtures.createAccount(repository, user);
+    repository.resources().create(account1, "r002");
+    repository.resources().create(account2, "r002");
+  }
+
+  @Test
   void getAll() {
     long account = Fixtures.createAccount(repository, user);
     long resource = repository.resources().create(account, "r003");

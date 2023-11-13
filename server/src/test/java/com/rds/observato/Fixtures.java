@@ -27,4 +27,8 @@ public class Fixtures {
   public static long createTask(Repository repository, long account) {
     return repository.tasks().create(account, faker.name().lastName(), faker.lorem().paragraph());
   }
+
+  public static long createResource(Repository repository, long account) {
+    return repository.resources().create(account, faker.name().username());
+  }
 }
