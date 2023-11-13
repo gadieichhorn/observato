@@ -1,9 +1,9 @@
 package com.rds.observato.extentions;
 
-import com.rds.observato.api.Error;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.AuthService;
-import com.rds.observato.persistence.SqlError;
+import com.rds.observato.error.Error;
+import com.rds.observato.error.SqlError;
 import io.dropwizard.servlets.tasks.Task;
 import io.vavr.control.Either;
 import io.vavr.control.Try;

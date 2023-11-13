@@ -1,6 +1,6 @@
 package com.rds.observato.validation;
 
-import com.rds.observato.api.Error;
+import com.rds.observato.error.Error;
 
 public record ValidationError(String message) implements Error {
 

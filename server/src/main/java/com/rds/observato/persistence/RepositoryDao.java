@@ -1,19 +1,19 @@
 package com.rds.observato.persistence;
 
+import com.rds.observato.accounts.AccountView;
+import com.rds.observato.accounts.AccountsDao;
+import com.rds.observato.accounts.UserAccountView;
 import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.persistence.accounts.AccountDao;
-import com.rds.observato.persistence.accounts.AccountView;
-import com.rds.observato.persistence.accounts.UserAccountView;
-import com.rds.observato.persistence.assignments.AssignmentDao;
-import com.rds.observato.persistence.projects.ProjectView;
-import com.rds.observato.persistence.projects.ProjectsDao;
-import com.rds.observato.persistence.resources.ResourceView;
-import com.rds.observato.persistence.resources.ResourcesDao;
-import com.rds.observato.persistence.tasks.TaskView;
-import com.rds.observato.persistence.tasks.TasksDao;
-import com.rds.observato.persistence.users.LoginView;
-import com.rds.observato.persistence.users.UserView;
-import com.rds.observato.persistence.users.UsersDao;
+import com.rds.observato.assignments.AssignmentDao;
+import com.rds.observato.projects.ProjectView;
+import com.rds.observato.projects.ProjectsDao;
+import com.rds.observato.resources.ResourceView;
+import com.rds.observato.resources.ResourcesDao;
+import com.rds.observato.tasks.TaskView;
+import com.rds.observato.tasks.TasksDao;
+import com.rds.observato.users.LoginView;
+import com.rds.observato.users.UserView;
+import com.rds.observato.users.UsersDao;
 import com.rds.observato.validation.Validator;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.reflect.ConstructorMapper;
@@ -23,7 +23,7 @@ import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 public record RepositoryDao(
-    AccountDao accounts,
+    AccountsDao accounts,
     UsersDao users,
     ProjectsDao projects,
     TasksDao tasks,
@@ -54,7 +54,7 @@ public record RepositoryDao(
         .registerRowMapper(ConstructorMapper.factory(UserAccountView.class));
 
     return new RepositoryDao(
-        jdbi.onDemand(AccountDao.class),
+        jdbi.onDemand(AccountsDao.class),
         jdbi.onDemand(UsersDao.class),
         jdbi.onDemand(ProjectsDao.class),
         jdbi.onDemand(TasksDao.class),

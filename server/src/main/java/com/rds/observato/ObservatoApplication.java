@@ -1,16 +1,16 @@
 package com.rds.observato;
 
+import com.rds.observato.accounts.AccountController;
+import com.rds.observato.accounts.AccountsController;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.*;
-import com.rds.observato.controller.account.AccountController;
-import com.rds.observato.controller.account.AccountsController;
-import com.rds.observato.controller.login.LoginController;
-import com.rds.observato.controller.projects.ProjectController;
-import com.rds.observato.controller.projects.ProjectsController;
-import com.rds.observato.controller.users.UserController;
-import com.rds.observato.controller.users.UsersController;
 import com.rds.observato.extentions.*;
+import com.rds.observato.login.LoginController;
 import com.rds.observato.persistence.RepositoryDao;
+import com.rds.observato.projects.ProjectController;
+import com.rds.observato.projects.ProjectsController;
+import com.rds.observato.users.UserController;
+import com.rds.observato.users.UsersController;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;

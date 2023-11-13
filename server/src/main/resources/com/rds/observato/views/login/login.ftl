@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="com.rds.observato.views.login.LoginView" -->
+<#-- @ftlvariable name="" type="com.rds.observato.login.LoginView" -->
 <!doctype html>
 <html lang="en">
 <head>

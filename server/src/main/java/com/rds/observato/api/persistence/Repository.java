@@ -1,15 +1,15 @@
 package com.rds.observato.api.persistence;
 
-import com.rds.observato.persistence.accounts.AccountDao;
-import com.rds.observato.persistence.assignments.AssignmentDao;
-import com.rds.observato.persistence.projects.ProjectsDao;
-import com.rds.observato.persistence.resources.ResourcesDao;
-import com.rds.observato.persistence.tasks.TasksDao;
-import com.rds.observato.persistence.users.UsersDao;
+import com.rds.observato.accounts.AccountsDao;
+import com.rds.observato.assignments.AssignmentDao;
+import com.rds.observato.projects.ProjectsDao;
+import com.rds.observato.resources.ResourcesDao;
+import com.rds.observato.tasks.TasksDao;
+import com.rds.observato.users.UsersDao;
 
 public interface Repository {
 
-  AccountDao accounts();
+  AccountsDao accounts();
 
   UsersDao users();
 
