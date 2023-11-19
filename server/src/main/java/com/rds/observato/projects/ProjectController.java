@@ -5,16 +5,17 @@ import com.rds.observato.api.response.ProjectResponse;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
-import java.util.Optional;
 
 @Path("projects/{account}/{project}")
 public record ProjectController(Repository repository) {
 
-  private static ProjectConverter converter = new ProjectConverter();
-
   @GET
-  public Optional<ProjectResponse> get(
+  public ProjectResponse get(
       @PathParam("account") long account, @PathParam("project") long project) {
-    return repository.projects().findById(account, project).map(converter::convert);
+    return repository
+        .projects()
+        .findById(account, project)
+        .map(ProjectResponse::from)
+        .orElseThrow(() -> new RuntimeException("Not found"));
   }
 }

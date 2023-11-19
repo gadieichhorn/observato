@@ -50,4 +50,14 @@ class AssignmentDaoTest extends DatabaseTestBase {
     repository.assignments().create(account, task, resource, Instant.now(), Instant.now());
     Assertions.assertThat(repository.assignments().getAll(account)).isNotEmpty();
   }
+
+  @Test
+  void findById() {
+    long account = Fixtures.createAccount(repository, user);
+    long task = Fixtures.createTask(repository, user);
+    long resource = Fixtures.createResource(repository, user);
+    long assignment =
+        repository.assignments().create(account, task, resource, Instant.now(), Instant.now());
+    Assertions.assertThat(repository.assignments().findById(account, assignment)).isNotEmpty();
+  }
 }

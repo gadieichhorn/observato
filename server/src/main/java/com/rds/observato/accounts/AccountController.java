@@ -11,10 +11,8 @@ import java.util.Optional;
 @Produces(MediaType.APPLICATION_JSON)
 public record AccountController(Repository repository) {
 
-  public static AccountConverter converter = new AccountConverter();
-
   @GET
   public Optional<GetAccountResponse> getOne(@PathParam("id") long id) {
-    return repository.accounts().findById(id).map(converter::convert);
+    return repository.accounts().findById(id).map(GetAccountResponse::from);
   }
 }
