@@ -16,7 +16,7 @@ class LoginControllerTest extends DatabaseTestBase {
       ResourceExtension.builder()
           .addProvider(RolesAllowedDynamicFeature.class)
           .setTestContainerFactory(new GrizzlyWebTestContainerFactory())
-          .addProvider(() -> new LoginController(repository()))
+          //          .addProvider(() -> new LoginController(repository()))
           .build();
 
   @BeforeAll

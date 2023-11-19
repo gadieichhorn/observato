@@ -1,3 +1,11 @@
 package com.rds.observato.projects;
 
-public record CreateProjectRequest(String name, String description) {}
+import com.rds.observato.validation.Validator;
+
+public record CreateProjectRequest(String name, String description) {
+
+  public CreateProjectRequest {
+    Validator.checkIsNullOrEmpty(name, "name");
+    Validator.checkIsNullOrEmpty(description, "description");
+  }
+}

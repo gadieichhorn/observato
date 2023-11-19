@@ -22,7 +22,7 @@ class ProjectsDaoTest extends DatabaseTestBase {
   }
 
   @Test
-  void findByName() {
+  void findById() {
     long account = Fixtures.createAccount(repository, user);
     long project = repository.projects().create(account, "proj004", "some project");
     Assertions.assertThat(repository.projects().findById(account, project))

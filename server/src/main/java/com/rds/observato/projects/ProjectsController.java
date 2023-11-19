@@ -4,23 +4,22 @@ import com.google.common.collect.ImmutableSet;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.response.GetProjectResponse;
 import com.rds.observato.api.response.GetProjectsResponse;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
 @Path("projects/{account}")
+@Produces(MediaType.APPLICATION_JSON)
 public record ProjectsController(Repository repository) {
 
   @POST
-  public CreateProjectResponse create(
+  public CreateProjectResponse post(
       @PathParam("account") long account, CreateProjectRequest request) {
     return new CreateProjectResponse(
         repository.projects().create(account, request.name(), request.description()));
   }
 
   @GET
-  public GetProjectsResponse getAll(@PathParam("account") long account) {
+  public GetProjectsResponse get(@PathParam("account") long account) {
     return new GetProjectsResponse(
         repository.projects().findAll(account).stream()
             .map(GetProjectResponse::from)

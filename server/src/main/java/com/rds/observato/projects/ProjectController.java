@@ -5,8 +5,11 @@ import com.rds.observato.api.response.GetProjectResponse;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 @Path("projects/{account}/{project}")
+@Produces(MediaType.APPLICATION_JSON)
 public record ProjectController(Repository repository) {
 
   @GET

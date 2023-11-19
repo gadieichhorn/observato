@@ -2,14 +2,15 @@ package com.rds.observato.projects;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.api.persistence.Repository;
-import io.dropwizard.jersey.guava.OptionalMessageBodyWriter;
+import com.rds.observato.api.response.GetProjectResponse;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.core.HttpHeaders;
-import jakarta.ws.rs.core.Response;
 import java.util.UUID;
+import org.assertj.core.api.Assertions;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
@@ -19,7 +20,6 @@ class ProjectControllerTest extends DatabaseTestBase {
   public static final ResourceExtension EXT =
       ResourceExtension.builder()
           .setTestContainerFactory(new GrizzlyWebTestContainerFactory())
-          .addProvider(OptionalMessageBodyWriter::new)
           .addProvider(() -> new ProjectController(repository))
           .build();
 
@@ -33,15 +33,19 @@ class ProjectControllerTest extends DatabaseTestBase {
             .users()
             .create(UUID.randomUUID().toString(), "salt".getBytes(), "hash".getBytes());
     account = repository.accounts().create(UUID.randomUUID().toString(), user);
-    project = repository.projects().create(account, UUID.randomUUID().toString(), "description");
+    project = repository.projects().create(account, "prj0001", "description");
   }
 
-  //  @Test
+  @Test
   void get() {
-    Response response =
-        EXT.target("/projects/%d/%d".formatted(account, project))
-            .request()
-            .header(HttpHeaders.AUTHORIZATION, "secret")
-            .get();
+    Assertions.assertThat(
+            EXT.target("/projects/%d/%d".formatted(account, project))
+                .request()
+                .header(HttpHeaders.AUTHORIZATION, "secret")
+                .get(GetProjectResponse.class))
+        .isNotNull()
+        .isInstanceOf(GetProjectResponse.class)
+        .hasFieldOrPropertyWithValue("id", project)
+        .hasFieldOrPropertyWithValue("name", "prj0001");
   }
 }
