@@ -34,8 +34,8 @@ public record ObservatoRepository(
 
   public ObservatoRepository {
     Validator.checkIsNull(users, "users");
-    Validator.checkIsNull(accounts, "accounts");
     Validator.checkIsNull(tasks, "tasks");
+    Validator.checkIsNull(accounts, "accounts");
     Validator.checkIsNull(projects, "projects");
     Validator.checkIsNull(resources, "resources");
     Validator.checkIsNull(assignments, "assignments");

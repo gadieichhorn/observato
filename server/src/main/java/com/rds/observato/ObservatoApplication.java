@@ -3,11 +3,14 @@ package com.rds.observato;
 import com.rds.observato.accounts.AccountController;
 import com.rds.observato.accounts.AccountsController;
 import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.assignments.AssignmentController;
+import com.rds.observato.assignments.AssignmentsController;
 import com.rds.observato.auth.*;
 import com.rds.observato.extentions.*;
-import com.rds.observato.login.LoginController;
 import com.rds.observato.projects.ProjectController;
 import com.rds.observato.projects.ProjectsController;
+import com.rds.observato.resources.ResourceController;
+import com.rds.observato.resources.ResourcesController;
 import com.rds.observato.users.UserController;
 import com.rds.observato.users.UsersController;
 import io.dropwizard.assets.AssetsBundle;
@@ -85,10 +88,12 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     environment.jersey().register(new ProjectsController(repository));
     environment.jersey().register(new AccountController(repository));
     environment.jersey().register(new AccountsController(repository));
+    environment.jersey().register(new ResourceController(repository));
+    environment.jersey().register(new ResourcesController(repository));
+    environment.jersey().register(new AssignmentController(repository));
+    environment.jersey().register(new AssignmentsController(repository));
 
     // VIEWS
-    environment.jersey().register(new LoginController(repository));
-
     environment.admin().addTask(new GenerateDemoDataTask(repository, auth));
   }
 }

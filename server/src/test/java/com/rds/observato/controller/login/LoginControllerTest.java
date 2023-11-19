@@ -1,7 +1,6 @@
 package com.rds.observato.controller.login;
 
 import com.rds.observato.DatabaseTestBase;
-import com.rds.observato.login.LoginController;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;

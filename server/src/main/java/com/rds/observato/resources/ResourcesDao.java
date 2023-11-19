@@ -1,5 +1,6 @@
 package com.rds.observato.resources;
 
+import java.util.Optional;
 import java.util.Set;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
@@ -19,4 +20,6 @@ public interface ResourcesDao {
               select id, revision, account_id, name from obs.resources where account_id = :account
               """)
   Set<ResourceView> getAll(@Bind("account") long account);
+
+  Optional<ResourceView> findById(@Bind("account") long account, @Bind("resource") long resource);
 }
