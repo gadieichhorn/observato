@@ -43,6 +43,6 @@ class ResourcesDaoTest extends DatabaseTestBase {
     long account = Fixtures.createAccount(repository, user);
     long resource = repository.resources().create(account, "r003");
     Set<ResourceView> all = repository.resources().getAll(account);
-    Assertions.assertThat(all).contains(new ResourceView(resource, account, "r003"));
+    Assertions.assertThat(all).contains(new ResourceView(resource, 0, account, "r003"));
   }
 }

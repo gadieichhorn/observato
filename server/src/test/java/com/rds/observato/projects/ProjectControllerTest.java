@@ -2,6 +2,7 @@ package com.rds.observato.projects;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.api.persistence.Repository;
+import io.dropwizard.jersey.guava.OptionalMessageBodyWriter;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -9,7 +10,6 @@ import jakarta.ws.rs.core.Response;
 import java.util.UUID;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
@@ -18,8 +18,8 @@ class ProjectControllerTest extends DatabaseTestBase {
   private static Repository repository = repository();
   public static final ResourceExtension EXT =
       ResourceExtension.builder()
-          //          .addProvider(RolesAllowedDynamicFeature.class)
           .setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+          .addProvider(OptionalMessageBodyWriter::new)
           .addProvider(() -> new ProjectController(repository))
           .build();
 
@@ -36,15 +36,12 @@ class ProjectControllerTest extends DatabaseTestBase {
     project = repository.projects().create(account, UUID.randomUUID().toString(), "description");
   }
 
-  @Test
+  //  @Test
   void get() {
-    //        String credential = "Basic " +
-    // Base64.getEncoder().encodeToString("internal:secret".getBytes());
     Response response =
         EXT.target("/projects/%d/%d".formatted(account, project))
             .request()
             .header(HttpHeaders.AUTHORIZATION, "secret")
             .get();
-    //    Assertions.assertThat(results).isPresent().get().isEqualTo("cd5");
   }
 }

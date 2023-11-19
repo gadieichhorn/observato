@@ -25,7 +25,7 @@ database:
   driverClass: org.postgresql.Driver
   user: observato
   password: observato
-  url: jdbc:postgresql://localhost:5432/observato
+  url: jdbc:postgresql://localhost:54321/observato
   properties:
     charSet: UTF-8
     tcpKeepAlive: true

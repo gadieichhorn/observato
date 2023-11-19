@@ -16,7 +16,7 @@ public interface ResourcesDao {
 
   @SqlQuery(
       """
-              select id,account_id, name from obs.resources where account_id = :account
+              select id, revision, account_id, name from obs.resources where account_id = :account
               """)
   Set<ResourceView> getAll(@Bind("account") long account);
 }

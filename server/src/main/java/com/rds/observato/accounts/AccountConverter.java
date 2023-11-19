@@ -6,6 +6,6 @@ public class AccountConverter implements ResponseMapper<AccountView, GetAccountR
 
   @Override
   public GetAccountResponse convert(AccountView view) {
-    return new GetAccountResponse(view.id(), view.name(), view.owner());
+    return new GetAccountResponse(view.id(), view.revision(), view.name(), view.owner());
   }
 }

@@ -17,19 +17,19 @@ public interface UsersDao {
   long create(@Bind("name") String name, @Bind("salt") byte[] salt, @Bind("secret") byte[] secret);
 
   @SqlQuery("""
-          select id, name from obs.users where id = :id
+          select id, revision, name from obs.users where id = :id
           """)
   Optional<UserView> findById(@Bind("id") long id);
 
   @SqlQuery(
       """
-          select id, name, salt, secret from obs.users where name = :name
+          select id, revision, name, salt, secret from obs.users where name = :name
           """)
   Optional<LoginView> findByName(@Bind("name") String name);
 
   @SqlQuery(
       """
-              select id, name, salt, secret from obs.users where name = :name
+              select id, revision, name, salt, secret from obs.users where name = :name
               """)
   Set<UserRoleView> userRoleByAccount(@Bind("user") String user, @Bind("account") long account);
 }

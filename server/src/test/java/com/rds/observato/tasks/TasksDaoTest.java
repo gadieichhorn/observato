@@ -45,7 +45,7 @@ class TasksDaoTest extends DatabaseTestBase {
     long account = Fixtures.createAccount(repository, user);
     long task = repository.tasks().create(account, "t001", "tasks");
     Assertions.assertThat(repository.tasks().findAll(account))
-        .containsExactly(new TaskView(task, account, "t001", "tasks"));
+        .containsExactly(new TaskView(task, 0, account, "t001", "tasks"));
   }
 
   @Test
@@ -55,6 +55,6 @@ class TasksDaoTest extends DatabaseTestBase {
     long task = repository.tasks().create(account, "t001", "tasks");
     repository.projects().assignTaskToProject(account, task, project);
     Assertions.assertThat(repository.tasks().findAllByProject(account, project))
-        .containsExactly(new TaskView(task, account, "t001", "tasks"));
+        .containsExactly(new TaskView(task, 0, account, "t001", "tasks"));
   }
 }

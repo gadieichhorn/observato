@@ -21,13 +21,13 @@ public interface ProjectsDao {
 
   @SqlQuery(
       """
-                      select id , account_id , name , description  from obs.projects where account_id = :account and id=:id
+                      select id, revision, account_id , name , description  from obs.projects where account_id = :account and id=:id
               """)
   Optional<ProjectView> findById(@Bind("account") long account, @Bind("id") long id);
 
   @SqlQuery(
       """
-                          select id , account_id , name , description  from obs.projects where account_id = :account
+                          select id, revision, account_id , name , description  from obs.projects where account_id = :account
                   """)
   Set<ProjectView> findAll(@Bind("account") long account);
 

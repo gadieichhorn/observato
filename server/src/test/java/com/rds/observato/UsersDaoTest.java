@@ -7,7 +7,6 @@ import com.rds.observato.users.LoginView;
 import com.rds.observato.users.UserView;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 import org.assertj.core.api.Assertions;
@@ -20,7 +19,7 @@ class UsersDaoTest extends DatabaseTestBase {
   private Repository repository;
 
   @BeforeEach
-  void setUp() throws SQLException {
+  void setUp() {
     repository = RepositoryDao.create(jdbi());
   }
 

@@ -19,13 +19,13 @@ public interface TasksDao {
 
   @SqlQuery(
       """
-                    select id , account_id , name , description  from obs.tasks where account_id = :account
+                    select id, revision,  account_id , name , description  from obs.tasks where account_id = :account
               """)
   Set<TaskView> findAll(@Bind("account") long account);
 
   @SqlQuery(
       """
-                  select t.id, t.account_id, t.name, t.description
+                  select t.id, t.revision,  t.account_id, t.name, t.description
                   from obs.project_tasks pt
                            join obs.tasks t on pt.task_id = t.id
                   where t.account_id = :account

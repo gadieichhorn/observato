@@ -54,6 +54,6 @@ class ProjectsDaoTest extends DatabaseTestBase {
     long id = repository.projects().create(account, "proj005", "find all");
     Assertions.assertThat(repository.projects().findAll(account))
         .hasSizeGreaterThan(0)
-        .contains(new ProjectView(id, account, "proj005", "find all"));
+        .contains(new ProjectView(id, 0, account, "proj005", "find all"));
   }
 }

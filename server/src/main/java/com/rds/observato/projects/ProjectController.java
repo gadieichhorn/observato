@@ -7,14 +7,14 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import java.util.Optional;
 
-@Path("projects/{account}/{id}")
+@Path("projects/{account}/{project}")
 public record ProjectController(Repository repository) {
 
   private static ProjectConverter converter = new ProjectConverter();
 
   @GET
   public Optional<ProjectResponse> get(
-      @PathParam("account") long account, @PathParam("id") long id) {
-    return repository.projects().findById(account, id).map(converter::convert);
+      @PathParam("account") long account, @PathParam("project") long project) {
+    return repository.projects().findById(account, project).map(converter::convert);
   }
 }
