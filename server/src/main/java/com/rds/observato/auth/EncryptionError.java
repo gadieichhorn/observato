@@ -1,6 +1,6 @@
 package com.rds.observato.auth;
 
-import com.rds.observato.error.Error;
+import com.rds.observato.extentions.Error;
 
 public record EncryptionError(String message) implements Error {
 

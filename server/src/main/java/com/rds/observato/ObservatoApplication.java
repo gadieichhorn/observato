@@ -6,7 +6,6 @@ import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.*;
 import com.rds.observato.extentions.*;
 import com.rds.observato.login.LoginController;
-import com.rds.observato.persistence.RepositoryDao;
 import com.rds.observato.projects.ProjectController;
 import com.rds.observato.projects.ProjectsController;
 import com.rds.observato.users.UserController;
@@ -56,7 +55,8 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     DataSourceFactory dataSourceFactory = configuration.getDataSourceFactory();
 
     Repository repository =
-        RepositoryDao.create(new JdbiFactory().build(environment, dataSourceFactory, "observato"));
+        ObservatoRepository.create(
+            new JdbiFactory().build(environment, dataSourceFactory, "observato"));
     AuthService auth = AuthService.create();
 
     //    MetricRegistry metrics = environment.metrics();

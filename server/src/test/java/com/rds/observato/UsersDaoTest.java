@@ -2,7 +2,6 @@ package com.rds.observato;
 
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.AuthService;
-import com.rds.observato.persistence.RepositoryDao;
 import com.rds.observato.users.LoginView;
 import com.rds.observato.users.UserView;
 import java.security.NoSuchAlgorithmException;
@@ -20,7 +19,7 @@ class UsersDaoTest extends DatabaseTestBase {
 
   @BeforeEach
   void setUp() {
-    repository = RepositoryDao.create(jdbi());
+    repository = ObservatoRepository.create(jdbi());
   }
 
   @Test

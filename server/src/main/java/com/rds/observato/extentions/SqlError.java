@@ -1,4 +1,4 @@
-package com.rds.observato.error;
+package com.rds.observato.extentions;
 
 public record SqlError(String message) implements Error {
 

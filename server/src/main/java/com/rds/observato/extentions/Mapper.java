@@ -1,4 +1,4 @@
-package com.rds.observato.json;
+package com.rds.observato.extentions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;

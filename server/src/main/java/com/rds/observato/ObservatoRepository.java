@@ -1,4 +1,4 @@
-package com.rds.observato.persistence;
+package com.rds.observato;
 
 import com.rds.observato.accounts.AccountView;
 import com.rds.observato.accounts.AccountsDao;
@@ -23,7 +23,7 @@ import org.jdbi.v3.jackson2.Jackson2Plugin;
 import org.jdbi.v3.postgres.PostgresPlugin;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
-public record RepositoryDao(
+public record ObservatoRepository(
     AccountsDao accounts,
     UsersDao users,
     ProjectsDao projects,
@@ -32,7 +32,7 @@ public record RepositoryDao(
     AssignmentDao assignments)
     implements Repository {
 
-  public RepositoryDao {
+  public ObservatoRepository {
     Validator.checkIsNull(users, "users");
     Validator.checkIsNull(accounts, "accounts");
     Validator.checkIsNull(tasks, "tasks");
@@ -55,7 +55,7 @@ public record RepositoryDao(
         .registerRowMapper(ConstructorMapper.factory(AssignmentView.class))
         .registerRowMapper(ConstructorMapper.factory(UserAccountView.class));
 
-    return new RepositoryDao(
+    return new ObservatoRepository(
         jdbi.onDemand(AccountsDao.class),
         jdbi.onDemand(UsersDao.class),
         jdbi.onDemand(ProjectsDao.class),

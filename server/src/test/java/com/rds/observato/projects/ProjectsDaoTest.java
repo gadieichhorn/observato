@@ -2,15 +2,15 @@ package com.rds.observato.projects;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
+import com.rds.observato.ObservatoRepository;
 import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.persistence.RepositoryDao;
 import org.assertj.core.api.Assertions;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.Test;
 
 class ProjectsDaoTest extends DatabaseTestBase {
 
-  private static final Repository repository = RepositoryDao.create(jdbi());
+  private static final Repository repository = ObservatoRepository.create(jdbi());
 
   private static final long user = Fixtures.createUser(repository);
 

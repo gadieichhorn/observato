@@ -2,7 +2,6 @@ package com.rds.observato;
 
 import com.rds.observato.accounts.AccountView;
 import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.persistence.RepositoryDao;
 import java.sql.SQLException;
 import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
@@ -46,6 +45,6 @@ public class DatabaseTestBase {
   }
 
   public static Repository repository() {
-    return RepositoryDao.create(jdbi());
+    return ObservatoRepository.create(jdbi());
   }
 }

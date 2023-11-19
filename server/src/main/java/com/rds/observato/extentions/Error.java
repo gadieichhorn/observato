@@ -1,4 +1,4 @@
-package com.rds.observato.error;
+package com.rds.observato.extentions;
 
 public interface Error {
   String message();

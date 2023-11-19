@@ -1,7 +1,6 @@
 package com.rds.observato.extentions;
 
 import com.rds.observato.ObservatoConfiguration;
-import com.rds.observato.json.Mapper;
 import io.dropwizard.core.ConfiguredBundle;
 import io.dropwizard.core.setup.Bootstrap;
 
