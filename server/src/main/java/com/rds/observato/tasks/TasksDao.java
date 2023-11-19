@@ -1,5 +1,6 @@
 package com.rds.observato.tasks;
 
+import java.util.Optional;
 import java.util.Set;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
@@ -32,4 +33,10 @@ public interface TasksDao {
                     and pt.project_id = :project
                                     """)
   Set<TaskView> findAllByProject(@Bind("account") long account, @Bind("project") long project);
+
+  @SqlQuery(
+      """
+                    select id, revision, account_id, name, description  from obs.tasks where account_id = :account and id = :id
+              """)
+  Optional<TaskView> finById(@Bind("account") long account, @Bind("id") long id);
 }

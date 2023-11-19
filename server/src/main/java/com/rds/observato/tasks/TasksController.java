@@ -4,11 +4,9 @@ import com.codahale.metrics.annotation.Timed;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.request.CreateTaskRequest;
 import com.rds.observato.api.response.CreateTaskResponse;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import java.util.stream.Collectors;
 
 @Timed
 @Path("tasks/{account}")
@@ -19,5 +17,13 @@ public record TasksController(Repository repository) {
   public CreateTaskResponse create(@PathParam("account") long account, CreateTaskRequest request) {
     return new CreateTaskResponse(
         repository.tasks().create(account, request.name(), request.description()));
+  }
+
+  @GET
+  public GetTasksResponse get(@PathParam("account") long account) {
+    return new GetTasksResponse(
+        repository.tasks().findAll(account).stream()
+            .map(GetTaskResponse::from)
+            .collect(Collectors.toSet()));
   }
 }
