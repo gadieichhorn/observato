@@ -8,7 +8,7 @@ import java.util.Set;
 
 public record User(String username, Set<String> roles) implements Principal {
 
-  public static final User ANONYMOUS = new User("anonymous@pexapark.com", ImmutableSet.of());
+  public static final User ANONYMOUS = new User("anonymous@rds.com", ImmutableSet.of());
 
   public User {
     Validator.checkIsNullOrEmpty(username, "username");

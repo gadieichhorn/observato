@@ -23,9 +23,9 @@ public interface AccountsDao {
 
   @SqlQuery(
       """
-          select id,name,owner_id from obs.accounts where owner_id = :user
+          select id, revision, name, owner_id from obs.accounts where owner_id = :user
           """)
-  Set<AccountView> getAllAccountByUser(@Bind("user") long user);
+  Set<AccountView> getAccountsByUser(@Bind("user") long user);
 
   @SqlUpdate(
       """

@@ -5,6 +5,8 @@ import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.request.CreateUserRequest;
 import com.rds.observato.api.response.CreateUserResponse;
 import com.rds.observato.auth.AuthService;
+import com.rds.observato.auth.User;
+import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import java.security.NoSuchAlgorithmException;
@@ -16,7 +18,7 @@ import java.security.spec.InvalidKeySpecException;
 @Consumes(MediaType.APPLICATION_JSON)
 public record UsersController(Repository repository, AuthService auth) {
   @POST
-  public CreateUserResponse create(CreateUserRequest request) {
+  public CreateUserResponse create(@Auth User user, CreateUserRequest request) {
     try {
       byte[] salt = auth.salt();
       byte[] hash = auth.hash(salt, request.password());

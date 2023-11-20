@@ -2,6 +2,8 @@ package com.rds.observato.projects;
 
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.response.GetProjectResponse;
+import com.rds.observato.auth.User;
+import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -13,7 +15,7 @@ import jakarta.ws.rs.core.MediaType;
 public record ProjectController(Repository repository) {
 
   @GET
-  public GetProjectResponse get(
+  public GetProjectResponse get(@Auth User user,
       @PathParam("account") long account, @PathParam("project") long project) {
     return repository
         .projects()

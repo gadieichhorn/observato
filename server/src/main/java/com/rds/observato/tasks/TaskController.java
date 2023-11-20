@@ -2,6 +2,8 @@ package com.rds.observato.tasks;
 
 import com.codahale.metrics.annotation.Timed;
 import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.auth.User;
+import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -12,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 public record TaskController(Repository repository) {
 
   @GET
-  public GetTaskResponse create(@PathParam("account") long account, @PathParam("task") long task) {
+  public GetTaskResponse create(@Auth User user, @PathParam("account") long account, @PathParam("task") long task) {
     return repository
         .tasks()
         .finById(account, task)

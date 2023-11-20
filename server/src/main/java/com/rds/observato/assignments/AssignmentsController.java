@@ -2,6 +2,8 @@ package com.rds.observato.assignments;
 
 import com.codahale.metrics.annotation.Timed;
 import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.auth.User;
+import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import java.util.stream.Collectors;
@@ -12,7 +14,7 @@ import java.util.stream.Collectors;
 public record AssignmentsController(Repository repository) {
 
   @POST
-  public CreateAssignmentResponse create(
+  public CreateAssignmentResponse create(@Auth User user,
       @PathParam("account") long account, CreateAssignmentRequest request) {
     return new CreateAssignmentResponse(
         repository
@@ -21,7 +23,7 @@ public record AssignmentsController(Repository repository) {
   }
 
   @GET
-  public GetAssignmentsResponse get(@PathParam("account") long account) {
+  public GetAssignmentsResponse get(@Auth User user,@PathParam("account") long account) {
     return new GetAssignmentsResponse(
         repository.assignments().getAll(account).stream()
             .map(GetAssignmentResponse::from)

@@ -4,6 +4,7 @@
 POST localhost:8080/api/accounts
 Accept: application/json
 Content-Type: application/json
+observato-api-token: secret
 
 {
   "name": "g",
@@ -15,12 +16,14 @@ Content-Type: application/json
 GET localhost:8080/api/accounts/1
 Accept: application/json
 Content-Type: application/json
+observato-api-token: secret
 
 ###
 
 POST localhost:8080/api/users
 Accept: application/json
 Content-Type: application/json
+observato-api-token: secret
 
 {
   "name": "aaaa",
@@ -33,18 +36,21 @@ Content-Type: application/json
 GET localhost:8080/api/users/1
 Accept: application/json
 Content-Type: application/json
+observato-api-token: secret
 
 ###
 
 GET localhost:8080/api/projects/2/2
 Accept: application/json
 Content-Type: application/json
+observato-api-token: secret
 
 ###
 
 GET localhost:8080/api/projects/2
 Accept: application/json
 Content-Type: application/json
+observato-api-token: secret
 
 ###
 

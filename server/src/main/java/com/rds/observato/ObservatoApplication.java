@@ -24,7 +24,6 @@ import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.views.common.ViewBundle;
 import java.time.ZoneOffset;
 import java.util.TimeZone;
-import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 public class ObservatoApplication extends Application<ObservatoConfiguration> {
 
@@ -62,12 +61,6 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
             new JdbiFactory().build(environment, dataSourceFactory, "observato"));
     AuthService auth = AuthService.create();
 
-    //    MetricRegistry metrics = environment.metrics();
-    //    CachingAuthenticator<BasicCredentials, User> cachingAuthenticator =
-    //        new CachingAuthenticator<>(
-    //            metricRegistry, simpleAuthenticator,
-    // configuration.getAuthenticationCachePolicy());
-
     environment
         .jersey()
         .register(
@@ -78,7 +71,7 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
                     .setRealm("OBSERVATO")
                     .buildAuthFilter()));
 
-    environment.jersey().register(RolesAllowedDynamicFeature.class);
+//    environment.jersey().register(RolesAllowedDynamicFeature.class);
     environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
     // CONTROLLERS
