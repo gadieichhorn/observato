@@ -65,7 +65,7 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
             new AuthDynamicFeature(
                 new ObservatoAuthFilter.Builder()
                     .setAuthenticator(new ObservatoBasicAuthenticator(repository))
-                    .setAuthorizer(new ObservatoAuthorizer())
+                    //                    .setAuthorizer(new ObservatoAuthorizer())
                     .setRealm("OBSERVATO")
                     .buildAuthFilter()));
 

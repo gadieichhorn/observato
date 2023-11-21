@@ -19,10 +19,13 @@ public record ObservatoBasicAuthenticator(Repository repository)
 
   @Override
   public Optional<User> authenticate(String token) throws AuthenticationException {
+
     TokenView view =
         repository.accounts().getUserToken(token).orElse(new TokenView(0, 0, 0, "", null));
     log.info("TOKEN: {}", view);
+
     if (view.id() > 0) {
+
       UserView user =
           repository.users().findById(view.user()).orElse(new UserView(0, 0, "anonymous"));
       log.info("USER: {}", user);
@@ -39,4 +42,17 @@ public record ObservatoBasicAuthenticator(Repository repository)
       return Optional.of(new User("anonymous@rds.com", ImmutableSet.of(Roles.ANONYMOUS)));
     }
   }
+
+  //  ImmutableSet<Roles> roles =
+  //          repository
+  //                  .accounts()
+  //                  .getUserToken(token)
+  //                  .map(view -> repository.accounts().getAccountByUser(view.user(),
+  // view.account()))
+  //                  .map(
+  //                          views ->
+  //                                  views.stream()
+  //                                          .map(UserAccountView::role)
+  //                                          .collect(ImmutableSet.toImmutableSet()))
+  //                  .orElse(ImmutableSet.of());
 }

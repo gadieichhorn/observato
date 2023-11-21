@@ -1,3 +1,15 @@
+GET http://localhost:8080/api/accounts/1
+Accept: application/json
+Content-Type: application/json
+Authorization: 33bbdf5379d2459f89be37013fb3a610
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-11-21T105431.200.json
+
+###
+
 POST http://localhost:8080/api/accounts
 Accept: application/json
 Content-Type: application/json
@@ -587,18 +599,6 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2023-11-20T184202.500.json
-
-###
-
-GET http://localhost:8080/api/accounts/1
-Accept: application/json
-Content-Type: application/json
-observato-api-token: secret
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-11-20T183818.200.json
 
 ###
 

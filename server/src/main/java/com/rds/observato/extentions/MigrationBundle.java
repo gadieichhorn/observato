@@ -9,15 +9,14 @@ public class MigrationBundle implements ConfiguredBundle<ObservatoConfiguration>
 
   @Override
   public void run(ObservatoConfiguration configuration, Environment environment) throws Exception {
-    Flyway flyway =
-        new Flyway(
+    new Flyway(
             Flyway.configure()
                 .dataSource(
                     configuration.getDataSourceFactory().getUrl(),
                     configuration.getDataSourceFactory().getUser(),
                     configuration.getDataSourceFactory().getPassword())
                 .loggers("slf4j")
-                .locations("db/migrations"));
-    flyway.migrate();
+                .locations("db/migrations"))
+        .migrate();
   }
 }

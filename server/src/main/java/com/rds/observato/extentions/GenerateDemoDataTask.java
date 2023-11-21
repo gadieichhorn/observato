@@ -48,7 +48,8 @@ public class GenerateDemoDataTask extends Task {
             account ->
                 repository
                     .accounts()
-                    .createUserTokenForAccount(user, account, UUID.randomUUID().toString().replace("-","")))
+                    .createUserTokenForAccount(
+                        user, account, UUID.randomUUID().toString().replace("-", "")))
         .forEach(account -> resource(user, account));
   }
 
