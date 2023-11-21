@@ -8,9 +8,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public record User(String username, Set<Roles> roles) implements Principal {
+public record User(long id, String username, Set<Roles> roles) implements Principal {
   private static final Logger log = LoggerFactory.getLogger(User.class);
-  public static final User ANONYMOUS = new User("anonymous@rds.com", ImmutableSet.of());
 
   public User {
     Validator.checkIsNullOrEmpty(username, "username");

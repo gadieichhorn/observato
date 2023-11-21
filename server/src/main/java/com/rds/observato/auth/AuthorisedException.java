@@ -2,7 +2,7 @@ package com.rds.observato.auth;
 
 import java.util.Arrays;
 
-class AuthorisedException extends RuntimeException {
+public class AuthorisedException extends RuntimeException {
   private final Roles[] requiredRoles;
 
   public AuthorisedException(Roles[] requiredRoles) {

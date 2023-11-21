@@ -2,7 +2,10 @@ package com.rds.observato;
 
 import com.github.javafaker.Faker;
 import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.User;
 import java.util.UUID;
+import org.testcontainers.shaded.com.google.common.collect.ImmutableSet;
 
 public class Fixtures {
 
@@ -34,5 +37,21 @@ public class Fixtures {
 
   public static String token(long user) {
     return UUID.randomUUID().toString().replace("-", "");
+  }
+
+  public static User admin() {
+    return new User(0, "admin", ImmutableSet.of(Roles.ADMIN));
+  }
+
+  public static User scheduler() {
+    return new User(0, "scheduler", ImmutableSet.of(Roles.SCHEDULER));
+  }
+
+  public static User resource() {
+    return new User(0, "resource", ImmutableSet.of(Roles.RESOURCE));
+  }
+
+  public static User anonymous() {
+    return new User(0, "anonymous", ImmutableSet.of(Roles.ANONYMOUS));
   }
 }
