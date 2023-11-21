@@ -4,7 +4,7 @@
 POST localhost:8080/api/accounts
 Accept: application/json
 Content-Type: application/json
-Authorization: secret
+Authorization: 33bbdf5379d2459f89be37013fb3a610
 
 {
   "name": "g",
@@ -16,14 +16,14 @@ Authorization: secret
 GET localhost:8080/api/accounts/1
 Accept: application/json
 Content-Type: application/json
-Authorization: secret
+Authorization: 33bbdf5379d2459f89be37013fb3a610
 
 ###
 
 POST localhost:8080/api/users
 Accept: application/json
 Content-Type: application/json
-Authorization: secret
+Authorization: 33bbdf5379d2459f89be37013fb3a610
 
 {
   "name": "aaaa",
@@ -36,21 +36,21 @@ Authorization: secret
 GET localhost:8080/api/users/1
 Accept: application/json
 Content-Type: application/json
-Authorization: secret
+Authorization: 33bbdf5379d2459f89be37013fb3a610
 
 ###
 
-GET localhost:8080/api/projects/2/2
+GET localhost:8080/api/projects/16/80
 Accept: application/json
 Content-Type: application/json
-Authorization: secret
+Authorization: 33bbdf5379d2459f89be37013fb3a610
 
 ###
 
 GET localhost:8080/api/projects/2
 Accept: application/json
 Content-Type: application/json
-Authorization: 18efbf42-5c55-43cd-b24c-c8b6da2e86a2
+Authorization: 33bbdf5379d2459f89be37013fb3a610
 
 ###
 
@@ -58,7 +58,7 @@ Authorization: 18efbf42-5c55-43cd-b24c-c8b6da2e86a2
 GET localhost:8080/api/resources/3
 Accept: application/json
 Content-Type: application/json
-Authorization: secret
+Authorization: 33bbdf5379d2459f89be37013fb3a610
 
 ###
 
@@ -66,12 +66,14 @@ Authorization: secret
 GET localhost:8080/api/resources/1/1
 Accept: application/json
 Content-Type: application/json
-Authorization: secret
+Authorization: 33bbdf5379d2459f89be37013fb3a610
+
 
 ###
 
 POST localhost:8081/tasks/demo
 Accept: application/json
 Content-Type: application/json
+Authorization: 33bbdf5379d2459f89be37013fb3a610
 
 ###
