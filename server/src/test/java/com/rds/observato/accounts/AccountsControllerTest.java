@@ -44,11 +44,13 @@ class AccountsControllerTest extends DatabaseTestBase {
           .addProvider(() -> new AccountsController(repository))
           .build();
 
-  static long user;
+  long user;
+  String token;
 
   @BeforeEach
   void setUp() {
     user = Fixtures.createUser(repository);
+    token = Fixtures.token(user);
   }
 
   @Test
@@ -72,6 +74,7 @@ class AccountsControllerTest extends DatabaseTestBase {
   //  @Test
   void get() {
     long account = repository.accounts().create("acc0005", user);
+    repository.accounts().createUserTokenForAccount(user, account, "secret");
 
     Assertions.assertThat(
             EXT.target("/accounts")

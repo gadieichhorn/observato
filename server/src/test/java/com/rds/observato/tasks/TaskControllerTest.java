@@ -51,6 +51,7 @@ class TaskControllerTest extends DatabaseTestBase {
   void getById() {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     long task = repository.tasks().create(account, "tsk0001", "description");
+    repository.accounts().createUserTokenForAccount(user, account, "secret");
 
     Assertions.assertThat(
             EXT.target("/tasks/%d/%d".formatted(account, task))

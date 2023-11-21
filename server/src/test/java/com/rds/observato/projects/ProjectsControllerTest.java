@@ -2,6 +2,7 @@ package com.rds.observato.projects;
 
 import com.google.common.collect.ImmutableSet;
 import com.rds.observato.DatabaseTestBase;
+import com.rds.observato.Fixtures;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.response.GetProjectResponse;
 import com.rds.observato.api.response.GetProjectsResponse;
@@ -39,7 +40,8 @@ class ProjectsControllerTest extends DatabaseTestBase {
           .addProvider(() -> new ProjectsController(repository))
           .build();
 
-  static long user;
+  long user;
+  String token;
 
   @BeforeEach
   void setUp() {
@@ -47,16 +49,19 @@ class ProjectsControllerTest extends DatabaseTestBase {
         repository
             .users()
             .create(UUID.randomUUID().toString(), "salt".getBytes(), "hash".getBytes());
+    token = Fixtures.token(user);
   }
 
   @Test
   void get() {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     long project = repository.projects().create(account, "prj0002", "description");
+    repository.accounts().createUserTokenForAccount(user, account, token);
+
     Assertions.assertThat(
             EXT.target("/projects/%d".formatted(account))
                 .request()
-                .header(HttpHeaders.AUTHORIZATION, "secret")
+                .header(HttpHeaders.AUTHORIZATION, token)
                 .get(GetProjectsResponse.class))
         .isNotNull()
         .isInstanceOf(GetProjectsResponse.class)
@@ -68,10 +73,12 @@ class ProjectsControllerTest extends DatabaseTestBase {
   @Test
   void post() {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
+    repository.accounts().createUserTokenForAccount(user, account, token);
+
     CreateProjectResponse response =
         EXT.target("/projects/%d".formatted(account))
             .request()
-            .header(HttpHeaders.AUTHORIZATION, "secret")
+            .header(HttpHeaders.AUTHORIZATION, token)
             .post(Entity.json(new CreateProjectRequest("prj00003", "description")))
             .readEntity(CreateProjectResponse.class);
 

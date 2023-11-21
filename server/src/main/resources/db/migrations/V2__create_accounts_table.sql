@@ -22,5 +22,6 @@ CREATE TABLE IF NOT EXISTS obs.tokens
     account_id BIGINT    NOT NULL REFERENCES obs.accounts (id),
     token      TEXT      NOT NULL,
     created_on TIMESTAMP NOT NULL,
+    UNIQUE (token),
     UNIQUE (user_id, account_id)
 );

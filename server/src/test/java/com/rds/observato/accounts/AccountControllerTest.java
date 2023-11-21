@@ -1,6 +1,7 @@
 package com.rds.observato.accounts;
 
 import com.rds.observato.DatabaseTestBase;
+import com.rds.observato.Fixtures;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.ObservatoAuthFilter;
 import com.rds.observato.auth.ObservatoBasicAuthenticator;
@@ -36,6 +37,7 @@ class AccountControllerTest extends DatabaseTestBase {
           .build();
 
   static long user;
+  static String token;
 
   @BeforeEach
   void setUp() {
@@ -43,16 +45,18 @@ class AccountControllerTest extends DatabaseTestBase {
         repository
             .users()
             .create(UUID.randomUUID().toString(), "salt".getBytes(), "hash".getBytes());
+    token = Fixtures.token(user);
   }
 
   @Test
   void get() {
     long account = repository.accounts().create("acc0001", user);
+    repository.accounts().createUserTokenForAccount(user, account, token);
 
     Assertions.assertThat(
             EXT.target("/accounts/%d".formatted(account))
                 .request()
-                .header(HttpHeaders.AUTHORIZATION, "secret")
+                .header(HttpHeaders.AUTHORIZATION, token)
                 .get(GetAccountResponse.class))
         .isNotNull()
         .isInstanceOf(GetAccountResponse.class)

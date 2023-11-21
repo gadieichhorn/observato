@@ -2,9 +2,9 @@ package com.rds.observato.extentions;
 
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.AuthService;
+import com.rds.observato.auth.Roles;
 import io.dropwizard.servlets.tasks.Task;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -43,15 +43,16 @@ public class GenerateDemoDataTask extends Task {
         .limit(3)
         .map(i -> repository.accounts().create(UUID.randomUUID().toString(), user))
         .peek(account -> log.info("ACCOUNT: {}", account))
-        .peek(account -> repository.accounts().assignUserToAccount(user, account))
+        .peek(account -> repository.accounts().assignUserToAccount(user, account, Roles.ADMIN))
+        .peek(
+            account ->
+                repository
+                    .accounts()
+                    .createUserTokenForAccount(user, account, UUID.randomUUID().toString()))
         .forEach(account -> resource(user, account));
   }
 
   private void resource(Long user, Long account) {
-    repository
-        .accounts()
-        .createUserTokenForAccount(
-            user, account, UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
     Stream.iterate(0, i -> i + 1)
         .limit(5)
         .map(i -> repository.resources().create(account, UUID.randomUUID().toString()))

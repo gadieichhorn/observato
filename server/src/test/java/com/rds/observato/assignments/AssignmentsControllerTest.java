@@ -3,6 +3,7 @@ package com.rds.observato.assignments;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.rds.observato.DatabaseTestBase;
+import com.rds.observato.Fixtures;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.ObservatoAuthFilter;
 import com.rds.observato.auth.ObservatoBasicAuthenticator;
@@ -40,7 +41,8 @@ class AssignmentsControllerTest extends DatabaseTestBase {
           .addProvider(() -> new AssignmentsController(repository))
           .build();
 
-  static long user;
+  long user;
+  String token;
 
   @BeforeEach
   void setUp() {
@@ -48,11 +50,13 @@ class AssignmentsControllerTest extends DatabaseTestBase {
         repository
             .users()
             .create(UUID.randomUUID().toString(), "salt".getBytes(), "hash".getBytes());
+    token = Fixtures.token(user);
   }
 
   @Test
   void get() {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
+    repository.accounts().createUserTokenForAccount(user, account, token);
     long task = repository.tasks().create(account, "tsk0003", "description");
     long resource = repository.resources().create(account, "rsc0003");
     long assignment =
@@ -68,7 +72,7 @@ class AssignmentsControllerTest extends DatabaseTestBase {
     Assertions.assertThat(
             EXT.target("/assignments/%d".formatted(account))
                 .request()
-                .header(HttpHeaders.AUTHORIZATION, "secret")
+                .header(HttpHeaders.AUTHORIZATION, token)
                 .get(GetAssignmentsResponse.class))
         .isNotNull()
         .isInstanceOf(GetAssignmentsResponse.class)
@@ -88,13 +92,14 @@ class AssignmentsControllerTest extends DatabaseTestBase {
   @Test
   void post() {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
+    repository.accounts().createUserTokenForAccount(user, account, token);
     long task = repository.tasks().create(account, "tsk0003", "description");
     long resource = repository.resources().create(account, "rsc0003");
 
     CreateAssignmentResponse response =
         EXT.target("/assignments/%d".formatted(account))
             .request()
-            .header(HttpHeaders.AUTHORIZATION, "secret")
+            .header(HttpHeaders.AUTHORIZATION, token)
             .post(
                 Entity.json(
                     new CreateAssignmentRequest(

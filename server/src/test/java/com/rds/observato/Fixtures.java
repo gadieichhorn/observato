@@ -31,4 +31,8 @@ public class Fixtures {
   public static long createResource(Repository repository, long account) {
     return repository.resources().create(account, faker.name().username());
   }
+
+  public static String token(long user) {
+    return UUID.randomUUID().toString().replace("-", "");
+  }
 }

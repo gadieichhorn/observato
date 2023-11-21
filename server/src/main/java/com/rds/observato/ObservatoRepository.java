@@ -14,6 +14,7 @@ import com.rds.observato.resources.ResourcesDao;
 import com.rds.observato.tasks.TaskView;
 import com.rds.observato.tasks.TasksDao;
 import com.rds.observato.users.LoginView;
+import com.rds.observato.users.UserRoleView;
 import com.rds.observato.users.UserView;
 import com.rds.observato.users.UsersDao;
 import com.rds.observato.validation.Validator;
@@ -54,6 +55,7 @@ public record ObservatoRepository(
         .registerRowMapper(ConstructorMapper.factory(ProjectView.class))
         .registerRowMapper(ConstructorMapper.factory(AccountView.class))
         .registerRowMapper(ConstructorMapper.factory(ResourceView.class))
+        .registerRowMapper(ConstructorMapper.factory(UserRoleView.class))
         .registerRowMapper(ConstructorMapper.factory(AssignmentView.class))
         .registerRowMapper(ConstructorMapper.factory(UserAccountView.class));
 

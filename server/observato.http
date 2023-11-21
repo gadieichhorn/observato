@@ -50,7 +50,7 @@ Authorization: secret
 GET localhost:8080/api/projects/2
 Accept: application/json
 Content-Type: application/json
-Authorization: secret
+Authorization: 18efbf42-5c55-43cd-b24c-c8b6da2e86a2
 
 ###
 

@@ -1,10 +1,14 @@
 package com.rds.observato.auth;
 
 import com.google.common.collect.ImmutableSet;
+import com.rds.observato.accounts.TokenView;
+import com.rds.observato.accounts.UserAccountView;
 import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.users.UserView;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,10 +19,19 @@ public record ObservatoBasicAuthenticator(Repository repository)
 
   @Override
   public Optional<User> authenticate(String token) throws AuthenticationException {
-    repository.accounts().getUserToken(token).ifPresent(view -> log.info("TOKEN: {}", view));
-    if ("secret".equals(token)) {
+    TokenView view =
+        repository.accounts().getUserToken(token).orElse(new TokenView(0, 0, 0, "", null));
+    log.info("TOKEN: {}", view);
+    if (view.id() > 0) {
+      UserView user =
+          repository.users().findById(view.user()).orElse(new UserView(0, 0, "anonymous"));
+      log.info("USER: {}", user);
+      // TODO load user account role
+      Set<UserAccountView> userRoleViews =
+          repository.accounts().getAccountByUser(view.user(), view.account());
       return Optional.of(new User("gadi@rds.com", ImmutableSet.of(Roles.ADMIN)));
+    } else {
+      return Optional.of(new User("anonymous@rds.com", ImmutableSet.of(Roles.ANONYMOUS)));
     }
-    return Optional.empty();
   }
 }
