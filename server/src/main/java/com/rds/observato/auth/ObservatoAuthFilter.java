@@ -5,6 +5,7 @@ import jakarta.annotation.Priority;
 import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ public class ObservatoAuthFilter extends AuthFilter<String, User> {
 
   @Override
   public void filter(ContainerRequestContext containerRequestContext) {
-    String token = containerRequestContext.getHeaders().getFirst("observato-api-token");
+    String token = containerRequestContext.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
     log.info("TOKEN: {}", token);
     if (!authenticate(containerRequestContext, token, "")) {
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);

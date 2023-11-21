@@ -45,11 +45,18 @@ public interface AccountsDao {
           """)
   Set<UserAccountView> getUsersByAccount(@Bind("account") long account);
 
+  @SqlQuery(
+      """
+                select id, user_id, account_id, token, created_on
+                from obs.tokens
+                where token = :token
+          """)
   Optional<TokenView> getUserToken(@Bind("token") String token);
 
-  @SqlUpdate("""
-          insert into obs.tokens 
-          (user_id, account_id, token, created_on) 
+  @SqlUpdate(
+      """
+          insert into obs.tokens
+          (user_id, account_id, token, created_on)
           values (:user,:account, :token, now())
           """)
   @GetGeneratedKeys

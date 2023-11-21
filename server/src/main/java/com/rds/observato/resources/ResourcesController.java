@@ -17,6 +17,7 @@ public record ResourcesController(Repository repository) {
   @POST
   public CreateResourceResponse create(
       @Auth User user, @PathParam("account") long account, CreateResourceRequest request) {
+    Authoriser.check(user, Roles.ADMIN);
     return new CreateResourceResponse(repository.resources().create(account, request.name()));
   }
 

@@ -2,6 +2,7 @@ package com.rds.observato;
 
 import com.rds.observato.accounts.AccountView;
 import com.rds.observato.accounts.AccountsDao;
+import com.rds.observato.accounts.TokenView;
 import com.rds.observato.accounts.UserAccountView;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.assignments.AssignmentDao;
@@ -49,6 +50,7 @@ public record ObservatoRepository(
         .registerRowMapper(ConstructorMapper.factory(TaskView.class))
         .registerRowMapper(ConstructorMapper.factory(UserView.class))
         .registerRowMapper(ConstructorMapper.factory(LoginView.class))
+        .registerRowMapper(ConstructorMapper.factory(TokenView.class))
         .registerRowMapper(ConstructorMapper.factory(ProjectView.class))
         .registerRowMapper(ConstructorMapper.factory(AccountView.class))
         .registerRowMapper(ConstructorMapper.factory(ResourceView.class))

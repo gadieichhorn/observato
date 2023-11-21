@@ -56,7 +56,7 @@ class AccountsControllerTest extends DatabaseTestBase {
     CreateAccountResponse response =
         EXT.target("/accounts")
             .request()
-            .header("observato-api-token", "secret")
+            .header(HttpHeaders.AUTHORIZATION, "secret")
             .post(Entity.json(new CreateAccountRequest("acc0003", user)))
             .readEntity(CreateAccountResponse.class);
 

@@ -1,3 +1,121 @@
+POST http://localhost:8080/api/accounts
+Accept: application/json
+Content-Type: application/json
+Authorization: secret
+Content-Length: 39
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "g",
+  "owner": "g@g.com"
+}
+
+<> 2023-11-21T083932.400.json
+
+###
+
+GET http://localhost:8080/api/accounts/1
+Accept: application/json
+Content-Type: application/json
+Authorization: secret
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-11-21T083927.200.json
+
+###
+
+GET http://localhost:8080/api/users/1
+Accept: application/json
+Content-Type: application/json
+Authorization: secret
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-11-21T083922.200.json
+
+###
+
+GET http://localhost:8080/api/projects/2
+Accept: application/json
+Content-Type: application/json
+Authorization: secret
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-11-21T083908.200.json
+
+###
+
+GET http://localhost:8080/api/resources/3
+Accept: application/json
+Content-Type: application/json
+Authorization: secret
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-11-21T083901.200.json
+
+###
+
+GET http://localhost:8080/api/resources/1
+Accept: application/json
+Content-Type: application/json
+Authorization: secret
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-11-21T083835.200.json
+
+###
+
+GET http://localhost:8080/api/resources/1/1
+Accept: application/json
+Content-Type: application/json
+Authorization: secret
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-11-21T083830.500.json
+
+###
+
+POST http://localhost:8081/tasks/demo
+Accept: application/json
+Content-Type: application/json
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+POST http://localhost:8080/api/accounts
+Accept: application/json
+Content-Type: application/json
+Authorization: secret
+Content-Length: 39
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "g",
+  "owner": "g@g.com"
+}
+
+<> 2023-11-21T083740.401.json
+
+###
+
 POST http://localhost:8081/tasks/demo
 Accept: application/json
 Content-Type: application/json
@@ -461,123 +579,6 @@ User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
 Accept-Encoding: br,deflate,gzip,x-gzip
 
 <> 2023-11-13T091933.404.json
-
-###
-
-GET http://localhost:8080/api/projects/1
-Accept: application/json
-Content-Type: application/json
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-11-13T091927.200.json
-
-###
-
-GET http://localhost:8080/api/projects
-Accept: application/json
-Content-Type: application/json
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-11-13T091922.404.json
-
-###
-
-GET http://localhost:8080/api/users/1
-Accept: application/json
-Content-Type: application/json
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-11-13T091903.200.json
-
-###
-
-POST http://localhost:8080/api/users
-Accept: application/json
-Content-Type: application/json
-Content-Length: 54
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "aaaa",
-  "password": "sdfwexfaerfcsref"
-}
-
-<> 2023-11-13T091846.500.json
-
-###
-
-GET http://localhost:8080/api/accounts/1
-Accept: application/json
-Content-Type: application/json
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-11-13T091820.200.json
-
-###
-
-POST http://localhost:8080/api/accounts
-Accept: application/json
-Content-Type: application/json
-Content-Length: 39
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "g",
-  "owner": "g@g.com"
-}
-
-<> 2023-11-13T091739.400.json
-
-###
-
-GET http://localhost:8080/api/accounts/1
-Accept: application/json
-Content-Type: application/json
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-11-13T091720.401.json
-
-###
-
-POST http://localhost:8080/api/users
-Accept: application/json
-Content-Type: application/json
-Content-Length: 54
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-{
-  "name": "aaaa",
-  "password": "sdfwexfaerfcsref"
-}
-
-<> 2023-11-13T091714.200.json
-
-###
-
-GET http://localhost:8080/api/users/1
-Accept: application/json
-Content-Type: application/json
-Connection: Keep-Alive
-User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
-Accept-Encoding: br,deflate,gzip,x-gzip
-
-<> 2023-11-13T091705.200.json
 
 ###
 

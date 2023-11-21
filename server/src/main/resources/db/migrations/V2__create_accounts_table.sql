@@ -17,10 +17,10 @@ CREATE TABLE IF NOT EXISTS obs.account_users
 
 CREATE TABLE IF NOT EXISTS obs.tokens
 (
-    id          BIGSERIAL PRIMARY KEY,
-    user_id     bigint    NOT NULL REFERENCES obs.users (id),
-    account_id  BIGINT    NOT NULL REFERENCES obs.accounts (id),
-    token       BYTEA     NOT NULL,
-    created_on  TIMESTAMP NOT NULL,
+    id         BIGSERIAL PRIMARY KEY,
+    user_id    bigint    NOT NULL REFERENCES obs.users (id),
+    account_id BIGINT    NOT NULL REFERENCES obs.accounts (id),
+    token      TEXT      NOT NULL,
+    created_on TIMESTAMP NOT NULL,
     UNIQUE (user_id, account_id)
 );

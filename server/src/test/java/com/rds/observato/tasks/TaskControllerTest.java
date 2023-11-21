@@ -4,6 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.auth.ObservatoAuthFilter;
+import com.rds.observato.auth.ObservatoBasicAuthenticator;
+import com.rds.observato.auth.User;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthFilter;
+import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -18,9 +24,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 class TaskControllerTest extends DatabaseTestBase {
 
   private static Repository repository = repository();
+  private static final AuthFilter<String, User> BASIC_AUTH_HANDLER =
+      new ObservatoAuthFilter.Builder()
+          .setAuthenticator(new ObservatoBasicAuthenticator(repository))
+          .setRealm("OBSERVATO")
+          .buildAuthFilter();
   public static final ResourceExtension EXT =
       ResourceExtension.builder()
           .setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+          .addProvider(new AuthDynamicFeature(BASIC_AUTH_HANDLER))
+          .addProvider(new AuthValueFactoryProvider.Binder<>(User.class))
           .addProvider(() -> new TaskController(repository))
           .build();
 
