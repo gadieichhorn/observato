@@ -3,12 +3,13 @@ package com.rds.observato.extentions;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.AuthService;
 import io.dropwizard.servlets.tasks.Task;
-import io.vavr.control.Either;
-import io.vavr.control.Try;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,35 +27,62 @@ public class GenerateDemoDataTask extends Task {
 
   @Override
   public void execute(Map<String, List<String>> parameters, PrintWriter output) throws Exception {
-    user()
-        .flatMap(this::account)
-        .flatMap(this::tasks)
-        .peekLeft(
-            throwable -> log.warn("Failed to create user with error: {}", throwable.message()));
+    Stream.iterate(0, i -> i + 1)
+        .limit(3)
+        .map(
+            i ->
+                repository
+                    .users()
+                    .create(UUID.randomUUID().toString(), "salt".getBytes(), "hash".getBytes()))
+        .peek(user -> log.info("USER: {}", user))
+        .forEach(user -> account(user));
   }
 
-  private Either<Error, Long> user() {
-    String password = UUID.randomUUID().toString().replace("-", "");
-    System.out.println(password);
-    byte[] salt = auth.salt();
-
-    return Try.of(() -> auth.hash(salt, password))
-        .map(hash -> repository.users().create("gadi", salt, hash))
-        .toEither()
-        .mapLeft(SqlError::from);
+  private void account(Long user) {
+    Stream.iterate(0, i -> i + 1)
+        .limit(3)
+        .map(i -> repository.accounts().create(UUID.randomUUID().toString(), user))
+        .peek(account -> log.info("ACCOUNT: {}", account))
+        .peek(account -> repository.accounts().assignUserToAccount(user, account))
+        .forEach(account -> resource(user, account));
   }
 
-  private Either<Error, Long> account(long user) {
-    return Try.of(() -> repository.accounts().create("acc001", user))
-        .toEither()
-        .peek(account -> log.info("Account created: {}", account))
-        .mapLeft(SqlError::from);
+  private void resource(Long user, Long account) {
+    repository
+        .accounts()
+        .createUserTokenForAccount(
+            user, account, UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
+    Stream.iterate(0, i -> i + 1)
+        .limit(5)
+        .map(i -> repository.resources().create(account, UUID.randomUUID().toString()))
+        .peek(resource -> log.info("RESOURCE: {}", resource))
+        .forEach(resource -> task(user, account, resource));
   }
 
-  private Either<Error, Long> tasks(long account) {
-    return Try.of(() -> repository.tasks().create(account, "tsk001", "a task"))
-        .toEither()
-        .peek(task -> log.info("Task created: {} -> {}", account, task))
-        .mapLeft(SqlError::from);
+  private void task(Long user, Long account, Long resource) {
+    long project = repository.projects().create(account, UUID.randomUUID().toString(), "project");
+    log.info("PROJECT: {}", project);
+    Stream.iterate(0, i -> i + 1)
+        .limit(5)
+        .map(
+            i ->
+                repository
+                    .tasks()
+                    .create(account, UUID.randomUUID().toString(), "task%d".formatted(i)))
+        .peek(task -> log.info("TASK: {}", task))
+        .peek(task -> repository.projects().assignTaskToProject(account, task, project))
+        .map(task -> assignment(user, account, resource, task))
+        .forEach(assignment -> log.info("ASSIGNMENT: {}", assignment));
+  }
+
+  private long assignment(Long user, Long account, Long resource, Long task) {
+    return repository
+        .assignments()
+        .create(
+            account,
+            task,
+            resource,
+            Instant.now().plusSeconds(task * 1000),
+            Instant.now().plusSeconds((task + 1) * 1000));
   }
 }

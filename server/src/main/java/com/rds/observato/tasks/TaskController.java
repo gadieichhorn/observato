@@ -14,7 +14,8 @@ import jakarta.ws.rs.core.Response;
 public record TaskController(Repository repository) {
 
   @GET
-  public GetTaskResponse create(@Auth User user, @PathParam("account") long account, @PathParam("task") long task) {
+  public GetTaskResponse create(
+      @Auth User user, @PathParam("account") long account, @PathParam("task") long task) {
     return repository
         .tasks()
         .finById(account, task)

@@ -16,13 +16,14 @@ import java.util.stream.Collectors;
 public record TasksController(Repository repository) {
 
   @POST
-  public CreateTaskResponse create(@Auth User user, @PathParam("account") long account, CreateTaskRequest request) {
+  public CreateTaskResponse create(
+      @Auth User user, @PathParam("account") long account, CreateTaskRequest request) {
     return new CreateTaskResponse(
         repository.tasks().create(account, request.name(), request.description()));
   }
 
   @GET
-  public GetTasksResponse get(@Auth User user,@PathParam("account") long account) {
+  public GetTasksResponse get(@Auth User user, @PathParam("account") long account) {
     return new GetTasksResponse(
         repository.tasks().findAll(account).stream()
             .map(GetTaskResponse::from)

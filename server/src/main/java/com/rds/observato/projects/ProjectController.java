@@ -15,8 +15,8 @@ import jakarta.ws.rs.core.MediaType;
 public record ProjectController(Repository repository) {
 
   @GET
-  public GetProjectResponse get(@Auth User user,
-      @PathParam("account") long account, @PathParam("project") long project) {
+  public GetProjectResponse get(
+      @Auth User user, @PathParam("account") long account, @PathParam("project") long project) {
     return repository
         .projects()
         .findById(account, project)

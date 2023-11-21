@@ -13,8 +13,10 @@ import jakarta.ws.rs.core.MediaType;
 public record AssignmentController(Repository repository) {
 
   @GET
-  public GetAssignmentResponse get(@Auth User user,
-      @PathParam("account") long account, @PathParam("assignment") long assignment) {
+  public GetAssignmentResponse get(
+      @Auth User user,
+      @PathParam("account") long account,
+      @PathParam("assignment") long assignment) {
     return repository
         .assignments()
         .findById(account, assignment)

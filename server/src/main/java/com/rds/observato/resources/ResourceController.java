@@ -11,8 +11,8 @@ import jakarta.ws.rs.PathParam;
 public record ResourceController(Repository repository) {
 
   @GET
-  public GetResourceResponse create(@Auth User user,
-      @PathParam("account") long account, @PathParam("resource") long resource) {
+  public GetResourceResponse create(
+      @Auth User user, @PathParam("account") long account, @PathParam("resource") long resource) {
     return repository
         .resources()
         .findById(account, resource)

@@ -6,7 +6,7 @@ import com.rds.observato.validation.Validator;
 import java.security.Principal;
 import java.util.Set;
 
-public record User(String username, Set<String> roles) implements Principal {
+public record User(String username, Set<Roles> roles) implements Principal {
 
   public static final User ANONYMOUS = new User("anonymous@rds.com", ImmutableSet.of());
 
@@ -19,7 +19,7 @@ public record User(String username, Set<String> roles) implements Principal {
     return username;
   }
 
-  public boolean hasAnyOf(String... requiredRoles) {
+  public boolean hasAnyOf(Roles... requiredRoles) {
     return !Sets.intersection(roles, ImmutableSet.copyOf(requiredRoles)).isEmpty();
   }
 }

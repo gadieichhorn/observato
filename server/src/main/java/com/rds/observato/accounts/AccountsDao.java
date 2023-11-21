@@ -44,4 +44,15 @@ public interface AccountsDao {
           select user_id,account_id, role from obs.account_users where  account_id = :account
           """)
   Set<UserAccountView> getUsersByAccount(@Bind("account") long account);
+
+  Optional<TokenView> getUserToken(@Bind("token") String token);
+
+  @SqlUpdate("""
+          insert into obs.tokens 
+          (user_id, account_id, token, created_on) 
+          values (:user,:account, :token, now())
+          """)
+  @GetGeneratedKeys
+  long createUserTokenForAccount(
+      @Bind("user") long user, @Bind("account") long account, @Bind("token") byte[] token);
 }

@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public record AssignmentsController(Repository repository) {
 
   @POST
-  public CreateAssignmentResponse create(@Auth User user,
-      @PathParam("account") long account, CreateAssignmentRequest request) {
+  public CreateAssignmentResponse create(
+      @Auth User user, @PathParam("account") long account, CreateAssignmentRequest request) {
     return new CreateAssignmentResponse(
         repository
             .assignments()
@@ -23,7 +23,7 @@ public record AssignmentsController(Repository repository) {
   }
 
   @GET
-  public GetAssignmentsResponse get(@Auth User user,@PathParam("account") long account) {
+  public GetAssignmentsResponse get(@Auth User user, @PathParam("account") long account) {
     return new GetAssignmentsResponse(
         repository.assignments().getAll(account).stream()
             .map(GetAssignmentResponse::from)

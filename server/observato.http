@@ -54,6 +54,22 @@ observato-api-token: secret
 
 ###
 
+
+GET localhost:8080/api/resources/1
+Accept: application/json
+Content-Type: application/json
+observato-api-token: secret
+
+###
+
+
+GET localhost:8080/api/resources/1/1
+Accept: application/json
+Content-Type: application/json
+observato-api-token: secret
+
+###
+
 POST localhost:8081/tasks/demo
 Accept: application/json
 Content-Type: application/json

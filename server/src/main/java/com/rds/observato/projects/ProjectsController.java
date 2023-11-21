@@ -14,14 +14,14 @@ import jakarta.ws.rs.core.MediaType;
 public record ProjectsController(Repository repository) {
 
   @POST
-  public CreateProjectResponse post(@Auth User user,
-      @PathParam("account") long account, CreateProjectRequest request) {
+  public CreateProjectResponse post(
+      @Auth User user, @PathParam("account") long account, CreateProjectRequest request) {
     return new CreateProjectResponse(
         repository.projects().create(account, request.name(), request.description()));
   }
 
   @GET
-  public GetProjectsResponse get(@Auth User user,@PathParam("account") long account) {
+  public GetProjectsResponse get(@Auth User user, @PathParam("account") long account) {
     return new GetProjectsResponse(
         repository.projects().findAll(account).stream()
             .map(GetProjectResponse::from)

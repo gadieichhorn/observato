@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 public class ObservatoAuthorizer implements Authorizer<User> {
 
   private static final Logger log = LoggerFactory.getLogger(ObservatoAuthorizer.class);
+
   @Override
   public boolean authorize(
       User principal, String role, @Nullable ContainerRequestContext requestContext) {
