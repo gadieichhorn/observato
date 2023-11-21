@@ -7,6 +7,7 @@ import com.rds.observato.api.request.CreateTaskRequest;
 import com.rds.observato.api.response.CreateTaskResponse;
 import com.rds.observato.auth.ObservatoAuthFilter;
 import com.rds.observato.auth.ObservatoBasicAuthenticator;
+import com.rds.observato.auth.Roles;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthFilter;
@@ -56,6 +57,7 @@ class TasksControllerTest extends DatabaseTestBase {
   void create() {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     repository.accounts().createUserTokenForAccount(user, account, token);
+    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
 
     CreateTaskResponse response =
         EXT.target("/tasks/%d".formatted(account))
@@ -76,6 +78,7 @@ class TasksControllerTest extends DatabaseTestBase {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     long task = repository.tasks().create(account, "tsk0001", "description");
     repository.accounts().createUserTokenForAccount(user, account, token);
+    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
 
     Assertions.assertThat(
             EXT.target("/tasks/%d".formatted(account))

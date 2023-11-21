@@ -7,6 +7,7 @@ import com.rds.observato.Fixtures;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.ObservatoAuthFilter;
 import com.rds.observato.auth.ObservatoBasicAuthenticator;
+import com.rds.observato.auth.Roles;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthFilter;
@@ -57,6 +58,8 @@ class AssignmentsControllerTest extends DatabaseTestBase {
   void get() {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     repository.accounts().createUserTokenForAccount(user, account, token);
+    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
+
     long task = repository.tasks().create(account, "tsk0003", "description");
     long resource = repository.resources().create(account, "rsc0003");
     long assignment =
@@ -93,6 +96,8 @@ class AssignmentsControllerTest extends DatabaseTestBase {
   void post() {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     repository.accounts().createUserTokenForAccount(user, account, token);
+    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
+
     long task = repository.tasks().create(account, "tsk0003", "description");
     long resource = repository.resources().create(account, "rsc0003");
 

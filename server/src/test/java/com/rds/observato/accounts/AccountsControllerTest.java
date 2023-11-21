@@ -11,6 +11,7 @@ import com.rds.observato.api.response.CreateAccountResponse;
 import com.rds.observato.api.response.GetAccountsResponse;
 import com.rds.observato.auth.ObservatoAuthFilter;
 import com.rds.observato.auth.ObservatoBasicAuthenticator;
+import com.rds.observato.auth.Roles;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthFilter;
@@ -75,6 +76,7 @@ class AccountsControllerTest extends DatabaseTestBase {
   void get() {
     long account = repository.accounts().create("acc0005", user);
     repository.accounts().createUserTokenForAccount(user, account, "secret");
+    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
 
     Assertions.assertThat(
             EXT.target("/accounts")

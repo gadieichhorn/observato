@@ -8,6 +8,7 @@ import com.rds.observato.api.response.GetProjectResponse;
 import com.rds.observato.api.response.GetProjectsResponse;
 import com.rds.observato.auth.ObservatoAuthFilter;
 import com.rds.observato.auth.ObservatoBasicAuthenticator;
+import com.rds.observato.auth.Roles;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthFilter;
@@ -57,6 +58,7 @@ class ProjectsControllerTest extends DatabaseTestBase {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     long project = repository.projects().create(account, "prj0002", "description");
     repository.accounts().createUserTokenForAccount(user, account, token);
+    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
 
     Assertions.assertThat(
             EXT.target("/projects/%d".formatted(account))
@@ -74,6 +76,7 @@ class ProjectsControllerTest extends DatabaseTestBase {
   void post() {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     repository.accounts().createUserTokenForAccount(user, account, token);
+    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
 
     CreateProjectResponse response =
         EXT.target("/projects/%d".formatted(account))

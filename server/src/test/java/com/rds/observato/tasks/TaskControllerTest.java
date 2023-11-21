@@ -6,6 +6,7 @@ import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.ObservatoAuthFilter;
 import com.rds.observato.auth.ObservatoBasicAuthenticator;
+import com.rds.observato.auth.Roles;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthFilter;
@@ -52,6 +53,7 @@ class TaskControllerTest extends DatabaseTestBase {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     long task = repository.tasks().create(account, "tsk0001", "description");
     repository.accounts().createUserTokenForAccount(user, account, "secret");
+    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
 
     Assertions.assertThat(
             EXT.target("/tasks/%d/%d".formatted(account, task))

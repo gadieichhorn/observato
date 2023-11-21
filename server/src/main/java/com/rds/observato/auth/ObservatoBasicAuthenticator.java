@@ -29,7 +29,12 @@ public record ObservatoBasicAuthenticator(Repository repository)
       // TODO load user account role
       Set<UserAccountView> userRoleViews =
           repository.accounts().getAccountByUser(view.user(), view.account());
-      return Optional.of(new User("gadi@rds.com", ImmutableSet.of(Roles.ADMIN)));
+      log.info("ROLES: {}", userRoleViews);
+
+      ImmutableSet<Roles> roles =
+          userRoleViews.stream().map(UserAccountView::role).collect(ImmutableSet.toImmutableSet());
+
+      return Optional.of(new User("gadi@rds.com", roles));
     } else {
       return Optional.of(new User("anonymous@rds.com", ImmutableSet.of(Roles.ANONYMOUS)));
     }
