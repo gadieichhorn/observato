@@ -3,7 +3,7 @@ package com.rds.observato.tasks;
 import com.codahale.metrics.annotation.Timed;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.Authoriser;
-import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
@@ -18,7 +18,7 @@ public record TaskController(Repository repository) {
   @GET
   public GetTaskResponse create(
       @Auth User user, @PathParam("account") long account, @PathParam("task") long task) {
-    Authoriser.check(user, Roles.ADMIN);
+    Authoriser.check(user, Role.ADMIN);
     return repository
         .tasks()
         .finById(account, task)

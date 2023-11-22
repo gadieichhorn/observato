@@ -2,7 +2,7 @@ package com.rds.observato.extentions;
 
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.AuthService;
-import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.Role;
 import io.dropwizard.servlets.tasks.Task;
 import java.io.PrintWriter;
 import java.time.Instant;
@@ -43,7 +43,7 @@ public class GenerateDemoDataTask extends Task {
         .limit(3)
         .map(i -> repository.accounts().create(UUID.randomUUID().toString(), user))
         .peek(account -> log.info("ACCOUNT: {}", account))
-        .peek(account -> repository.accounts().assignUserToAccount(user, account, Roles.ADMIN))
+        .peek(account -> repository.accounts().assignUserToAccount(user, account, Role.ADMIN))
         .peek(
             account ->
                 repository

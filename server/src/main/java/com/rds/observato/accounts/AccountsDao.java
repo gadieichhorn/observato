@@ -1,6 +1,6 @@
 package com.rds.observato.accounts;
 
-import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.Role;
 import java.util.Optional;
 import java.util.Set;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -38,7 +38,7 @@ public interface AccountsDao {
               values ( :user, :account, :role)
               """)
   void assignUserToAccount(
-      @Bind("user") long user, @Bind("account") long account, @Bind("role") Roles role);
+      @Bind("user") long user, @Bind("account") long account, @Bind("role") Role role);
 
   @SqlQuery(
       """

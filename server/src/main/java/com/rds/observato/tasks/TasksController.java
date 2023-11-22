@@ -5,7 +5,7 @@ import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.request.CreateTaskRequest;
 import com.rds.observato.api.response.CreateTaskResponse;
 import com.rds.observato.auth.Authoriser;
-import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
@@ -20,14 +20,14 @@ public record TasksController(Repository repository) {
   @POST
   public CreateTaskResponse create(
       @Auth User user, @PathParam("account") long account, CreateTaskRequest request) {
-    Authoriser.check(user, Roles.ADMIN);
+    Authoriser.check(user, Role.ADMIN);
     return new CreateTaskResponse(
         repository.tasks().create(account, request.name(), request.description()));
   }
 
   @GET
   public GetTasksResponse get(@Auth User user, @PathParam("account") long account) {
-    Authoriser.check(user, Roles.ADMIN);
+    Authoriser.check(user, Role.ADMIN);
     return new GetTasksResponse(
         repository.tasks().findAll(account).stream()
             .map(GetTaskResponse::from)

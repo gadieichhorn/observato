@@ -6,7 +6,7 @@ import com.rds.observato.api.request.CreateUserRequest;
 import com.rds.observato.api.response.CreateUserResponse;
 import com.rds.observato.auth.AuthService;
 import com.rds.observato.auth.Authoriser;
-import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
@@ -21,7 +21,7 @@ import java.security.spec.InvalidKeySpecException;
 public record UsersController(Repository repository, AuthService auth) {
   @POST
   public CreateUserResponse create(@Auth User user, CreateUserRequest request) {
-    Authoriser.check(user, Roles.ADMIN);
+    Authoriser.check(user, Role.ADMIN);
     try {
       byte[] salt = auth.salt();
       byte[] hash = auth.hash(salt, request.password());

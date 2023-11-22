@@ -8,7 +8,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public record User(long id, String username, Set<Roles> roles) implements Principal {
+public record User(long id, String username, Set<Role> roles) implements Principal {
   private static final Logger log = LoggerFactory.getLogger(User.class);
 
   public User {
@@ -20,7 +20,7 @@ public record User(long id, String username, Set<Roles> roles) implements Princi
     return username;
   }
 
-  public boolean hasAnyOf(Roles... requiredRoles) {
+  public boolean hasAnyOf(Role... requiredRoles) {
     log.info("USER ROLES: {}", roles);
     return !Sets.intersection(roles, ImmutableSet.copyOf(requiredRoles)).isEmpty();
   }

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
 import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.Role;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.Test;
 
@@ -45,14 +45,14 @@ class AccountsDaoTest extends DatabaseTestBase {
   @Test
   void assignUserToAccount() {
     long account = repository.accounts().create("a0001", user);
-    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
+    repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
   }
 
   @Test
   void assignDuplicateUserToAccount() {
     long account = repository.accounts().create("a0002", user);
-    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
-    assertThatThrownBy(() -> repository.accounts().assignUserToAccount(user, account, Roles.ADMIN))
+    repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
+    assertThatThrownBy(() -> repository.accounts().assignUserToAccount(user, account, Role.ADMIN))
         .isInstanceOf(UnableToExecuteStatementException.class);
   }
 
@@ -64,18 +64,18 @@ class AccountsDaoTest extends DatabaseTestBase {
     long account2 = repository.accounts().create("a0004", user);
     long account3 = repository.accounts().create("a0005", user);
 
-    repository.accounts().assignUserToAccount(user1, account1, Roles.ADMIN);
-    repository.accounts().assignUserToAccount(user1, account2, Roles.SCHEDULER);
-    repository.accounts().assignUserToAccount(user2, account3, Roles.RESOURCE);
+    repository.accounts().assignUserToAccount(user1, account1, Role.ADMIN);
+    repository.accounts().assignUserToAccount(user1, account2, Role.SCHEDULER);
+    repository.accounts().assignUserToAccount(user2, account3, Role.RESOURCE);
 
     assertThat(repository.accounts().getAccountByUser(user1, account1))
-        .containsExactlyInAnyOrder(new UserAccountView(user1, account1, Roles.ADMIN));
+        .containsExactlyInAnyOrder(new UserAccountView(user1, account1, Role.ADMIN));
 
     assertThat(repository.accounts().getAccountByUser(user1, account2))
-        .containsExactlyInAnyOrder(new UserAccountView(user1, account2, Roles.SCHEDULER));
+        .containsExactlyInAnyOrder(new UserAccountView(user1, account2, Role.SCHEDULER));
 
     assertThat(repository.accounts().getAccountByUser(user2, account3))
-        .containsExactlyInAnyOrder(new UserAccountView(user2, account3, Roles.RESOURCE));
+        .containsExactlyInAnyOrder(new UserAccountView(user2, account3, Role.RESOURCE));
   }
 
   @Test
@@ -85,14 +85,14 @@ class AccountsDaoTest extends DatabaseTestBase {
     long user3 = repository.users().create("u009", "salt".getBytes(), "hash".getBytes());
     long account1 = repository.accounts().create("a0006", user1);
     long account2 = repository.accounts().create("a0007", user);
-    repository.accounts().assignUserToAccount(user1, account1, Roles.ADMIN);
-    repository.accounts().assignUserToAccount(user2, account1, Roles.SCHEDULER);
-    repository.accounts().assignUserToAccount(user3, account2, Roles.RESOURCE);
+    repository.accounts().assignUserToAccount(user1, account1, Role.ADMIN);
+    repository.accounts().assignUserToAccount(user2, account1, Role.SCHEDULER);
+    repository.accounts().assignUserToAccount(user3, account2, Role.RESOURCE);
     assertThat(repository.accounts().getUsersByAccount(account1))
         .containsExactlyInAnyOrder(
-            new UserAccountView(user1, account1, Roles.ADMIN),
-            new UserAccountView(user2, account1, Roles.SCHEDULER));
+            new UserAccountView(user1, account1, Role.ADMIN),
+            new UserAccountView(user2, account1, Role.SCHEDULER));
     assertThat(repository.accounts().getUsersByAccount(account2))
-        .containsExactlyInAnyOrder(new UserAccountView(user3, account2, Roles.RESOURCE));
+        .containsExactlyInAnyOrder(new UserAccountView(user3, account2, Role.RESOURCE));
   }
 }

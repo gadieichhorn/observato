@@ -34,12 +34,12 @@ public record ObservatoBasicAuthenticator(Repository repository)
           repository.accounts().getAccountByUser(view.user(), view.account());
       log.info("ROLES: {}", userRoleViews);
 
-      ImmutableSet<Roles> roles =
+      ImmutableSet<Role> roles =
           userRoleViews.stream().map(UserAccountView::role).collect(ImmutableSet.toImmutableSet());
 
       return Optional.of(new User(user.id(), "gadi@rds.com", roles));
     } else {
-      return Optional.of(new User(0, "anonymous@rds.com", ImmutableSet.of(Roles.ANONYMOUS)));
+      return Optional.of(new User(0, "anonymous@rds.com", ImmutableSet.of(Role.ANONYMOUS)));
     }
   }
 

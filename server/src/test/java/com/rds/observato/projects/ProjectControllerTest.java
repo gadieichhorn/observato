@@ -6,7 +6,7 @@ import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.response.GetProjectResponse;
 import com.rds.observato.auth.ObservatoAuthFilter;
 import com.rds.observato.auth.ObservatoBasicAuthenticator;
-import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthFilter;
@@ -52,7 +52,7 @@ class ProjectControllerTest extends DatabaseTestBase {
     long account = repository.accounts().create(UUID.randomUUID().toString(), user);
     long project = repository.projects().create(account, "prj0001", "description");
     repository.accounts().createUserTokenForAccount(user, account, token);
-    repository.accounts().assignUserToAccount(user, account, Roles.ADMIN);
+    repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
 
     Assertions.assertThat(
             EXT.target("/projects/%d/%d".formatted(account, project))

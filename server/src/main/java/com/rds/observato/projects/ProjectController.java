@@ -3,7 +3,7 @@ package com.rds.observato.projects;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.response.GetProjectResponse;
 import com.rds.observato.auth.Authoriser;
-import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.GET;
@@ -19,7 +19,7 @@ public record ProjectController(Repository repository) {
   @GET
   public GetProjectResponse get(
       @Auth User user, @PathParam("account") long account, @PathParam("project") long project) {
-    Authoriser.check(user, Roles.ADMIN);
+    Authoriser.check(user, Role.ADMIN);
     return repository
         .projects()
         .findById(account, project)

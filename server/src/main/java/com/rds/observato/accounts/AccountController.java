@@ -3,7 +3,7 @@ package com.rds.observato.accounts;
 import com.codahale.metrics.annotation.Timed;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.Authoriser;
-import com.rds.observato.auth.Roles;
+import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
@@ -17,7 +17,7 @@ public record AccountController(Repository repository) {
 
   @GET
   public Optional<GetAccountResponse> get(@Auth User user, @PathParam("id") long id) {
-    Authoriser.check(user, Roles.ADMIN);
+    Authoriser.check(user, Role.ADMIN);
     return repository.accounts().findById(id).map(GetAccountResponse::from);
   }
 }

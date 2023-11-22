@@ -1,6 +1,6 @@
 package com.rds.observato.auth;
 
-public enum Roles {
+public enum Role {
   ADMIN,
   RESOURCE,
   SCHEDULER,
