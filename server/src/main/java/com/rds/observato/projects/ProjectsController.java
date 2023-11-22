@@ -1,5 +1,6 @@
 package com.rds.observato.projects;
 
+import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.ImmutableSet;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.api.response.GetProjectResponse;
@@ -7,10 +8,12 @@ import com.rds.observato.api.response.GetProjectsResponse;
 import com.rds.observato.auth.Authoriser;
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
+import com.rds.observato.validation.Validator;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
+@Timed
 @Path("projects/{account}")
 @Produces(MediaType.APPLICATION_JSON)
 public record ProjectsController(Repository repository) {
@@ -18,6 +21,7 @@ public record ProjectsController(Repository repository) {
   @POST
   public CreateProjectResponse post(
       @Auth User user, @PathParam("account") long account, CreateProjectRequest request) {
+    Validator.checkIsNull(user, "user");
     Authoriser.check(user, Role.ADMIN);
     return new CreateProjectResponse(
         repository.projects().create(account, request.name(), request.description()));

@@ -1,56 +1,19 @@
 package com.rds.observato.assignments;
 
-import com.rds.observato.DatabaseTestBase;
-import com.rds.observato.Fixtures;
-import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.auth.ObservatoAuthFilter;
-import com.rds.observato.auth.ObservatoBasicAuthenticator;
+import com.rds.observato.ControllerBaseTest;
 import com.rds.observato.auth.Role;
-import com.rds.observato.auth.User;
-import io.dropwizard.auth.AuthDynamicFeature;
-import io.dropwizard.auth.AuthFilter;
-import io.dropwizard.auth.AuthValueFactoryProvider;
-import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.HttpHeaders;
 import java.time.Instant;
 import java.util.UUID;
 import org.assertj.core.api.Assertions;
-import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.shaded.com.google.common.collect.ImmutableSet;
 
-@ExtendWith(DropwizardExtensionsSupport.class)
-class AssignmentsControllerTest extends DatabaseTestBase {
+class AssignmentsControllerTest extends ControllerBaseTest {
 
-  private static Repository repository = repository();
-  private static final AuthFilter<String, User> BASIC_AUTH_HANDLER =
-      new ObservatoAuthFilter.Builder()
-          .setAuthenticator(new ObservatoBasicAuthenticator(repository))
-          .setRealm("OBSERVATO")
-          .buildAuthFilter();
-  public static final ResourceExtension EXT =
-      ResourceExtension.builder()
-          .setTestContainerFactory(new GrizzlyWebTestContainerFactory())
-          .addProvider(new AuthDynamicFeature(BASIC_AUTH_HANDLER))
-          .addProvider(new AuthValueFactoryProvider.Binder<>(User.class))
-          .addProvider(() -> new AssignmentsController(repository))
-          .build();
-
-  long user;
-  String token;
-
-  @BeforeEach
-  void setUp() {
-    user =
-        repository
-            .users()
-            .create(UUID.randomUUID().toString(), "salt".getBytes(), "hash".getBytes());
-    token = Fixtures.token(user);
-  }
+  private final ResourceExtension EXT = ext(() -> new AssignmentsController(repository));
 
   @Test
   void get() {
