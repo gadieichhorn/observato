@@ -20,9 +20,12 @@ import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(DropwizardExtensionsSupport.class)
 class ObservatoApplicationTest extends DatabaseTestBase {
   private static final Logger log = LoggerFactory.getLogger(ObservatoApplicationTest.class);
@@ -32,8 +35,6 @@ class ObservatoApplicationTest extends DatabaseTestBase {
   private final long user = Fixtures.createUser(repository);
   private final String token = Fixtures.token(user);
   private final long account = Fixtures.createAccount(repository, user);
-  private final long task = Fixtures.createTask(repository, account);
-  private final long resource = Fixtures.createResource(repository, account);
   private Client client;
 
   private static final Clock CLOCK =
@@ -44,16 +45,6 @@ class ObservatoApplicationTest extends DatabaseTestBase {
 
     repository.accounts().createUserTokenForAccount(user, account, token);
     repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
-
-    //    long assignment =
-    //        repository
-    //            .assignments()
-    //            .create(
-    //                account,
-    //                task,
-    //                resource,
-    //                Instant.parse("2024-01-01T00:00:00Z"),
-    //                Instant.parse("2024-01-01T01:00:00Z"));
 
     client = EXT.client();
   }
@@ -92,7 +83,23 @@ class ObservatoApplicationTest extends DatabaseTestBase {
                     String.format("http://localhost:%d/api/tasks/%d", EXT.getLocalPort(), account))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
-                .post(Entity.json(new CreateTaskRequest("tsk011", "descr")))
+                .post(Entity.json(new CreateTaskRequest("tsk013", "descr")))
+                .getStatus())
+        .isEqualTo(200);
+  }
+
+  @Test
+  void getTask() {
+    long t = Fixtures.createTask(repository, account);
+
+    assertThat(
+            client
+                .target(
+                    String.format(
+                        "http://localhost:%d/api/tasks/%d/%d", EXT.getLocalPort(), account, t))
+                .request()
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .get()
                 .getStatus())
         .isEqualTo(200);
   }
@@ -102,6 +109,9 @@ class ObservatoApplicationTest extends DatabaseTestBase {
     Instant start = CLOCK.instant();
     Instant end = start.plus(1, ChronoUnit.HOURS);
 
+    long t = Fixtures.createTask(repository, account);
+    long r = Fixtures.createResource(repository, account);
+
     assertThat(
             client
                 .target(
@@ -109,7 +119,29 @@ class ObservatoApplicationTest extends DatabaseTestBase {
                         "http://localhost:%d/api/assignments/%d", EXT.getLocalPort(), account))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
-                .post(Entity.json(new CreateAssignmentRequest(task, resource, start, end)))
+                .post(Entity.json(new CreateAssignmentRequest(t, r, start, end)))
+                .getStatus())
+        .isEqualTo(200);
+  }
+
+  //  @Test
+  void getAssignment() {
+    Instant start = CLOCK.instant();
+    Instant end = start.plus(1, ChronoUnit.HOURS);
+
+    long t = Fixtures.createTask(repository, account);
+    long r = Fixtures.createResource(repository, account);
+    long a = repository.assignments().create(account, t, r, start, end);
+
+    assertThat(
+            client
+                .target(
+                    String.format(
+                        "http://localhost:%d/api/assignments/%d/%d",
+                        EXT.getLocalPort(), account, a))
+                .request()
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .get()
                 .getStatus())
         .isEqualTo(200);
   }

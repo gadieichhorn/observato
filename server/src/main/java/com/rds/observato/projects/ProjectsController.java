@@ -25,7 +25,6 @@ public record ProjectsController(Repository repository) {
   @POST
   public CreateProjectResponse post(
       @Auth User user, @PathParam("account") Long account, CreateProjectRequest request) {
-    log.info("USER:{}", user);
     Authoriser.check(user, Role.ADMIN);
     Validator.checkIsNullOrNegative(account, "account");
     Validator.checkIsNull(request, "request");

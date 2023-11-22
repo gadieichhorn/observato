@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public record AssignmentsController(Repository repository) {
 
   @POST
-  public CreateAssignmentResponse create(
+  public CreateAssignmentResponse post(
       @Auth User user, @PathParam("account") Long account, CreateAssignmentRequest request) {
     Authoriser.check(user, Role.ADMIN);
     Validator.checkIsNullOrNegative(account, "account");
