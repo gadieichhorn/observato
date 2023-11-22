@@ -14,8 +14,8 @@ class AssignmentDaoTest extends DatabaseTestBase {
   @Test
   void create() {
     long account = Fixtures.createAccount(repository, user);
-    long task = Fixtures.createTask(repository, user);
-    long resource = Fixtures.createResource(repository, user);
+    long task = Fixtures.createTask(repository, account);
+    long resource = Fixtures.createResource(repository, account);
 
     Assertions.assertThatCode(
             () ->
@@ -28,8 +28,8 @@ class AssignmentDaoTest extends DatabaseTestBase {
   @Test
   void duplicate() {
     long account = Fixtures.createAccount(repository, user);
-    long task = Fixtures.createTask(repository, user);
-    long resource = Fixtures.createResource(repository, user);
+    long task = Fixtures.createTask(repository, account);
+    long resource = Fixtures.createResource(repository, account);
 
     repository.assignments().create(account, task, resource, Instant.now(), Instant.now());
     Assertions.assertThatThrownBy(
@@ -43,8 +43,8 @@ class AssignmentDaoTest extends DatabaseTestBase {
   @Test
   void findAll() {
     long account = Fixtures.createAccount(repository, user);
-    long task = Fixtures.createTask(repository, user);
-    long resource = Fixtures.createResource(repository, user);
+    long task = Fixtures.createTask(repository, account);
+    long resource = Fixtures.createResource(repository, account);
     repository.assignments().create(account, task, resource, Instant.now(), Instant.now());
     Assertions.assertThat(repository.assignments().getAll(account)).isNotEmpty();
   }
@@ -52,8 +52,8 @@ class AssignmentDaoTest extends DatabaseTestBase {
   @Test
   void findById() {
     long account = Fixtures.createAccount(repository, user);
-    long task = Fixtures.createTask(repository, user);
-    long resource = Fixtures.createResource(repository, user);
+    long task = Fixtures.createTask(repository, account);
+    long resource = Fixtures.createResource(repository, account);
     long assignment =
         repository.assignments().create(account, task, resource, Instant.now(), Instant.now());
     Assertions.assertThat(repository.assignments().findById(account, assignment)).isNotEmpty();
