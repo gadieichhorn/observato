@@ -5,6 +5,7 @@ import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.Authoriser;
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
+import com.rds.observato.validation.Validator;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,8 +18,10 @@ public record AssignmentsController(Repository repository) {
 
   @POST
   public CreateAssignmentResponse create(
-      @Auth User user, @PathParam("account") long account, CreateAssignmentRequest request) {
+      @Auth User user, @PathParam("account") Long account, CreateAssignmentRequest request) {
     Authoriser.check(user, Role.ADMIN);
+    Validator.checkIsNullOrNegative(account, "account");
+    Validator.checkIsNull(request, "request");
     return new CreateAssignmentResponse(
         repository
             .assignments()
@@ -28,6 +31,7 @@ public record AssignmentsController(Repository repository) {
   @GET
   public GetAssignmentsResponse get(@Auth User user, @PathParam("account") long account) {
     Authoriser.check(user, Role.ADMIN);
+    Validator.checkIsNullOrNegative(account, "account");
     return new GetAssignmentsResponse(
         repository.assignments().getAll(account).stream()
             .map(GetAssignmentResponse::from)

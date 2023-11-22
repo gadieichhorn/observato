@@ -38,4 +38,10 @@ public class Validator {
       throw new ValidationException("<%s> is required non null".formatted(message));
     }
   }
+
+  public static void checkIsNullOrNegative(Long value, String message) {
+    if (Objects.isNull(value) || value <= 0L) {
+      throw new ValidationException("<%s> is required non null".formatted(message));
+    }
+  }
 }

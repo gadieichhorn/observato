@@ -7,6 +7,7 @@ import com.rds.observato.api.response.CreateAccountResponse;
 import com.rds.observato.auth.Authoriser;
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
+import com.rds.observato.validation.Validator;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -19,6 +20,7 @@ public record AccountsController(Repository repository) {
   @POST
   public CreateAccountResponse post(@Auth User user, CreateAccountRequest request) {
     Authoriser.check(user, Role.ADMIN);
+    Validator.checkIsNull(request, "request");
     return new CreateAccountResponse(repository.accounts().create(request.name(), request.owner()));
   }
 

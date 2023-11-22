@@ -20,9 +20,10 @@ public record ProjectsController(Repository repository) {
 
   @POST
   public CreateProjectResponse post(
-      @Auth User user, @PathParam("account") long account, CreateProjectRequest request) {
-    Validator.checkIsNull(user, "user");
+      @Auth User user, @PathParam("account") Long account, CreateProjectRequest request) {
     Authoriser.check(user, Role.ADMIN);
+    Validator.checkIsNullOrNegative(account, "account");
+    Validator.checkIsNull(request, "request");
     return new CreateProjectResponse(
         repository.projects().create(account, request.name(), request.description()));
   }
@@ -30,6 +31,7 @@ public record ProjectsController(Repository repository) {
   @GET
   public GetProjectsResponse get(@Auth User user, @PathParam("account") long account) {
     Authoriser.check(user, Role.ADMIN);
+    Validator.checkIsNullOrNegative(account, "account");
     return new GetProjectsResponse(
         repository.projects().findAll(account).stream()
             .map(GetProjectResponse::from)

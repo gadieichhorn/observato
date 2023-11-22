@@ -5,6 +5,7 @@ import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.Authoriser;
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
+import com.rds.observato.validation.Validator;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,6 +19,7 @@ public record AccountController(Repository repository) {
   @GET
   public Optional<GetAccountResponse> get(@Auth User user, @PathParam("id") long id) {
     Authoriser.check(user, Role.ADMIN);
+    Validator.checkIsNullOrNegative(id, "id");
     return repository.accounts().findById(id).map(GetAccountResponse::from);
   }
 }
