@@ -2,7 +2,6 @@ package com.rds.observato.assignments;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
-import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.AuthorisedException;
 import java.time.Instant;
 import org.assertj.core.api.Assertions;
@@ -10,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class AssignmentControllerAuthTest extends DatabaseTestBase {
 
-  private static final Repository repository = repository();
-  private static final AssignmentController controller = new AssignmentController(repository);
+  private final AssignmentController controller = new AssignmentController(repository);
 
   @Test
   void authorized() {

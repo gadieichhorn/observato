@@ -15,6 +15,8 @@ public class DatabaseTestBase {
   private static final DatabaseContainer DATABASE;
   private static final PGSimpleDataSource dataSource = new PGSimpleDataSource();
 
+  protected final Repository repository = repository();
+
   static {
     DATABASE =
         DatabaseContainer.create(

@@ -2,7 +2,6 @@ package com.rds.observato.assignments;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
-import com.rds.observato.api.persistence.Repository;
 import java.time.Instant;
 import org.assertj.core.api.Assertions;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
@@ -10,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class AssignmentDaoTest extends DatabaseTestBase {
 
-  private static final Repository repository = repository();
-  private static final long user = Fixtures.createUser(repository);
+  private final long user = Fixtures.createUser(repository);
 
   @Test
   void create() {

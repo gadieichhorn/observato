@@ -2,15 +2,13 @@ package com.rds.observato.accounts;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
-import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.AuthorisedException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class AccountControllerAuthTest extends DatabaseTestBase {
 
-  private static final Repository repository = repository();
-  private static final AccountController controller = new AccountController(repository);
+  private final AccountController controller = new AccountController(repository);
 
   @Test
   void authorized() {

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
-import com.rds.observato.api.persistence.Repository;
 import java.util.Set;
 import org.assertj.core.api.Assertions;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
@@ -12,8 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class ResourcesDaoTest extends DatabaseTestBase {
 
-  private static final Repository repository = repository();
-  private static final long user = Fixtures.createUser(repository);
+  private final long user = Fixtures.createUser(repository);
 
   @Test
   void create() {

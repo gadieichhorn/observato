@@ -2,7 +2,6 @@ package com.rds.observato.projects;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
-import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,7 +9,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 class ProjectsControllerAuthTest extends DatabaseTestBase {
 
-  private static final Repository repository = repository();
   private final ProjectsController controller = new ProjectsController(repository);
 
   @ParameterizedTest

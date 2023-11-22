@@ -2,14 +2,12 @@ package com.rds.observato.projects;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
-import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class ProjectControllerAuthTest extends DatabaseTestBase {
 
-  private static final Repository repository = repository();
   private final ProjectController controller = new ProjectController(repository);
 
   @Test

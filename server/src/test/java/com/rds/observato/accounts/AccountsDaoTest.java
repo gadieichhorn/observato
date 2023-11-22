@@ -4,15 +4,13 @@ import static org.assertj.core.api.Assertions.*;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
-import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.Role;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.Test;
 
 class AccountsDaoTest extends DatabaseTestBase {
 
-  private static final Repository repository = repository();
-  private static final long user = Fixtures.createUser(repository);
+  private final long user = Fixtures.createUser(repository);
 
   @Test
   void create() {

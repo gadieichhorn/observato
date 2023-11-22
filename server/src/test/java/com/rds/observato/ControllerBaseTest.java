@@ -1,6 +1,5 @@
 package com.rds.observato;
 
-import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.ObservatoAuthFilter;
 import com.rds.observato.auth.ObservatoBasicAuthenticator;
 import com.rds.observato.auth.User;
@@ -14,8 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
 public class ControllerBaseTest extends DatabaseTestBase {
-
-  protected Repository repository = repository();
 
   protected long user = Fixtures.createUser(repository);
   protected String token = Fixtures.token(user);

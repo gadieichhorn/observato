@@ -2,15 +2,13 @@ package com.rds.observato.assignments;
 
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
-import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.AuthorisedException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class AssignmentsControllerAuthTest extends DatabaseTestBase {
 
-  private static final Repository repository = repository();
-  private static final AssignmentsController controller = new AssignmentsController(repository);
+  private final AssignmentsController controller = new AssignmentsController(repository);
 
   @Test
   void authorized() {
