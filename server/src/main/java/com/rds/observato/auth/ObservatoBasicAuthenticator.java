@@ -22,17 +22,17 @@ public record ObservatoBasicAuthenticator(Repository repository)
 
     TokenView view =
         repository.accounts().getUserToken(token).orElse(new TokenView(0, 0, 0, "", null));
-    log.info("TOKEN: {}", view);
+    //    log.info("TOKEN: {}", view);
 
     if (view.id() > 0) {
 
       UserView user =
           repository.users().findById(view.user()).orElse(new UserView(0, 0, "anonymous"));
-      log.info("USER: {}", user);
+      //      log.info("USER: {}", user);
       // TODO load user account role
       Set<UserAccountView> userRoleViews =
           repository.accounts().getAccountByUser(view.user(), view.account());
-      log.info("ROLES: {}", userRoleViews);
+      //      log.info("ROLES: {}", userRoleViews);
 
       ImmutableSet<Role> roles =
           userRoleViews.stream().map(UserAccountView::role).collect(ImmutableSet.toImmutableSet());

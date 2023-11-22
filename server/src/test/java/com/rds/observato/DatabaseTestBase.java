@@ -12,16 +12,14 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 public class DatabaseTestBase {
 
-  private static final DatabaseContainer DATABASE;
+  protected static final DatabaseContainer DATABASE;
   private static final PGSimpleDataSource dataSource = new PGSimpleDataSource();
 
   protected final Repository repository = repository();
 
   static {
     DATABASE =
-        DatabaseContainer.create(
-            new ObservatoConfiguration.DatabaseConfiguration(
-                "observato", "observato", "observato"));
+        DatabaseContainer.create(new DatabaseConfiguration("observato", "observato", "observato"));
 
     dataSource.setUrl(DATABASE.getJdbcUrl());
     dataSource.setUser(DATABASE.getUsername());

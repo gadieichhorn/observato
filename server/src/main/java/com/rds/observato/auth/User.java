@@ -21,7 +21,7 @@ public record User(long id, String username, Set<Role> roles) implements Princip
   }
 
   public boolean hasAnyOf(Role... requiredRoles) {
-    log.info("USER ROLES: {}", roles);
+    //    log.info("USER ROLES: {}", roles);
     return !Sets.intersection(roles, ImmutableSet.copyOf(requiredRoles)).isEmpty();
   }
 }

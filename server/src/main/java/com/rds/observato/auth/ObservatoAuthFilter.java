@@ -17,7 +17,7 @@ public class ObservatoAuthFilter extends AuthFilter<String, User> {
   @Override
   public void filter(ContainerRequestContext containerRequestContext) {
     String token = containerRequestContext.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-    log.info("TOKEN: {}", token);
+    log.debug("TOKEN: {}", token);
     if (!authenticate(containerRequestContext, token, "")) {
       throw new WebApplicationException(Response.Status.UNAUTHORIZED);
     }

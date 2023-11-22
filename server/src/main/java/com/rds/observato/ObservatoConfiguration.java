@@ -16,6 +16,4 @@ public class ObservatoConfiguration extends Configuration {
   public DataSourceFactory getDataSourceFactory() {
     return database;
   }
-
-  public record DatabaseConfiguration(String database, String username, String password) {}
 }

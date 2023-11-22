@@ -1,0 +1,42 @@
+logging:
+  level: INFO
+  appenders:
+    - type: console
+      threshold: ALL
+      queueSize: 512
+      discardingThreshold: 0
+      timeZone: UTC
+      target: stdout
+      logFormat: "%d{HH:mm:ss.SSS} %highlight(%-5level) [%10thread] %X{messageId:-unknown} %cyan(%-40logger{36}) - %msg%n"
+
+server:
+  rootPath: /api
+  applicationConnectors:
+    - type: http
+      port: 8090
+      maxRequestHeaderSize: 16KiB
+  adminConnectors:
+    - type: http
+      port: 8091
+  requestLog:
+    appenders: [ ]
+
+database:
+  driverClass: org.postgresql.Driver
+  user: observato
+  password: observato
+  url: jdbc:postgresql://localhost:54321/observato
+  properties:
+    charSet: UTF-8
+    tcpKeepAlive: true
+#    socketFactory: org.apache.commons.net.DefaultSocketFactory
+#    cloudSqlInstance: localhost
+  maxWaitForConnection: 1s
+  validationQuery: "/* Pexapark Health Check */ SELECT 1"
+  validationQueryTimeout: 3s
+  initialSize: 2
+  minSize: 2
+  maxSize: 4
+  checkConnectionWhileIdle: false
+  evictionInterval: 10s
+  minIdleTime: 1 minute

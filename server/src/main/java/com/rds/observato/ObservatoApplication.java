@@ -11,6 +11,8 @@ import com.rds.observato.projects.ProjectController;
 import com.rds.observato.projects.ProjectsController;
 import com.rds.observato.resources.ResourceController;
 import com.rds.observato.resources.ResourcesController;
+import com.rds.observato.tasks.TaskController;
+import com.rds.observato.tasks.TasksController;
 import com.rds.observato.users.UserController;
 import com.rds.observato.users.UsersController;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -73,7 +75,9 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
     // CONTROLLERS
+    environment.jersey().register(new TaskController(repository));
     environment.jersey().register(new UserController(repository));
+    environment.jersey().register(new TasksController(repository));
     environment.jersey().register(new UsersController(repository, auth));
     environment.jersey().register(new ProjectController(repository));
     environment.jersey().register(new ProjectsController(repository));

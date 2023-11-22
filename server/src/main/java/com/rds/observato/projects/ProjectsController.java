@@ -12,15 +12,20 @@ import com.rds.observato.validation.Validator;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Timed
 @Path("projects/{account}")
 @Produces(MediaType.APPLICATION_JSON)
 public record ProjectsController(Repository repository) {
 
+  private static final Logger log = LoggerFactory.getLogger(ProjectsController.class);
+
   @POST
   public CreateProjectResponse post(
       @Auth User user, @PathParam("account") Long account, CreateProjectRequest request) {
+    log.info("USER:{}", user);
     Authoriser.check(user, Role.ADMIN);
     Validator.checkIsNullOrNegative(account, "account");
     Validator.checkIsNull(request, "request");

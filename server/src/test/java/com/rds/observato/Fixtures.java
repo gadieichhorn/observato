@@ -3,6 +3,9 @@ package com.rds.observato;
 import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
+import io.dropwizard.testing.ConfigOverride;
+import io.dropwizard.testing.ResourceHelpers;
+import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import java.util.UUID;
 import org.testcontainers.shaded.com.google.common.collect.ImmutableSet;
 
@@ -54,5 +57,15 @@ public class Fixtures {
 
   public static User user(Role role, long user) {
     return new User(user, "user", ImmutableSet.of(role));
+  }
+
+  public static DropwizardAppExtension<ObservatoConfiguration> integrationExtension(
+      DatabaseContainer database) {
+    return new DropwizardAppExtension<>(
+        ObservatoApplication.class,
+        ResourceHelpers.resourceFilePath("observato.yaml"),
+        ConfigOverride.config("database.url", database.getJdbcUrl()),
+        ConfigOverride.config("database.user", database.getUsername()),
+        ConfigOverride.config("database.password", database.getPassword()));
   }
 }

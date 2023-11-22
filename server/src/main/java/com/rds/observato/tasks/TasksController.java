@@ -7,6 +7,7 @@ import com.rds.observato.api.response.CreateTaskResponse;
 import com.rds.observato.auth.Authoriser;
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
+import com.rds.observato.validation.Validator;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -19,7 +20,9 @@ public record TasksController(Repository repository) {
 
   @POST
   public CreateTaskResponse create(
-      @Auth User user, @PathParam("account") long account, CreateTaskRequest request) {
+      @Auth User user, @PathParam("account") Long account, CreateTaskRequest request) {
+    Validator.checkIsNullOrNegative(account, "account");
+    Validator.checkIsNull(request, "request");
     Authoriser.check(user, Role.ADMIN);
     return new CreateTaskResponse(
         repository.tasks().create(account, request.name(), request.description()));
