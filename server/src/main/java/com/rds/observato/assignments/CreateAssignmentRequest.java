@@ -7,8 +7,8 @@ public record CreateAssignmentRequest(Long task, Long resource, Instant start, I
 
   public CreateAssignmentRequest {
     //    Validator.checkIsNull(account, "account");
-    Validator.checkIsNull(task, "task");
-    Validator.checkIsNull(resource, "resource");
+    Validator.checkIsNullOrNegative(task, "task");
+    Validator.checkIsNullOrNegative(resource, "resource");
     Validator.checkIsNull(start, "start");
     Validator.checkIsNull(end, "end");
   }

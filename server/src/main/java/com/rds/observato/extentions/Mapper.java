@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.blackbird.BlackbirdModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -20,16 +21,15 @@ public class Mapper {
 
   public static ObjectMapper create() {
     return JsonMapper.builder()
+        .addModule(new JodaModule())
+        .addModule(new Jdk8Module())
         .addModule(new GuavaModule())
-        .addModule(new JavaTimeModule())
-        .addModule(new GuavaExtrasModule())
         .addModule(new CaffeineModule())
-        //                .addModule(new JodaModule())
+        .addModule(new JavaTimeModule())
         .addModule(new BlackbirdModule())
         .addModule(new FuzzyEnumModule())
+        .addModule(new GuavaExtrasModule())
         .addModule(new ParameterNamesModule())
-        .addModule(new Jdk8Module())
-        .addModule(new JavaTimeModule())
         .propertyNamingStrategy(new AnnotationSensitivePropertyNamingStrategy())
         .registerSubtypes(ImmutableMap.class)
         .registerSubtypes(ImmutableList.class)
