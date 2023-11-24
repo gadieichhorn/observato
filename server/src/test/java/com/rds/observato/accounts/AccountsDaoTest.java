@@ -7,6 +7,7 @@ import com.rds.observato.Fixtures;
 import com.rds.observato.auth.Role;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.shaded.com.google.common.collect.ImmutableSet;
 
 class AccountsDaoTest extends DatabaseTestBase {
 
@@ -52,10 +53,12 @@ class AccountsDaoTest extends DatabaseTestBase {
     long account = repository.accounts().create("a0008", user);
     repository.accounts().createUserTokenForAccount(user, account, token);
     repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
+    repository.accounts().assignUserToAccount(user, account, Role.RESOURCE);
     assertThat(repository.accounts().getUserToken(token))
         .isPresent()
         .get()
         .hasFieldOrPropertyWithValue("user", user)
+        .hasFieldOrPropertyWithValue("roles", ImmutableSet.of(Role.ADMIN, Role.RESOURCE))
         .hasFieldOrPropertyWithValue("account", account);
   }
 
