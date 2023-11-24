@@ -1,3 +1,3 @@
-package com.rds.observato.api.response;
+package com.rds.observato.tasks;
 
 public record CreateTaskResponse(long id) {}

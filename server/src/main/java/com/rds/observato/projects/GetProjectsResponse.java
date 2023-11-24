@@ -1,4 +1,4 @@
-package com.rds.observato.api.response;
+package com.rds.observato.projects;
 
 import java.util.Set;
 

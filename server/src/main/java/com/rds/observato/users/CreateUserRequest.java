@@ -1,4 +1,4 @@
-package com.rds.observato.api.request;
+package com.rds.observato.users;
 
 import com.rds.observato.validation.Validator;
 

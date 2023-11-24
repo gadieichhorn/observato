@@ -1,7 +1,6 @@
 package com.rds.observato.projects;
 
 import com.rds.observato.ControllerBaseTest;
-import com.rds.observato.api.response.GetProjectResponse;
 import com.rds.observato.auth.Role;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -21,7 +20,7 @@ class ProjectControllerTest extends ControllerBaseTest {
     repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
 
     Assertions.assertThat(
-            EXT.target("/projects/%d/%d".formatted(account, project))
+            EXT.target("/projects/%d".formatted(project))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .get(GetProjectResponse.class))

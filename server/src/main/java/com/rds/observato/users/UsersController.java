@@ -1,9 +1,7 @@
 package com.rds.observato.users;
 
 import com.codahale.metrics.annotation.Timed;
-import com.rds.observato.api.persistence.Repository;
-import com.rds.observato.api.request.CreateUserRequest;
-import com.rds.observato.api.response.CreateUserResponse;
+import com.rds.observato.Repository;
 import com.rds.observato.auth.AuthService;
 import com.rds.observato.auth.Authoriser;
 import com.rds.observato.auth.Role;

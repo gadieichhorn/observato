@@ -2,7 +2,6 @@ package com.rds.observato;
 
 import com.rds.observato.accounts.AccountController;
 import com.rds.observato.accounts.AccountsController;
-import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.assignments.AssignmentController;
 import com.rds.observato.assignments.AssignmentsController;
 import com.rds.observato.auth.*;

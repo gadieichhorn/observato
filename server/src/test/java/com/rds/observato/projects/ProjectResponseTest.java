@@ -2,7 +2,6 @@ package com.rds.observato.projects;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rds.observato.api.response.GetProjectResponse;
 import com.rds.observato.extentions.Mapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,4 @@
-package com.rds.observato.api.response;
-
-import com.rds.observato.projects.ProjectView;
+package com.rds.observato.projects;
 
 public record GetProjectResponse(long id, long account, String name, String description) {
 

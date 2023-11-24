@@ -34,7 +34,7 @@ class AssignmentsControllerTest extends ControllerBaseTest {
                 Instant.parse("2023-01-01T01:00:00Z"));
 
     Assertions.assertThat(
-            EXT.target("/assignments/%d".formatted(account))
+            EXT.target("/assignments")
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .get(GetAssignmentsResponse.class))
@@ -63,7 +63,7 @@ class AssignmentsControllerTest extends ControllerBaseTest {
     long resource = repository.resources().create(account, "rsc0003");
 
     CreateAssignmentResponse response =
-        EXT.target("/assignments/%d".formatted(account))
+        EXT.target("/assignments")
             .request()
             .header(HttpHeaders.AUTHORIZATION, token)
             .post(

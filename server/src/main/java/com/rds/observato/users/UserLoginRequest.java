@@ -1,3 +1,3 @@
-package com.rds.observato.api.request;
+package com.rds.observato.users;
 
 public record UserLoginRequest(String username, String password) {}

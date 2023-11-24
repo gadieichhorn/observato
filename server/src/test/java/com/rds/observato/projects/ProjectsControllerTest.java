@@ -2,8 +2,6 @@ package com.rds.observato.projects;
 
 import com.google.common.collect.ImmutableSet;
 import com.rds.observato.ControllerBaseTest;
-import com.rds.observato.api.response.GetProjectResponse;
-import com.rds.observato.api.response.GetProjectsResponse;
 import com.rds.observato.auth.Role;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.client.Entity;
@@ -24,7 +22,7 @@ class ProjectsControllerTest extends ControllerBaseTest {
     repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
 
     Assertions.assertThat(
-            EXT.target("/projects/%d".formatted(account))
+            EXT.target("/projects")
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .get(GetProjectsResponse.class))
@@ -42,7 +40,7 @@ class ProjectsControllerTest extends ControllerBaseTest {
     repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
 
     CreateProjectResponse response =
-        EXT.target("/projects/%d".formatted(account))
+        EXT.target("/projects")
             .request()
             .header(HttpHeaders.AUTHORIZATION, token)
             .post(Entity.json(new CreateProjectRequest("prj00003", "description")))

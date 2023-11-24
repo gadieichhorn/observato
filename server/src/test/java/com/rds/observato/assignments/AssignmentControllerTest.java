@@ -32,7 +32,7 @@ class AssignmentControllerTest extends ControllerBaseTest {
                 Instant.parse("2024-01-01T01:00:00Z"));
 
     Assertions.assertThat(
-            EXT.target("/assignments/%d/%d".formatted(account, assignment))
+            EXT.target("/assignments/%d".formatted(assignment))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .get(GetAssignmentResponse.class))

@@ -1,6 +1,6 @@
 package com.rds.observato.auth;
 
-import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.Repository;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import java.util.Optional;

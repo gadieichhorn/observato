@@ -1,16 +1,15 @@
 package com.rds.observato;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
-import com.rds.observato.api.request.CreateAccountRequest;
-import com.rds.observato.api.request.CreateTaskRequest;
+import com.rds.observato.accounts.CreateAccountRequest;
 import com.rds.observato.assignments.CreateAssignmentRequest;
 import com.rds.observato.auth.Role;
 import com.rds.observato.extentions.Mapper;
 import com.rds.observato.projects.CreateProjectRequest;
+import com.rds.observato.tasks.CreateTaskRequest;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import jakarta.ws.rs.client.Client;
@@ -70,9 +69,7 @@ class ObservatoApplicationTest extends DatabaseTestBase {
   void createProject() {
     assertThat(
             client
-                .target(
-                    String.format(
-                        "http://localhost:%d/api/projects/%d", EXT.getLocalPort(), account))
+                .target(String.format("http://localhost:%d/api/projects", EXT.getLocalPort()))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .post(Entity.json(new CreateProjectRequest("test", "descr")))
@@ -84,8 +81,7 @@ class ObservatoApplicationTest extends DatabaseTestBase {
   void createTask() {
     assertThat(
             client
-                .target(
-                    String.format("http://localhost:%d/api/tasks/%d", EXT.getLocalPort(), account))
+                .target(String.format("http://localhost:%d/api/tasks", EXT.getLocalPort()))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .post(Entity.json(new CreateTaskRequest("tsk013", "descr")))
@@ -98,9 +94,7 @@ class ObservatoApplicationTest extends DatabaseTestBase {
     long t = Fixtures.createTask(repository, account);
     assertThat(
             client
-                .target(
-                    String.format(
-                        "http://localhost:%d/api/tasks/%d/%d", EXT.getLocalPort(), account, t))
+                .target(String.format("http://localhost:%d/api/tasks/%d", EXT.getLocalPort(), t))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .get()
@@ -118,9 +112,7 @@ class ObservatoApplicationTest extends DatabaseTestBase {
 
     assertThat(
             client
-                .target(
-                    String.format(
-                        "http://localhost:%d/api/assignments/%d", EXT.getLocalPort(), account))
+                .target(String.format("http://localhost:%d/api/assignments", EXT.getLocalPort()))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .post(Entity.json(new CreateAssignmentRequest(t, r, start, end)))
@@ -140,9 +132,7 @@ class ObservatoApplicationTest extends DatabaseTestBase {
     assertThat(
             client
                 .target(
-                    String.format(
-                        "http://localhost:%d/api/assignments/%d/%d",
-                        EXT.getLocalPort(), account, a))
+                    String.format("http://localhost:%d/api/assignments/%d", EXT.getLocalPort(), a))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .get()

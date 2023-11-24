@@ -1,35 +1,35 @@
 package com.rds.observato.projects;
 
+import static org.assertj.core.api.Assertions.*;
+
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
 import com.rds.observato.auth.*;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 class ProjectControllerAuthTest extends DatabaseTestBase {
 
   private final ProjectController controller = new ProjectController(repository);
+  long user = Fixtures.createUser(repository);
+  long account = Fixtures.createAccount(repository, user);
+  long project = Fixtures.createProject(repository, account);
 
-  @Test
-  void authorized() {
-    long user = Fixtures.createUser(repository);
-    long account = Fixtures.createAccount(repository, user);
-    long project = Fixtures.createProject(repository, account);
-    Assertions.assertThatCode(() -> controller.get(Fixtures.admin(), account, project))
+  @ParameterizedTest
+  @EnumSource(
+      value = Role.class,
+      names = {"ADMIN"})
+  void authorized(Role role) {
+    assertThatCode(() -> controller.get(Fixtures.user(role, user, account), project))
         .doesNotThrowAnyException();
   }
 
-  @Test
-  void unauthorized() {
-    long user = Fixtures.createUser(repository);
-    long account = Fixtures.createAccount(repository, user);
-    long project = Fixtures.createProject(repository, account);
-
-    Assertions.assertThatThrownBy(() -> controller.get(Fixtures.scheduler(), account, project))
-        .isInstanceOf(AuthorisedException.class);
-    Assertions.assertThatThrownBy(() -> controller.get(Fixtures.resource(), account, project))
-        .isInstanceOf(AuthorisedException.class);
-    Assertions.assertThatThrownBy(() -> controller.get(Fixtures.anonymous(), account, project))
+  @ParameterizedTest
+  @EnumSource(
+      value = Role.class,
+      names = {"RESOURCE", "SCHEDULER", "ANONYMOUS"})
+  void unauthorized(Role role) {
+    assertThatThrownBy(() -> controller.get(Fixtures.user(role, user, account), project))
         .isInstanceOf(AuthorisedException.class);
   }
 }

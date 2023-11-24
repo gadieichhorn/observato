@@ -1,6 +1,6 @@
 package com.rds.observato.extentions;
 
-import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.Repository;
 import com.rds.observato.auth.AuthService;
 import com.rds.observato.auth.Role;
 import io.dropwizard.servlets.tasks.Task;

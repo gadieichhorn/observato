@@ -1,6 +1,5 @@
 package com.rds.observato;
 
-import com.rds.observato.api.persistence.Repository;
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import io.dropwizard.testing.ConfigOverride;
@@ -40,23 +39,23 @@ public class Fixtures {
   }
 
   public static User admin() {
-    return new User(0, 0, "admin", ImmutableSet.of(Role.ADMIN));
+    return new User(1, 1, "admin", ImmutableSet.of(Role.ADMIN));
   }
 
   public static User scheduler() {
-    return new User(0, 0, "scheduler", ImmutableSet.of(Role.SCHEDULER));
+    return new User(1, 1, "scheduler", ImmutableSet.of(Role.SCHEDULER));
   }
 
   public static User resource() {
-    return new User(0, 0, "resource", ImmutableSet.of(Role.RESOURCE));
+    return new User(1, 1, "resource", ImmutableSet.of(Role.RESOURCE));
   }
 
   public static User anonymous() {
-    return new User(0, 0, "anonymous", ImmutableSet.of(Role.ANONYMOUS));
+    return new User(1, 1, "anonymous", ImmutableSet.of(Role.ANONYMOUS));
   }
 
-  public static User user(Role role, long user) {
-    return new User(user, 0, "user", ImmutableSet.of(role));
+  public static User user(Role role, long user, long account) {
+    return new User(user, account, role.name(), ImmutableSet.of(role));
   }
 
   public static DropwizardAppExtension<ObservatoConfiguration> integrationExtension(

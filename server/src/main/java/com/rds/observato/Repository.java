@@ -1,4 +1,4 @@
-package com.rds.observato.api.persistence;
+package com.rds.observato;
 
 import com.rds.observato.accounts.AccountsDao;
 import com.rds.observato.assignments.AssignmentDao;

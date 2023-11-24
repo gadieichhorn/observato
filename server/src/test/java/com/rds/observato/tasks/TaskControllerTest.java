@@ -28,7 +28,7 @@ class TaskControllerTest extends ControllerBaseTest {
   @Test
   void get() {
     Assertions.assertThat(
-            EXT.target("/tasks/%d/%d".formatted(account, task))
+            EXT.target("/tasks/%d".formatted(task))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .get(GetTaskResponse.class))
@@ -41,7 +41,7 @@ class TaskControllerTest extends ControllerBaseTest {
   @Test
   void put() {
     Assertions.assertThat(
-            EXT.target("/tasks/%d/%d".formatted(account, task))
+            EXT.target("/tasks/%d".formatted(task))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .put(Entity.json(new UpdateTaskRequest(task, 0, "tsk0002", "updated")))

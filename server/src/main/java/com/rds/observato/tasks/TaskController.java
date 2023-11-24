@@ -1,7 +1,7 @@
 package com.rds.observato.tasks;
 
 import com.codahale.metrics.annotation.Timed;
-import com.rds.observato.api.persistence.Repository;
+import com.rds.observato.Repository;
 import com.rds.observato.auth.Authoriser;
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
@@ -12,17 +12,16 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Timed
-@Path("tasks/{account}/{task}")
+@Path("tasks/{task}")
 @Produces(MediaType.APPLICATION_JSON)
 public record TaskController(Repository repository) {
 
   @GET
-  public GetTaskResponse get(
-      @Auth User user, @PathParam("account") long account, @PathParam("task") long task) {
+  public GetTaskResponse get(@Auth User user, @PathParam("task") long task) {
     Authoriser.check(user, Role.ADMIN);
     return repository
         .tasks()
-        .finById(account, task)
+        .finById(user.account(), task)
         .map(GetTaskResponse::from)
         .orElseThrow(
             () ->
@@ -31,16 +30,17 @@ public record TaskController(Repository repository) {
 
   @PUT
   public UpdateTaskResponse put(
-      @Auth User user,
-      @PathParam("account") long account,
-      @PathParam("task") long task,
-      UpdateTaskRequest request) {
+      @Auth User user, @PathParam("task") long task, UpdateTaskRequest request) {
     Authoriser.check(user, Role.ADMIN);
     Validator.checkIsNull(request, "request");
     return new UpdateTaskResponse(
         repository
             .tasks()
             .updateTask(
-                account, request.id(), request.revision(), request.name(), request.description()));
+                user.account(),
+                request.id(),
+                request.revision(),
+                request.name(),
+                request.description()));
   }
 }

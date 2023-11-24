@@ -5,14 +5,14 @@ import com.google.common.collect.Sets;
 import com.rds.observato.validation.Validator;
 import java.security.Principal;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public record User(long id, long account, String username, Set<Role> roles) implements Principal {
-  private static final Logger log = LoggerFactory.getLogger(User.class);
 
   public User {
+    Validator.checkIsNull(roles, "roles");
+    Validator.checkIsNullOrNegative(id, "id");
     Validator.checkIsNullOrEmpty(username, "username");
+    Validator.checkIsNullOrNegative(account, "account");
   }
 
   @Override
@@ -21,7 +21,6 @@ public record User(long id, long account, String username, Set<Role> roles) impl
   }
 
   public boolean hasAnyOf(Role... requiredRoles) {
-    //    log.info("USER ROLES: {}", roles);
     return !Sets.intersection(roles, ImmutableSet.copyOf(requiredRoles)).isEmpty();
   }
 }

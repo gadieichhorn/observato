@@ -1,9 +1,6 @@
 package com.rds.observato.accounts;
 
 import com.rds.observato.ControllerBaseTest;
-import com.rds.observato.api.request.CreateAccountRequest;
-import com.rds.observato.api.response.CreateAccountResponse;
-import com.rds.observato.api.response.GetAccountsResponse;
 import com.rds.observato.auth.Role;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.client.Entity;

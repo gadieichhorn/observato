@@ -1,8 +1,6 @@
 package com.rds.observato.tasks;
 
 import com.rds.observato.ControllerBaseTest;
-import com.rds.observato.api.request.CreateTaskRequest;
-import com.rds.observato.api.response.CreateTaskResponse;
 import com.rds.observato.auth.Role;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
 import io.dropwizard.testing.junit5.ResourceExtension;
@@ -26,7 +24,7 @@ class TasksControllerTest extends ControllerBaseTest {
     repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
 
     CreateTaskResponse response =
-        EXT.target("/tasks/%d".formatted(account))
+        EXT.target("/tasks")
             .request()
             .header(HttpHeaders.AUTHORIZATION, token)
             .post(Entity.json(new CreateTaskRequest("tsk0002", "description")))
@@ -47,7 +45,7 @@ class TasksControllerTest extends ControllerBaseTest {
     repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
 
     Assertions.assertThat(
-            EXT.target("/tasks/%d".formatted(account))
+            EXT.target("/tasks")
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .get(GetTasksResponse.class))
