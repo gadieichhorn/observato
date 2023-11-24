@@ -10,7 +10,7 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 public interface TasksDao {
   @SqlUpdate(
       """
-                      insert into obs.tasks (account_id, name, description) values(:account, :name, :description)
+                      insert into obs.tasks (account_id, name, description, skills) values(:account, :name, :description, '{}')
               """)
   @GetGeneratedKeys
   long create(

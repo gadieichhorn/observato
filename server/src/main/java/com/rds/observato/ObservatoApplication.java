@@ -10,6 +10,8 @@ import com.rds.observato.projects.ProjectController;
 import com.rds.observato.projects.ProjectsController;
 import com.rds.observato.resources.ResourceController;
 import com.rds.observato.resources.ResourcesController;
+import com.rds.observato.skills.SkillController;
+import com.rds.observato.skills.SkillsController;
 import com.rds.observato.tasks.TaskController;
 import com.rds.observato.tasks.TasksController;
 import com.rds.observato.users.UserController;
@@ -75,15 +77,23 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
 
     // CONTROLLERS
     environment.jersey().register(new TaskController(repository));
-    environment.jersey().register(new UserController(repository));
     environment.jersey().register(new TasksController(repository));
+
+    environment.jersey().register(new SkillController(repository));
+    environment.jersey().register(new SkillsController(repository));
+
+    environment.jersey().register(new UserController(repository));
     environment.jersey().register(new UsersController(repository, auth));
+
     environment.jersey().register(new ProjectController(repository));
     environment.jersey().register(new ProjectsController(repository));
+
     environment.jersey().register(new AccountController(repository));
     environment.jersey().register(new AccountsController(repository));
+
     environment.jersey().register(new ResourceController(repository));
     environment.jersey().register(new ResourcesController(repository));
+
     environment.jersey().register(new AssignmentController(repository));
     environment.jersey().register(new AssignmentsController(repository));
 

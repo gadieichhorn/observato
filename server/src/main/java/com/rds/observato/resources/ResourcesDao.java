@@ -10,7 +10,7 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 public interface ResourcesDao {
   @SqlUpdate(
       """
-                  insert into obs.resources (account_id, name) values(:account, :name)
+                  insert into obs.resources (account_id, name, skills) values(:account, :name, '{}')
                   """)
   @GetGeneratedKeys
   long create(@Bind("account") long account, @Bind("name") String name);
