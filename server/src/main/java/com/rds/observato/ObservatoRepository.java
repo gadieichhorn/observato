@@ -10,6 +10,7 @@ import com.rds.observato.projects.ProjectView;
 import com.rds.observato.projects.ProjectsDao;
 import com.rds.observato.resources.ResourceView;
 import com.rds.observato.resources.ResourcesDao;
+import com.rds.observato.skills.SkillsDao;
 import com.rds.observato.tasks.TaskView;
 import com.rds.observato.tasks.TasksDao;
 import com.rds.observato.users.LoginView;
@@ -30,7 +31,8 @@ public record ObservatoRepository(
     ProjectsDao projects,
     TasksDao tasks,
     ResourcesDao resources,
-    AssignmentDao assignments)
+    AssignmentDao assignments,
+    SkillsDao skills)
     implements Repository {
 
   public ObservatoRepository {
@@ -64,6 +66,7 @@ public record ObservatoRepository(
         jdbi.onDemand(ProjectsDao.class),
         jdbi.onDemand(TasksDao.class),
         jdbi.onDemand(ResourcesDao.class),
-        jdbi.onDemand(AssignmentDao.class));
+        jdbi.onDemand(AssignmentDao.class),
+        jdbi.onDemand(SkillsDao.class));
   }
 }
