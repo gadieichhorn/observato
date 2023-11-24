@@ -5,10 +5,13 @@
 interface User
 interface Account
 interface AccountUser
+interface Token
 enum Role
 
 AccountUser -> User
 AccountUser -left-> Account
-AccountUser --> Role
+AccountUser -up-> Role
+Token -up-> User
+Token -up-> Account
 
 @enduml

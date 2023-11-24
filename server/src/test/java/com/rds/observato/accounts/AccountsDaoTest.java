@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 class AccountsDaoTest extends DatabaseTestBase {
 
   private final long user = Fixtures.createUser(repository);
+  private final String token = Fixtures.token(user);
 
   @Test
   void create() {
@@ -44,6 +45,18 @@ class AccountsDaoTest extends DatabaseTestBase {
   void assignUserToAccount() {
     long account = repository.accounts().create("a0001", user);
     repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
+  }
+
+  @Test
+  void token() {
+    long account = repository.accounts().create("a0008", user);
+    repository.accounts().createUserTokenForAccount(user, account, token);
+    repository.accounts().assignUserToAccount(user, account, Role.ADMIN);
+    assertThat(repository.accounts().getUserToken(token))
+        .isPresent()
+        .get()
+        .hasFieldOrPropertyWithValue("user", user)
+        .hasFieldOrPropertyWithValue("account", account);
   }
 
   @Test

@@ -8,7 +8,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public record User(long id, String username, Set<Role> roles) implements Principal {
+public record User(long id, long account, String username, Set<Role> roles) implements Principal {
   private static final Logger log = LoggerFactory.getLogger(User.class);
 
   public User {
