@@ -30,7 +30,7 @@ class ProjectsControllerTest extends ControllerBaseTest {
         .isInstanceOf(GetProjectsResponse.class)
         .hasFieldOrPropertyWithValue(
             "projects",
-            ImmutableSet.of(new GetProjectResponse(project, account, "prj0002", "description")));
+            ImmutableSet.of(new GetProjectResponse(project, account, 0, "prj0002", "description")));
   }
 
   @Test

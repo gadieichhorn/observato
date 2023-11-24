@@ -1,10 +1,10 @@
-package com.rds.observato.projects;
+package com.rds.observato.skills;
 
-public record GetProjectResponse(
+public record GetSkillResponse(
     long id, long account, int revision, String name, String description) {
 
-  public static GetProjectResponse from(ProjectView view) {
-    return new GetProjectResponse(
+  public static GetSkillResponse from(SkillView view) {
+    return new GetSkillResponse(
         view.id(), view.account(), view.revision(), view.name(), view.description());
   }
 }
