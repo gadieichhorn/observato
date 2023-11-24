@@ -39,4 +39,20 @@ public interface TasksDao {
                     select id, revision, account_id, name, description  from obs.tasks where account_id = :account and id = :id
               """)
   Optional<TaskView> finById(@Bind("account") long account, @Bind("id") long id);
+
+  @SqlUpdate(
+      """
+              update obs.tasks
+              set name= :name, description = :description, revision = revision + 1
+              where account_id = :account
+                and id = :id
+                and revision = :revision;
+                      """)
+  //  @GetGeneratedKeys
+  int updateTask(
+      @Bind("account") long account,
+      @Bind("id") long id,
+      @Bind("revision") int revision,
+      @Bind("name") String name,
+      @Bind("description") String description);
 }
