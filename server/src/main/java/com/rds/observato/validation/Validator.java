@@ -45,4 +45,17 @@ public class Validator {
           "<%s> is required non null or positive non zero".formatted(message));
     }
   }
+
+  public static void checkIsNullOrNegative(Integer value, String message) {
+    if (Objects.isNull(value) || value <= 0) {
+      throw new ValidationException(
+          "<%s> is required non null or positive non zero".formatted(message));
+    }
+  }
+
+  public static void checkIsNullOrNotNegative(Integer value, String message) {
+    if (Objects.isNull(value) || value < 0) {
+      throw new ValidationException("<%s> is required non null or not negative".formatted(message));
+    }
+  }
 }
