@@ -1,29 +1,14 @@
+GET {{host}}/api/accounts/1
+Accept: application/json
+Content-Type: application/json
+Authorization: {{token}}
 
 ###
 
-POST localhost:8080/api/accounts
+POST {{host}}/api/users
 Accept: application/json
 Content-Type: application/json
-Authorization: 33bbdf5379d2459f89be37013fb3a610
-
-{
-  "name": "g",
-  "owner": "g@g.com"
-}
-
-###
-
-GET localhost:8080/api/accounts/1
-Accept: application/json
-Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
-
-###
-
-POST localhost:8080/api/users
-Accept: application/json
-Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
+Authorization: {{token}}
 
 {
   "name": "aaaa",
@@ -32,62 +17,72 @@ Authorization: 022c0d408e1842629d67b405ee3bc56e
 
 ###
 
-
-GET localhost:8080/api/users/1
+GET {{host}}/api/users/1
 Accept: application/json
 Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
+Authorization: {{token}}
 
 ###
 
-GET localhost:8080/api/projects/39
+GET {{host}}/api/projects/39
 Accept: application/json
 Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
+Authorization: {{token}}
 
 ###
 
-GET localhost:8080/api/projects
+GET {{host}}/api/projects
 Accept: application/json
 Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
+Authorization: {{token}}
 
 ###
 
-GET localhost:8080/api/tasks
+GET {{host}}/api/tasks
 Accept: application/json
 Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
+Authorization: {{token}}
 
 ###
 
-GET localhost:8080/api/tasks/192
+GET {{host}}/api/tasks/201
 Accept: application/json
 Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
+Authorization: {{token}}
 
 ###
 
-
-GET localhost:8080/api/resources/
+GET {{host}}/api/resources/
 Accept: application/json
 Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
+Authorization: {{token}}
 
 ###
 
-
-GET localhost:8080/api/resources/38
+GET {{host}}/api/resources/44
 Accept: application/json
 Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
+Authorization: {{token}}
 
+###
+
+GET {{host}}/api/skills
+Accept: application/json
+Content-Type: application/json
+Authorization: {{token}}
+
+###
+
+GET {{host}}/api/skills/75
+Accept: application/json
+Content-Type: application/json
+Authorization: {{token}}
 
 ###
 
 POST localhost:8081/tasks/demo
 Accept: application/json
 Content-Type: application/json
-Authorization: 022c0d408e1842629d67b405ee3bc56e
+Authorization: {{token}}
 
 ###

@@ -1,5 +1,6 @@
 package com.rds.observato.extentions;
 
+import com.github.javafaker.Faker;
 import com.rds.observato.Repository;
 import com.rds.observato.auth.AuthService;
 import com.rds.observato.auth.Role;
@@ -19,6 +20,8 @@ public class GenerateDemoDataTask extends Task {
   private final Repository repository;
   private final AuthService auth;
 
+  private final Faker faker = new Faker();
+
   public GenerateDemoDataTask(Repository repository, AuthService auth) {
     super("demo");
     this.repository = repository;
@@ -33,46 +36,44 @@ public class GenerateDemoDataTask extends Task {
             i ->
                 repository
                     .users()
-                    .create(UUID.randomUUID().toString(), "salt".getBytes(), "hash".getBytes()))
+                    .create(faker.internet().emailAddress(), "salt".getBytes(), "hash".getBytes()))
         .peek(user -> log.info("USER: {}", user))
-        .forEach(user -> account(user));
+        .forEach(this::account);
   }
 
   private void account(Long user) {
     Stream.iterate(0, i -> i + 1)
         .limit(3)
-        .map(i -> repository.accounts().create(UUID.randomUUID().toString(), user))
+        .map(i -> repository.accounts().create(faker.company().name(), user))
         .peek(account -> log.info("ACCOUNT: {}", account))
         .peek(account -> repository.accounts().assignUserToAccount(user, account, Role.ADMIN))
-        .peek(account -> skills(account))
+        .peek(this::skills)
         .peek(
             account ->
                 repository
                     .accounts()
-                    .createUserTokenForAccount(
-                        user, account, UUID.randomUUID().toString().replace("-", "")))
-        .forEach(account -> resource(user, account));
+                    .createUserTokenForAccount(user, account, faker.random().hex(32)))
+        .forEach(this::resource);
   }
 
   private void skills(long account) {
     Stream.iterate(0, i -> i + 1)
         .limit(10)
+        .map(i -> faker.superhero())
         .forEach(
-            i ->
-                repository
-                    .skills()
-                    .create(account, UUID.randomUUID().toString(), UUID.randomUUID().toString()));
+            superhero ->
+                repository.skills().create(account, superhero.name(), superhero.descriptor()));
   }
 
-  private void resource(Long user, Long account) {
+  private void resource(Long account) {
     Stream.iterate(0, i -> i + 1)
         .limit(5)
-        .map(i -> repository.resources().create(account, UUID.randomUUID().toString()))
+        .map(i -> repository.resources().create(account, faker.name().fullName()))
         .peek(resource -> log.info("RESOURCE: {}", resource))
-        .forEach(resource -> task(user, account, resource));
+        .forEach(resource -> task(account, resource));
   }
 
-  private void task(Long user, Long account, Long resource) {
+  private void task(Long account, Long resource) {
     long project = repository.projects().create(account, UUID.randomUUID().toString(), "project");
     log.info("PROJECT: {}", project);
     Stream.iterate(0, i -> i + 1)
@@ -84,11 +85,11 @@ public class GenerateDemoDataTask extends Task {
                     .create(account, UUID.randomUUID().toString(), "task%d".formatted(i)))
         .peek(task -> log.info("TASK: {}", task))
         .peek(task -> repository.projects().assignTaskToProject(account, task, project))
-        .map(task -> assignment(user, account, resource, task))
+        .map(task -> assignment(account, resource, task))
         .forEach(assignment -> log.info("ASSIGNMENT: {}", assignment));
   }
 
-  private long assignment(Long user, Long account, Long resource, Long task) {
+  private long assignment(Long account, Long resource, Long task) {
     return repository
         .assignments()
         .create(
