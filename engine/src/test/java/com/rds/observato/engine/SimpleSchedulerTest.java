@@ -29,7 +29,9 @@ class SimpleSchedulerTest {
             ImmutableSet.of(new MatchSkillRule(MatchSkillType.EXACTLY)));
 
     Assertions.assertThatCode(
-            () -> new SimpleScheduler().valid(new SimpleTask("", ImmutableMap.of(s1,1,s2,2)), schedule))
+            () ->
+                new SimpleScheduler()
+                    .valid(new SimpleTask("", ImmutableMap.of(s1, 1, s2, 2)), schedule))
         .doesNotThrowAnyException();
   }
 }
