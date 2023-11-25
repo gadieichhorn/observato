@@ -1,10 +1,12 @@
 package com.rds.observato.engine;
 
 import com.rd.observato.api.Assignment;
+import com.rd.observato.api.Error;
+import com.rd.observato.api.Schedule;
 import com.rd.observato.api.Task;
-import java.util.Set;
+import io.vavr.control.Either;
 
 public interface Scheduler {
 
-  Assignment valid(Task task, Set<Assignment> schedule);
+  Either<Error, Assignment> valid(Task task, Schedule schedule);
 }

@@ -15,6 +15,7 @@
         <module>server</module>
         <module>engine</module>
         <module>api</module>
+        <module>model</module>
     </modules>
 
     <properties>
