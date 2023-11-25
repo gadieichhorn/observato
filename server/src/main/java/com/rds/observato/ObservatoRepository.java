@@ -5,11 +5,7 @@ import com.rds.observato.accounts.TokenView;
 import com.rds.observato.accounts.UserAccountView;
 import com.rds.observato.assignments.AssignmentDao;
 import com.rds.observato.assignments.AssignmentView;
-import com.rds.observato.db.AccountsDao;
-import com.rds.observato.db.ProjectsDao;
-import com.rds.observato.db.ResourcesDao;
-import com.rds.observato.db.SkillsDao;
-import com.rds.observato.db.TasksDao;
+import com.rds.observato.db.*;
 import com.rds.observato.projects.ProjectView;
 import com.rds.observato.resources.ResourceView;
 import com.rds.observato.skills.SkillView;
@@ -17,7 +13,6 @@ import com.rds.observato.tasks.TaskView;
 import com.rds.observato.users.LoginView;
 import com.rds.observato.users.UserRoleView;
 import com.rds.observato.users.UserView;
-import com.rds.observato.users.UsersDao;
 import com.rds.observato.validation.Validator;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.reflect.ConstructorMapper;
@@ -62,13 +57,12 @@ public record ObservatoRepository(
         .registerRowMapper(ConstructorMapper.factory(AssignmentView.class))
         .registerRowMapper(ConstructorMapper.factory(UserAccountView.class));
 
-    return new ObservatoRepository(
-        jdbi.onDemand(AccountsDao.class),
-        jdbi.onDemand(UsersDao.class),
-        jdbi.onDemand(ProjectsDao.class),
-        jdbi.onDemand(TasksDao.class),
-        jdbi.onDemand(ResourcesDao.class),
-        jdbi.onDemand(AssignmentDao.class),
-        jdbi.onDemand(SkillsDao.class));
+    return jdbi.onDemand(Repository.class);
+    //        jdbi.onDemand(UsersDao.class),
+    //        jdbi.onDemand(ProjectsDao.class),
+    //        jdbi.onDemand(TasksDao.class),
+    //        jdbi.onDemand(ResourcesDao.class),
+    //        jdbi.onDemand(AssignmentDao.class),
+    //        jdbi.onDemand(SkillsDao.class));
   }
 }

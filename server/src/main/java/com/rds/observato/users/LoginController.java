@@ -1,7 +1,7 @@
 // package com.rds.observato.controller.users;
 //
 // import com.codahale.metrics.annotation.Timed;
-// import com.rds.observato.Repository;
+// import com.rds.observato.db.Repository;
 // import com.rds.observato.users.UserLoginRequest;
 // import com.rds.observato.users.UserView;
 // import jakarta.ws.rs.*;

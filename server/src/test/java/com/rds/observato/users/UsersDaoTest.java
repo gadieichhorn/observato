@@ -1,7 +1,7 @@
 package com.rds.observato.users;
 
 import com.rds.observato.DatabaseTestBase;
-import com.rds.observato.Repository;
+import com.rds.observato.db.Repository;
 import org.assertj.core.api.Assertions;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.Test;

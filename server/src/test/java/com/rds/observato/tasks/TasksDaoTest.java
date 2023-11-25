@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import com.google.common.collect.ImmutableMap;
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
-import com.rds.observato.Repository;
+import com.rds.observato.db.Repository;
 import java.util.Optional;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.junit.jupiter.api.Test;

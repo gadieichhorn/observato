@@ -5,6 +5,7 @@ import com.rds.observato.accounts.AccountsController;
 import com.rds.observato.assignments.AssignmentController;
 import com.rds.observato.assignments.AssignmentsController;
 import com.rds.observato.auth.*;
+import com.rds.observato.db.Repository;
 import com.rds.observato.extentions.*;
 import com.rds.observato.projects.ProjectController;
 import com.rds.observato.projects.ProjectsController;

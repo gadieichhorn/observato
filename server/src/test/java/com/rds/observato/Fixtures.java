@@ -2,6 +2,7 @@ package com.rds.observato;
 
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
+import com.rds.observato.db.Repository;
 import io.dropwizard.testing.ConfigOverride;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit5.DropwizardAppExtension;

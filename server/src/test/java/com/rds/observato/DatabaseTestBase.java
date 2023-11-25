@@ -1,6 +1,7 @@
 package com.rds.observato;
 
 import com.rds.observato.accounts.AccountView;
+import com.rds.observato.db.Repository;
 import java.sql.SQLException;
 import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;

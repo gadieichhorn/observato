@@ -1,9 +1,9 @@
 package com.rds.observato.extentions;
 
 import com.github.javafaker.Faker;
-import com.rds.observato.Repository;
 import com.rds.observato.auth.AuthService;
 import com.rds.observato.auth.Role;
+import com.rds.observato.db.Repository;
 import io.dropwizard.servlets.tasks.Task;
 import java.io.PrintWriter;
 import java.time.Instant;

@@ -1,6 +1,7 @@
 package com.rds.observato;
 
 import com.rds.observato.auth.AuthService;
+import com.rds.observato.db.Repository;
 import com.rds.observato.users.LoginView;
 import com.rds.observato.users.UserView;
 import java.security.NoSuchAlgorithmException;
