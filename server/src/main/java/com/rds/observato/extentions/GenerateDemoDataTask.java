@@ -44,6 +44,7 @@ public class GenerateDemoDataTask extends Task {
         .map(i -> repository.accounts().create(UUID.randomUUID().toString(), user))
         .peek(account -> log.info("ACCOUNT: {}", account))
         .peek(account -> repository.accounts().assignUserToAccount(user, account, Role.ADMIN))
+        .peek(account -> skills(account))
         .peek(
             account ->
                 repository
@@ -51,6 +52,16 @@ public class GenerateDemoDataTask extends Task {
                     .createUserTokenForAccount(
                         user, account, UUID.randomUUID().toString().replace("-", "")))
         .forEach(account -> resource(user, account));
+  }
+
+  private void skills(long account) {
+    Stream.iterate(0, i -> i + 1)
+        .limit(10)
+        .forEach(
+            i ->
+                repository
+                    .skills()
+                    .create(account, UUID.randomUUID().toString(), UUID.randomUUID().toString()));
   }
 
   private void resource(Long user, Long account) {

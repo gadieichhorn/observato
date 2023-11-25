@@ -2,6 +2,7 @@ package com.rds.observato.tasks;
 
 import static org.assertj.core.api.Assertions.*;
 
+import com.google.common.collect.ImmutableMap;
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
 import com.rds.observato.Repository;
@@ -45,7 +46,7 @@ class TasksDaoTest extends DatabaseTestBase {
     long account = Fixtures.createAccount(repository, user);
     long task = repository.tasks().create(account, "t001", "tasks");
     assertThat(repository.tasks().findAll(account))
-        .containsExactly(new TaskView(task, 0, account, "t001", "tasks"));
+        .containsExactly(new TaskView(task, 0, account, "t001", "tasks", ImmutableMap.of()));
   }
 
   @Test
@@ -55,7 +56,7 @@ class TasksDaoTest extends DatabaseTestBase {
     long task = repository.tasks().create(account, "t001", "tasks");
     repository.projects().assignTaskToProject(account, task, project);
     assertThat(repository.tasks().findAllByProject(account, project))
-        .containsExactly(new TaskView(task, 0, account, "t001", "tasks"));
+        .containsExactly(new TaskView(task, 0, account, "t001", "tasks", ImmutableMap.of()));
   }
 
   @Test

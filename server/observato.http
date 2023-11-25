@@ -16,14 +16,14 @@ Authorization: 33bbdf5379d2459f89be37013fb3a610
 GET localhost:8080/api/accounts/1
 Accept: application/json
 Content-Type: application/json
-Authorization: 33bbdf5379d2459f89be37013fb3a610
+Authorization: 022c0d408e1842629d67b405ee3bc56e
 
 ###
 
 POST localhost:8080/api/users
 Accept: application/json
 Content-Type: application/json
-Authorization: 33bbdf5379d2459f89be37013fb3a610
+Authorization: 022c0d408e1842629d67b405ee3bc56e
 
 {
   "name": "aaaa",
@@ -36,37 +36,51 @@ Authorization: 33bbdf5379d2459f89be37013fb3a610
 GET localhost:8080/api/users/1
 Accept: application/json
 Content-Type: application/json
-Authorization: 33bbdf5379d2459f89be37013fb3a610
+Authorization: 022c0d408e1842629d67b405ee3bc56e
 
 ###
 
-GET localhost:8080/api/projects/16/80
+GET localhost:8080/api/projects/39
 Accept: application/json
 Content-Type: application/json
-Authorization: 33bbdf5379d2459f89be37013fb3a610
+Authorization: 022c0d408e1842629d67b405ee3bc56e
 
 ###
 
-GET localhost:8080/api/projects/2
+GET localhost:8080/api/projects
 Accept: application/json
 Content-Type: application/json
-Authorization: 33bbdf5379d2459f89be37013fb3a610
+Authorization: 022c0d408e1842629d67b405ee3bc56e
+
+###
+
+GET localhost:8080/api/tasks
+Accept: application/json
+Content-Type: application/json
+Authorization: 022c0d408e1842629d67b405ee3bc56e
+
+###
+
+GET localhost:8080/api/tasks/192
+Accept: application/json
+Content-Type: application/json
+Authorization: 022c0d408e1842629d67b405ee3bc56e
 
 ###
 
 
-GET localhost:8080/api/resources/3
+GET localhost:8080/api/resources/
 Accept: application/json
 Content-Type: application/json
-Authorization: 33bbdf5379d2459f89be37013fb3a610
+Authorization: 022c0d408e1842629d67b405ee3bc56e
 
 ###
 
 
-GET localhost:8080/api/resources/1/1
+GET localhost:8080/api/resources/38
 Accept: application/json
 Content-Type: application/json
-Authorization: 33bbdf5379d2459f89be37013fb3a610
+Authorization: 022c0d408e1842629d67b405ee3bc56e
 
 
 ###
@@ -74,6 +88,6 @@ Authorization: 33bbdf5379d2459f89be37013fb3a610
 POST localhost:8081/tasks/demo
 Accept: application/json
 Content-Type: application/json
-Authorization: 33bbdf5379d2459f89be37013fb3a610
+Authorization: 022c0d408e1842629d67b405ee3bc56e
 
 ###

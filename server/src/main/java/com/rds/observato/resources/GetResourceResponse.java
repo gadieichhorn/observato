@@ -1,7 +1,9 @@
 package com.rds.observato.resources;
 
-public record GetResourceResponse(long id, long account, String name) {
+import java.util.Map;
+
+public record GetResourceResponse(long id, long account, String name, Map<String, Object> skills) {
   public static GetResourceResponse from(ResourceView view) {
-    return new GetResourceResponse(view.id(), view.account(), view.name());
+    return new GetResourceResponse(view.id(), view.account(), view.name(), view.skills());
   }
 }
