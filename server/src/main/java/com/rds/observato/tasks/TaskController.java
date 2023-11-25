@@ -36,7 +36,7 @@ public record TaskController(Repository repository) {
     return new UpdateTaskResponse(
         repository
             .tasks()
-            .updateTask(
+            .update(
                 user.account(),
                 request.id(),
                 request.revision(),

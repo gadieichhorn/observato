@@ -72,7 +72,7 @@ class TasksDaoTest extends DatabaseTestBase {
     assertThat(
             repository
                 .tasks()
-                .updateTask(
+                .update(
                     account,
                     task,
                     old.revision(),
@@ -96,8 +96,7 @@ class TasksDaoTest extends DatabaseTestBase {
 
     TaskView old = repository.tasks().finById(account, task).orElseThrow();
 
-    assertThat(
-            repository.tasks().updateTask(account, task, old.revision() + 1, "t011-1", "tasks-1"))
+    assertThat(repository.tasks().update(account, task, old.revision() + 1, "t011-1", "tasks-1"))
         .isEqualTo(0);
 
     Optional<TaskView> updated = repository.tasks().finById(account, task);
