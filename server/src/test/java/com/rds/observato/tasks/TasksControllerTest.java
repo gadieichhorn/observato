@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.testcontainers.shaded.com.google.common.collect.ImmutableMap;
 import org.testcontainers.shaded.com.google.common.collect.ImmutableSet;
 
 @ExtendWith(DropwizardExtensionsSupport.class)
@@ -51,6 +52,8 @@ class TasksControllerTest extends ControllerBaseTest {
                 .get(GetTasksResponse.class))
         .hasFieldOrPropertyWithValue(
             "tasks",
-            ImmutableSet.of(new GetTaskResponse(task, 0, account, "tsk0001", "description")));
+            ImmutableSet.of(
+                new GetTaskResponse(
+                    task, 0, account, "tsk0001", "description", ImmutableMap.of())));
   }
 }
