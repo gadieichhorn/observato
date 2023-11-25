@@ -36,7 +36,7 @@ public record AssignmentsController(Repository repository) {
     Authoriser.check(user, Role.ADMIN);
     Validator.checkIsNullOrNegative(user.account(), "account");
     return new GetAssignmentsResponse(
-        repository.assignments().getAll(user.account()).stream()
+        repository.assignments().findAll(user.account()).stream()
             .map(GetAssignmentResponse::from)
             .collect(Collectors.toSet()));
   }
