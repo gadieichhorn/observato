@@ -1,5 +1,6 @@
-package com.rds.observato.resources;
+package com.rds.observato.db;
 
+import com.rds.observato.resources.ResourceView;
 import java.util.Optional;
 import java.util.Set;
 import org.jdbi.v3.sqlobject.customizer.Bind;
