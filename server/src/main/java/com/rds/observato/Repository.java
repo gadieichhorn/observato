@@ -1,7 +1,7 @@
 package com.rds.observato;
 
-import com.rds.observato.accounts.AccountsDao;
 import com.rds.observato.assignments.AssignmentDao;
+import com.rds.observato.db.AccountsDao;
 import com.rds.observato.db.ProjectsDao;
 import com.rds.observato.db.ResourcesDao;
 import com.rds.observato.db.SkillsDao;
