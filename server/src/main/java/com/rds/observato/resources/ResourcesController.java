@@ -24,7 +24,7 @@ public record ResourcesController(Repository repository) {
   public GetResourcesResponse get(@Auth User user) {
     Authoriser.check(user, Role.ADMIN);
     return new GetResourcesResponse(
-        repository.resources().getAll(user.account()).stream()
+        repository.resources().findAll(user.account()).stream()
             .map(GetResourceResponse::from)
             .collect(ImmutableSet.toImmutableSet()));
   }

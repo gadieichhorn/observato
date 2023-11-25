@@ -1,7 +1,5 @@
 package com.rds.observato.resources;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.google.common.collect.ImmutableMap;
 import com.rds.observato.DatabaseTestBase;
 import com.rds.observato.Fixtures;
@@ -41,7 +39,7 @@ class ResourcesDaoTest extends DatabaseTestBase {
   void getAll() {
     long account = Fixtures.createAccount(repository, user);
     long resource = repository.resources().create(account, "r003");
-    Set<ResourceView> all = repository.resources().getAll(account);
+    Set<ResourceView> all = repository.resources().findAll(account);
     Assertions.assertThat(all)
         .contains(new ResourceView(resource, 0, account, "r003", ImmutableMap.of()));
   }
