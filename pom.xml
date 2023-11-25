@@ -13,6 +13,8 @@
 
     <modules>
         <module>server</module>
+        <module>engine</module>
+        <module>api</module>
     </modules>
 
     <properties>
