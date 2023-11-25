@@ -1,4 +1,4 @@
-package com.rds.observato.controller.login;
+package com.rds.observato.users;
 
 import com.rds.observato.DatabaseTestBase;
 import io.dropwizard.testing.junit5.DropwizardExtensionsSupport;
