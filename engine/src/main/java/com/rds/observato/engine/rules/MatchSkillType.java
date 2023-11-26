@@ -1,4 +1,4 @@
-package com.rds.observato.engine;
+package com.rds.observato.engine.rules;
 
 import com.rd.observato.api.Skill;
 import java.util.Map;

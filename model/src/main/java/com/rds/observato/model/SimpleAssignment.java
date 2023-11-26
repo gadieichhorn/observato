@@ -4,25 +4,12 @@ import com.rd.observato.api.Assignment;
 import com.rd.observato.api.Resource;
 import com.rd.observato.api.Task;
 import java.time.Instant;
+import java.util.Objects;
 
-public record SimpleAssignment() implements Assignment {
-  @Override
-  public Instant start() {
-    return null;
-  }
+public record SimpleAssignment(Task task, Resource resource, Instant start, Instant end)
+    implements Assignment {
 
-  @Override
-  public Instant end() {
-    return null;
-  }
-
-  @Override
-  public Task task() {
-    return null;
-  }
-
-  @Override
-  public Resource resource() {
-    return null;
+  public SimpleAssignment {
+    task = Objects.requireNonNull(task);
   }
 }

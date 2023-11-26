@@ -1,16 +1,18 @@
 package com.rds.observato.engine;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.google.common.collect.ImmutableMap;
 import com.rd.observato.api.Resource;
 import com.rd.observato.api.Rule;
 import com.rd.observato.api.Skill;
 import com.rd.observato.api.Task;
+import com.rds.observato.engine.rules.MatchSkillRule;
+import com.rds.observato.engine.rules.MatchSkillType;
 import com.rds.observato.model.SimpleResource;
 import com.rds.observato.model.SimpleSkill;
 import com.rds.observato.model.SimpleTask;
+import java.time.Duration;
 import org.junit.jupiter.api.Test;
 
 class MatchSkillRuleTest {
@@ -18,9 +20,9 @@ class MatchSkillRuleTest {
   Skill s1 = new SimpleSkill("S1", "S1");
   Skill s2 = new SimpleSkill("S2", "S2");
   Skill s3 = new SimpleSkill("S3", "S3");
-  Task t1 = new SimpleTask("T1", ImmutableMap.of(s1, 1));
-  Task t2 = new SimpleTask("T2", ImmutableMap.of(s2, 2));
-  Task t3 = new SimpleTask("T3", ImmutableMap.of(s3, 3));
+  Task t1 = new SimpleTask("T1", Duration.ofMinutes(30), ImmutableMap.of(s1, 1));
+  Task t2 = new SimpleTask("T2", Duration.ofMinutes(30), ImmutableMap.of(s2, 2));
+  Task t3 = new SimpleTask("T3", Duration.ofMinutes(30), ImmutableMap.of(s3, 3));
   Resource r1 = new SimpleResource("R1", ImmutableMap.of(s1, 10));
   Resource r2 = new SimpleResource("R1", ImmutableMap.of(s2, 2, s1, 1, s3, 3));
   Resource r3 = new SimpleResource("R1", ImmutableMap.of(s2, 0, s1, 0, s3, 0));
