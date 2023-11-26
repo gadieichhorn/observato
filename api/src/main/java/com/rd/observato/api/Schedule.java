@@ -1,6 +1,7 @@
 package com.rd.observato.api;
 
 import java.time.Instant;
+import java.util.Map;
 import java.util.Set;
 
 public interface Schedule {
@@ -11,7 +12,5 @@ public interface Schedule {
 
   Set<Task> tasks();
 
-  Set<Resource> resources();
-
-  Set<Assignment> assignments();
+  Map<Resource, Set<Assignment>> assignments();
 }

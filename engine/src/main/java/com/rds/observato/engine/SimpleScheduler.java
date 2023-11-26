@@ -4,39 +4,33 @@ import com.rd.observato.api.*;
 import com.rd.observato.api.Error;
 import io.vavr.control.Either;
 import io.vavr.control.Try;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class SimpleScheduler implements Scheduler {
-  @Override
-  public Either<Error, Assignment> valid(Policy policy, Task task, Schedule schedule) {
-    Set<Resource> collect =
-        schedule.resources().stream()
-            .filter(resource -> policy.rules().stream().anyMatch(rule -> rule.test(task, resource)))
-            .collect(Collectors.toSet());
-
-    return Either.left(new SchedulingError("no match"));
-  }
 
   @Override
   public Either<Error, Set<Resource>> candidates(Policy policy, Task task, Schedule schedule) {
-    return Try.of(
-            () ->
-                schedule.resources().stream()
-                    .filter(
-                        resource ->
-                            policy.rules().stream().anyMatch(rule -> rule.test(task, resource)))
-                    .collect(Collectors.toSet()))
+    return Try.of(() -> candidates(policy.rules(), task, schedule.assignments().keySet()))
         .toEither()
         .mapLeft(SchedulingError::from);
   }
 
-  public Either<Error, Set<Availability>> availability(
-      Task task, Resource candidate, Schedule schedule) {
+  private Set<Resource> candidates(Set<Rule> rules, Task task, Set<Resource> resources) {
+    return resources.stream()
+        .filter(resource -> rules.stream().anyMatch(rule -> rule.test(task, resource)))
+        .collect(Collectors.toSet());
+  }
 
-    //    schedule.assignments().stream().filter(assignment ->
-    // assignment.resource().equals(candidate)).map(assignment -> schedule.rules().stream().ma)
-
-    return Either.left(new SchedulingError("no availability"));
+  @Override
+  public Map<Resource, Set<Availability>> availability(Schedule schedule) {
+    return schedule.assignments().entrySet().stream()
+        .collect(
+            Collectors.toMap(
+                Map.Entry::getKey,
+                entry ->
+                    AvailabilityFinder.findGaps(
+                        schedule.start(), schedule.end(), entry.getValue())));
   }
 }
