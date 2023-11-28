@@ -32,7 +32,7 @@ class ResourceAvailabilityRuleTest {
   void smaller() {
     Task t1 = new SimpleTask("T1", Duration.ofHours(2), ImmutableMap.of());
     Availability a1 =
-            new SimpleAvailability(Instant.now(CLOCK), Instant.now(CLOCK).plus(1, ChronoUnit.HOURS));
+        new SimpleAvailability(Instant.now(CLOCK), Instant.now(CLOCK).plus(1, ChronoUnit.HOURS));
     assertThat(rule.test(t1, a1)).isFalse();
   }
 
@@ -40,7 +40,7 @@ class ResourceAvailabilityRuleTest {
   void same() {
     Task t1 = new SimpleTask("T1", Duration.ofHours(2), ImmutableMap.of());
     Availability a1 =
-            new SimpleAvailability(Instant.now(CLOCK), Instant.now(CLOCK).plus(2, ChronoUnit.HOURS));
+        new SimpleAvailability(Instant.now(CLOCK), Instant.now(CLOCK).plus(2, ChronoUnit.HOURS));
     assertThat(rule.test(t1, a1)).isTrue();
   }
 }
