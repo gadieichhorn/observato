@@ -4,18 +4,18 @@ import com.rd.observato.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public record MatchSkillRule(MatchSkillType type) implements Rule {
+public record ResourceAvailabilityRule() implements Rule {
 
-  private static final Logger log = LoggerFactory.getLogger(MatchSkillRule.class);
+  private static final Logger log = LoggerFactory.getLogger(ResourceAvailabilityRule.class);
 
   @Override
   public boolean test(Task task, Resource resource) {
-    return type.matcher.match(task.skills(), resource.skills());
+    return true;
   }
 
   @Override
   public boolean test(Task task, Availability availability) {
-    return true;
+    return availability.duration().compareTo(task.duration()) >= 0;
   }
 
   @Override
