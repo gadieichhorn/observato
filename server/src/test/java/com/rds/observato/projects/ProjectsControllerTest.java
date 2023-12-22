@@ -49,7 +49,7 @@ class ProjectsControllerTest extends ControllerBaseTest {
     Assertions.assertThat(repository.projects().findById(account, response.id()))
         .isPresent()
         .get()
-        .isInstanceOf(ProjectView.class)
+        .isInstanceOf(ProjectRecord.class)
         .hasFieldOrPropertyWithValue("name", "prj00003")
         .hasFieldOrPropertyWithValue("description", "description");
   }

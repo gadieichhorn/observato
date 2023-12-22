@@ -1,12 +1,10 @@
 package com.rds.observato.engine.rules;
 
 import com.rd.observato.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public record ResourceAvailabilityRule() implements Rule {
 
-  private static final Logger log = LoggerFactory.getLogger(ResourceAvailabilityRule.class);
+  //  private static final Logger log = LoggerFactory.getLogger(ResourceAvailabilityRule.class);
 
   @Override
   public boolean test(Task task, Resource resource) {

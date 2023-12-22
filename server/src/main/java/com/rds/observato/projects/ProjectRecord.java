@@ -2,7 +2,7 @@ package com.rds.observato.projects;
 
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
-public record ProjectView(
+public record ProjectRecord(
     @ColumnName("id") long id,
     @ColumnName("revision") int revision,
     @ColumnName("account_id") long account,

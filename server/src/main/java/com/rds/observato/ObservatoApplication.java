@@ -17,6 +17,8 @@ import com.rds.observato.tasks.TaskController;
 import com.rds.observato.tasks.TasksController;
 import com.rds.observato.users.UserController;
 import com.rds.observato.users.UsersController;
+import com.rds.observato.view.HomeViewController;
+import com.rds.observato.view.ProjectViewController;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.core.Application;
@@ -24,6 +26,7 @@ import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.jdbi3.JdbiFactory;
+import io.dropwizard.views.common.ViewBundle;
 import java.time.ZoneOffset;
 import java.util.TimeZone;
 
@@ -46,7 +49,7 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     //    bootstrap.addBundle(new AuthBundle());
     //    bootstrap.addBundle(new SwaggerBundle());
     //    bootstrap.addBundle(new PrometheusBundle());
-    //    bootstrap.addBundle(new ViewBundle<>());
+    bootstrap.addBundle(new ViewBundle<>());
     bootstrap.addBundle(new MigrationBundle());
     bootstrap.addBundle(new ExceptionsBundle());
     bootstrap.addBundle(new EnvironmentBundle());
@@ -99,6 +102,10 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     environment.jersey().register(new AssignmentsController(repository));
 
     // VIEWS
+    environment.jersey().register(new HomeViewController(repository));
+    environment.jersey().register(new ProjectViewController(repository));
+
+    // TASKS
     environment.admin().addTask(new GenerateDemoDataTask(repository, auth));
   }
 }

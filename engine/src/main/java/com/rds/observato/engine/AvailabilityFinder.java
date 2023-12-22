@@ -18,6 +18,7 @@ public class AvailabilityFinder {
             .filter(assignment -> assignment.end().isAfter(start))
             .sorted(Comparator.comparing(Assignment::start))
             .collect(Collectors.toList());
+
     collect.addFirst(new NoopAssignment(start.minus(1, ChronoUnit.HOURS), start));
     collect.addLast(new NoopAssignment(end, end.plus(1, ChronoUnit.HOURS)));
 

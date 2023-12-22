@@ -86,3 +86,8 @@ Content-Type: application/json
 Authorization: {{token}}
 
 ###
+
+GET localhost:3000/api/projects/view/2
+Authorization: {{token}}
+
+###

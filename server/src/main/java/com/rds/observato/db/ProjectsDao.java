@@ -1,6 +1,6 @@
 package com.rds.observato.db;
 
-import com.rds.observato.projects.ProjectView;
+import com.rds.observato.projects.ProjectRecord;
 import java.util.Optional;
 import java.util.Set;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -20,10 +20,10 @@ public interface ProjectsDao {
       @Bind("description") String description);
 
   @SqlQuery
-  Optional<ProjectView> findById(@Bind("account") long account, @Bind("id") long id);
+  Optional<ProjectRecord> findById(@Bind("account") long account, @Bind("id") long id);
 
   @SqlQuery
-  Set<ProjectView> findAll(@Bind("account") long account);
+  Set<ProjectRecord> findAll(@Bind("account") long account);
 
   @SqlUpdate()
   void assignTaskToProject(

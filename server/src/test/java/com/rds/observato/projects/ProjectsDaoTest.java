@@ -24,7 +24,7 @@ class ProjectsDaoTest extends DatabaseTestBase {
     Assertions.assertThat(repository.projects().findById(account, project))
         .isPresent()
         .get()
-        .isInstanceOf(ProjectView.class)
+        .isInstanceOf(ProjectRecord.class)
         .hasFieldOrPropertyWithValue("name", "proj004")
         .hasFieldOrPropertyWithValue("description", "some project");
   }
@@ -50,6 +50,6 @@ class ProjectsDaoTest extends DatabaseTestBase {
     long id = repository.projects().create(account, "proj005", "find all");
     Assertions.assertThat(repository.projects().findAll(account))
         .hasSizeGreaterThan(0)
-        .contains(new ProjectView(id, 0, account, "proj005", "find all"));
+        .contains(new ProjectRecord(id, 0, account, "proj005", "find all"));
   }
 }
