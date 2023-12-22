@@ -46,7 +46,7 @@ class TasksDaoTest extends DatabaseTestBase {
     long account = Fixtures.createAccount(repository, user);
     long task = repository.tasks().create(account, "t001", "tasks");
     assertThat(repository.tasks().findAll(account))
-        .containsExactly(new TaskView(task, 0, account, "t001", "tasks", ImmutableMap.of()));
+        .containsExactly(new TaskRecord(task, 0, account, "t001", "tasks", ImmutableMap.of()));
   }
 
   @Test
@@ -56,7 +56,7 @@ class TasksDaoTest extends DatabaseTestBase {
     long task = repository.tasks().create(account, "t001", "tasks");
     repository.projects().assignTaskToProject(account, task, project);
     assertThat(repository.tasks().findAllByProject(account, project))
-        .containsExactly(new TaskView(task, 0, account, "t001", "tasks", ImmutableMap.of()));
+        .containsExactly(new TaskRecord(task, 0, account, "t001", "tasks", ImmutableMap.of()));
   }
 
   @Test
@@ -67,7 +67,7 @@ class TasksDaoTest extends DatabaseTestBase {
             .tasks()
             .create(account, "update", "update is not locked when revision didnt change");
 
-    TaskView old = repository.tasks().finById(account, task).orElseThrow();
+    TaskRecord old = repository.tasks().finById(account, task).orElseThrow();
 
     assertThat(
             repository
@@ -80,7 +80,7 @@ class TasksDaoTest extends DatabaseTestBase {
                     "updated description when not locked"))
         .isEqualTo(1);
 
-    Optional<TaskView> updated = repository.tasks().finById(account, task);
+    Optional<TaskRecord> updated = repository.tasks().finById(account, task);
     assertThat(updated)
         .isPresent()
         .get()
@@ -94,12 +94,12 @@ class TasksDaoTest extends DatabaseTestBase {
     long account = Fixtures.createAccount(repository, user);
     long task = repository.tasks().create(account, "locked", "locking is fun");
 
-    TaskView old = repository.tasks().finById(account, task).orElseThrow();
+    TaskRecord old = repository.tasks().finById(account, task).orElseThrow();
 
     assertThat(repository.tasks().update(account, task, old.revision() + 1, "t011-1", "tasks-1"))
         .isEqualTo(0);
 
-    Optional<TaskView> updated = repository.tasks().finById(account, task);
+    Optional<TaskRecord> updated = repository.tasks().finById(account, task);
 
     assertThat(updated)
         .isPresent()

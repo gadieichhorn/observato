@@ -34,7 +34,7 @@ class TasksControllerTest extends ControllerBaseTest {
     Assertions.assertThat(repository.tasks().finById(account, response.id()))
         .isPresent()
         .get()
-        .isInstanceOf(TaskView.class)
+        .isInstanceOf(TaskRecord.class)
         .hasFieldOrPropertyWithValue("id", response.id());
   }
 

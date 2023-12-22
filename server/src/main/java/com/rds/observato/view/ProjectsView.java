@@ -12,7 +12,7 @@ public class ProjectsView extends View {
     this.projects = projects;
   }
 
-  public Set<ProjectRecord> getProjects() {
-    return projects;
-  }
+    public Set<ProjectRecord> getProjects() {
+      return projects;
+    }
 }

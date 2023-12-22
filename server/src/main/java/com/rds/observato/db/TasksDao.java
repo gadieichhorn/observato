@@ -1,6 +1,6 @@
 package com.rds.observato.db;
 
-import com.rds.observato.tasks.TaskView;
+import com.rds.observato.tasks.TaskRecord;
 import java.util.Optional;
 import java.util.Set;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -19,13 +19,13 @@ public interface TasksDao {
       @Bind("description") String description);
 
   @SqlQuery
-  Set<TaskView> findAll(@Bind("account") long account);
+  Set<TaskRecord> findAll(@Bind("account") long account);
 
   @SqlQuery
-  Set<TaskView> findAllByProject(@Bind("account") long account, @Bind("project") long project);
+  Set<TaskRecord> findAllByProject(@Bind("account") long account, @Bind("project") long project);
 
   @SqlQuery
-  Optional<TaskView> finById(@Bind("account") long account, @Bind("id") long id);
+  Optional<TaskRecord> finById(@Bind("account") long account, @Bind("id") long id);
 
   @SqlUpdate
   int update(

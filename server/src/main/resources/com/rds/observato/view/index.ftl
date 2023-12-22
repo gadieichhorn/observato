@@ -18,14 +18,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a hx-get="/api/accounts/view/2"
+                        <a hx-get="/api/accounts/view"
                            hx-target="#content"
                            placeholder="Search..."
                            class="nav-link active"
                            aria-current="page">Accounts</a>
                     </li>
                     <li class="nav-item">
-                        <a hx-get="/api/tasks/view/2"
+                        <a hx-get="/api/tasks/view"
                            hx-target="#content"
                            placeholder="Search..."
                            class="nav-link active"

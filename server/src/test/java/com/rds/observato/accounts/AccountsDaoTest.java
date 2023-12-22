@@ -32,7 +32,7 @@ class AccountsDaoTest extends DatabaseTestBase {
     assertThat(repository.accounts().findById(id))
         .isPresent()
         .get()
-        .isInstanceOf(AccountView.class)
+        .isInstanceOf(AccountRecord.class)
         .hasFieldOrPropertyWithValue("name", "a013")
         .hasFieldOrPropertyWithValue("owner", user);
   }

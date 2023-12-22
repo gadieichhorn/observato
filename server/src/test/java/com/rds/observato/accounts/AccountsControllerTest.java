@@ -25,7 +25,7 @@ class AccountsControllerTest extends ControllerBaseTest {
     Assertions.assertThat(repository.accounts().findById(response.id()))
         .isPresent()
         .get()
-        .isInstanceOf(AccountView.class)
+        .isInstanceOf(AccountRecord.class)
         .hasFieldOrPropertyWithValue("id", response.id())
         .hasFieldOrPropertyWithValue("revision", 0)
         .hasFieldOrPropertyWithValue("name", "acc0003");

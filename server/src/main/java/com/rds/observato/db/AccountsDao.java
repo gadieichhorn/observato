@@ -1,6 +1,6 @@
 package com.rds.observato.db;
 
-import com.rds.observato.accounts.AccountView;
+import com.rds.observato.accounts.AccountRecord;
 import com.rds.observato.accounts.TokenView;
 import com.rds.observato.accounts.UserAccountView;
 import com.rds.observato.auth.Role;
@@ -20,7 +20,7 @@ public interface AccountsDao {
   long create(@Bind("name") String name, @Bind("owner") long owner);
 
   @SqlQuery
-  Optional<AccountView> findById(@Bind("id") long id);
+  Optional<AccountRecord> findById(@Bind("id") long id);
 
   @SqlUpdate
   void assignUserToAccount(
@@ -28,6 +28,9 @@ public interface AccountsDao {
 
   @SqlQuery
   Set<UserAccountView> getAccountByUser(@Bind("user") long user, @Bind("account") long account);
+
+  @SqlQuery
+  Set<UserAccountView> getAccountsByUser(@Bind("user") long user);
 
   @SqlQuery
   Set<UserAccountView> getUsersByAccount(@Bind("account") long account);

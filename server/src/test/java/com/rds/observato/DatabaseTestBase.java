@@ -1,6 +1,6 @@
 package com.rds.observato;
 
-import com.rds.observato.accounts.AccountView;
+import com.rds.observato.accounts.AccountRecord;
 import com.rds.observato.db.Repository;
 import java.sql.SQLException;
 import org.flywaydb.core.Flyway;
@@ -37,7 +37,7 @@ public class DatabaseTestBase {
           Jdbi.create(dataSource.getConnection())
               .installPlugin(new PostgresPlugin())
               .installPlugin(new SqlObjectPlugin())
-              .registerRowMapper(ConstructorMapper.factory(AccountView.class));
+              .registerRowMapper(ConstructorMapper.factory(AccountRecord.class));
       return jdbi;
     } catch (SQLException e) {
       throw new RuntimeException(e);

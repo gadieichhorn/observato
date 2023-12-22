@@ -9,7 +9,7 @@ public record GetTaskResponse(
     String name,
     String description,
     Map<String, Object> skills) {
-  public static GetTaskResponse from(TaskView view) {
+  public static GetTaskResponse from(TaskRecord view) {
     return new GetTaskResponse(
         view.id(), view.revision(), view.account(), view.name(), view.description(), view.skills());
   }

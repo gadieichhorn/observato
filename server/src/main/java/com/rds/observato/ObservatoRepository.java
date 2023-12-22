@@ -1,6 +1,6 @@
 package com.rds.observato;
 
-import com.rds.observato.accounts.AccountView;
+import com.rds.observato.accounts.AccountRecord;
 import com.rds.observato.accounts.TokenView;
 import com.rds.observato.accounts.UserAccountView;
 import com.rds.observato.assignments.AssignmentView;
@@ -9,7 +9,7 @@ import com.rds.observato.db.AssignmentDao;
 import com.rds.observato.projects.ProjectRecord;
 import com.rds.observato.resources.ResourceView;
 import com.rds.observato.skills.SkillView;
-import com.rds.observato.tasks.TaskView;
+import com.rds.observato.tasks.TaskRecord;
 import com.rds.observato.users.LoginView;
 import com.rds.observato.users.UserRoleView;
 import com.rds.observato.users.UserRecord;
@@ -45,13 +45,13 @@ public record ObservatoRepository(
         .installPlugin(new SqlObjectPlugin())
         .installPlugin(new Jackson2Plugin())
         .installPlugin(new GuavaPlugin())
-        .registerRowMapper(ConstructorMapper.factory(TaskView.class))
+        .registerRowMapper(ConstructorMapper.factory(TaskRecord.class))
         .registerRowMapper(ConstructorMapper.factory(UserRecord.class))
         .registerRowMapper(ConstructorMapper.factory(LoginView.class))
         .registerRowMapper(ConstructorMapper.factory(SkillView.class))
         .registerRowMapper(ConstructorMapper.factory(TokenView.class))
         .registerRowMapper(ConstructorMapper.factory(ProjectRecord.class))
-        .registerRowMapper(ConstructorMapper.factory(AccountView.class))
+        .registerRowMapper(ConstructorMapper.factory(AccountRecord.class))
         .registerRowMapper(ConstructorMapper.factory(ResourceView.class))
         .registerRowMapper(ConstructorMapper.factory(UserRoleView.class))
         .registerRowMapper(ConstructorMapper.factory(AssignmentView.class))
