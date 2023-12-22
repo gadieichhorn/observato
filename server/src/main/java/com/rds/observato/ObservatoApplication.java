@@ -113,6 +113,7 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     environment.jersey().register(new AccountViewController(repository));
     environment.jersey().register(new AccountsViewController(repository));
 
+    environment.jersey().register(new ResourceViewController(repository));
     environment.jersey().register(new ResourcesViewController(repository));
 
     // TASKS
