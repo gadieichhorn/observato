@@ -3,7 +3,7 @@ package com.rds.observato;
 import com.rds.observato.auth.AuthService;
 import com.rds.observato.db.Repository;
 import com.rds.observato.users.LoginView;
-import com.rds.observato.users.UserView;
+import com.rds.observato.users.UserRecord;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Optional;
@@ -47,11 +47,11 @@ class UsersDaoTest extends DatabaseTestBase {
   void createAndGet() throws InvalidKeySpecException, NoSuchAlgorithmException {
     long id =
         repository.users().create("account3", "gadi@observato.com".getBytes(), "secret".getBytes());
-    Optional<UserView> user = repository.users().findById(id);
+    Optional<UserRecord> user = repository.users().findById(id);
     Assertions.assertThat(user)
         .isPresent()
         .get()
-        .isInstanceOf(UserView.class)
+        .isInstanceOf(UserRecord.class)
         .hasFieldOrPropertyWithValue("name", "account3");
   }
 

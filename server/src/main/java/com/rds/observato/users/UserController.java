@@ -19,7 +19,7 @@ public record UserController(Repository repository) {
   private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
   @GET
-  public Optional<UserView> getOne(@Auth User user, @PathParam("id") long id) {
+  public Optional<UserRecord> getOne(@Auth User user, @PathParam("id") long id) {
     Authoriser.check(user, Role.ADMIN);
     log.info("ID: {}", id);
     return repository.users().findById(id);

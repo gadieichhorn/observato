@@ -19,6 +19,8 @@ import com.rds.observato.users.UserController;
 import com.rds.observato.users.UsersController;
 import com.rds.observato.view.HomeViewController;
 import com.rds.observato.view.ProjectViewController;
+import com.rds.observato.view.ProjectsViewController;
+import com.rds.observato.view.UserViewController;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.core.Application;
@@ -103,7 +105,9 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
 
     // VIEWS
     environment.jersey().register(new HomeViewController(repository));
+    environment.jersey().register(new UserViewController(repository));
     environment.jersey().register(new ProjectViewController(repository));
+    environment.jersey().register(new ProjectsViewController(repository));
 
     // TASKS
     environment.admin().addTask(new GenerateDemoDataTask(repository, auth));

@@ -12,7 +12,7 @@ import com.rds.observato.skills.SkillView;
 import com.rds.observato.tasks.TaskView;
 import com.rds.observato.users.LoginView;
 import com.rds.observato.users.UserRoleView;
-import com.rds.observato.users.UserView;
+import com.rds.observato.users.UserRecord;
 import com.rds.observato.validation.Validator;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.reflect.ConstructorMapper;
@@ -46,7 +46,7 @@ public record ObservatoRepository(
         .installPlugin(new Jackson2Plugin())
         .installPlugin(new GuavaPlugin())
         .registerRowMapper(ConstructorMapper.factory(TaskView.class))
-        .registerRowMapper(ConstructorMapper.factory(UserView.class))
+        .registerRowMapper(ConstructorMapper.factory(UserRecord.class))
         .registerRowMapper(ConstructorMapper.factory(LoginView.class))
         .registerRowMapper(ConstructorMapper.factory(SkillView.class))
         .registerRowMapper(ConstructorMapper.factory(TokenView.class))

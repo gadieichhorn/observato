@@ -1,7 +1,7 @@
 package com.rds.observato.db;
 
 import com.rds.observato.users.LoginView;
-import com.rds.observato.users.UserView;
+import com.rds.observato.users.UserRecord;
 import java.util.Optional;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
@@ -17,7 +17,7 @@ public interface UsersDao {
   long create(@Bind("name") String name, @Bind("salt") byte[] salt, @Bind("secret") byte[] secret);
 
   @SqlQuery
-  Optional<UserView> findById(@Bind("id") long id);
+  Optional<UserRecord> findById(@Bind("id") long id);
 
   @SqlQuery
   Optional<LoginView> findByName(@Bind("name") String name);
