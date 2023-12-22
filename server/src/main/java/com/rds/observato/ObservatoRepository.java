@@ -7,7 +7,7 @@ import com.rds.observato.assignments.AssignmentView;
 import com.rds.observato.db.*;
 import com.rds.observato.db.AssignmentDao;
 import com.rds.observato.projects.ProjectRecord;
-import com.rds.observato.resources.ResourceView;
+import com.rds.observato.resources.ResourceRecord;
 import com.rds.observato.skills.SkillView;
 import com.rds.observato.tasks.TaskRecord;
 import com.rds.observato.users.LoginView;
@@ -52,7 +52,7 @@ public record ObservatoRepository(
         .registerRowMapper(ConstructorMapper.factory(TokenView.class))
         .registerRowMapper(ConstructorMapper.factory(ProjectRecord.class))
         .registerRowMapper(ConstructorMapper.factory(AccountRecord.class))
-        .registerRowMapper(ConstructorMapper.factory(ResourceView.class))
+        .registerRowMapper(ConstructorMapper.factory(ResourceRecord.class))
         .registerRowMapper(ConstructorMapper.factory(UserRoleView.class))
         .registerRowMapper(ConstructorMapper.factory(AssignmentView.class))
         .registerRowMapper(ConstructorMapper.factory(UserAccountView.class));

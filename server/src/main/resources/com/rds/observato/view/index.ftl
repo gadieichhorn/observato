@@ -9,7 +9,7 @@
 <#macro page_nav>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Observato</a>
+            <a class="navbar-brand" href="/api/home/view">Observato</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
                            aria-current="page">Tasks</a>
                     </li>
                     <li class="nav-item">
-                        <a hx-get="/api/resources/view/2"
+                        <a hx-get="/api/resources/view"
                            hx-target="#content"
                            placeholder="Search..."
                            class="nav-link active"

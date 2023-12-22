@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="" type="com.rds.observato.view.AccountsView" -->
 <h1>Accounts</h1>
 
-<table class="table">
+<table class="table table-hover">
     <thead>
     <tr>
         <th scope="col">Account</th>

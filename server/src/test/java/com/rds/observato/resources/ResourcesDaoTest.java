@@ -39,8 +39,8 @@ class ResourcesDaoTest extends DatabaseTestBase {
   void getAll() {
     long account = Fixtures.createAccount(repository, user);
     long resource = repository.resources().create(account, "r003");
-    Set<ResourceView> all = repository.resources().findAll(account);
+    Set<ResourceRecord> all = repository.resources().findAll(account);
     Assertions.assertThat(all)
-        .contains(new ResourceView(resource, 0, account, "r003", ImmutableMap.of()));
+        .contains(new ResourceRecord(resource, 0, account, "r003", ImmutableMap.of()));
   }
 }

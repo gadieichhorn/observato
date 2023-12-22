@@ -6,7 +6,7 @@ const {createProxyMiddleware} = require("http-proxy-middleware");
 const https = require("https");
 const {json} = require("express");
 
-let token = 'D43A9CA45A0D9CA831E3E212E69C019A';
+let token = 'BA99B5B2EEFCFADEF52D6824BCB31391';
 
 const app = express();
 
