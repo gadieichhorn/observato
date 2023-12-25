@@ -10,14 +10,13 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("projects/view")
+@Path("schedule/view")
 @Produces(MediaType.TEXT_HTML)
-public record ProjectsViewController(Repository repository) {
+public record ScheduleViewController(Repository repository) {
 
   @GET
-  public ProjectsView getProjects(@Auth User user) throws InterruptedException {
+  public ScheduleView getProjects(@Auth User user) {
     Authoriser.check(user, Role.ADMIN);
-    Thread.sleep(1000);
-    return new ProjectsView(repository.projects().findAll(user.account()));
+    return new ScheduleView();
   }
 }

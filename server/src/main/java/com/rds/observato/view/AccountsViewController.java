@@ -15,8 +15,9 @@ import jakarta.ws.rs.core.MediaType;
 public record AccountsViewController(Repository repository) {
 
   @GET
-  public AccountsView getProjects(@Auth User user) {
+  public AccountsView getProjects(@Auth User user) throws InterruptedException {
     Authoriser.check(user, Role.ADMIN);
+    Thread.sleep(1000);
     return new AccountsView(repository.accounts().getAccountsByUser(user.id()));
   }
 }

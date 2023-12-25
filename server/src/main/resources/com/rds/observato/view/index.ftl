@@ -1,5 +1,5 @@
 <#macro page_head>
-    <title>Observato</title>
+    <title xmlns="http://www.w3.org/1999/html">Observato</title>
 </#macro>
 
 <#macro page_body>
@@ -20,38 +20,50 @@
                     <li class="nav-item">
                         <a hx-get="/api/accounts/view"
                            hx-target="#content"
-                           placeholder="Search..."
+                           hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">Accounts</a>
                     </li>
                     <li class="nav-item">
                         <a hx-get="/api/tasks/view"
                            hx-target="#content"
-                           placeholder="Search..."
+                           hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">Tasks</a>
                     </li>
                     <li class="nav-item">
                         <a hx-get="/api/resources/view"
                            hx-target="#content"
-                           placeholder="Search..."
+                           hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">Resources</a>
                     </li>
                     <li class="nav-item">
                         <a hx-get="/api/users/view/2"
                            hx-target="#content"
-                           placeholder="Search..."
+                           hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">User</a>
                     </li>
                     <li class="nav-item">
                         <a hx-get="/api/projects/view"
                            hx-target="#content"
-                           placeholder="Search..."
+                           hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">Projects</a>
                     </li>
+                    <li class="nav-item">
+                        <a hx-get="/api/schedule/view"
+                           hx-target="#content"
+                           hx-indicator="#spinner"
+                           class="nav-link active"
+                           aria-current="page">Schedule</a>
+                    </li>
+<#--                    <li id="spinner">-->
+<#--                        <div class="spinner-grow htmx-indicator" role="status">-->
+<#--                            <span class="sr-only"></span>-->
+<#--                        </div>-->
+<#--                    </li>-->
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -71,9 +83,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
               crossorigin="anonymous">
-        <script src="https://unpkg.com/htmx.org@1.9.10"
-                integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
-                crossorigin="anonymous"></script>
         <@page_head/>
     </head>
     <body>
@@ -82,6 +91,10 @@
         <div class="container" id="content">
             <@page_body/>
         </div>
+
+        <script src="https://unpkg.com/htmx.org@1.9.10"
+                integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+                crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
                 crossorigin="anonymous"></script>
