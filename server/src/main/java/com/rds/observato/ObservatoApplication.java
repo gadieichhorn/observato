@@ -18,6 +18,7 @@ import com.rds.observato.tasks.TasksController;
 import com.rds.observato.users.UserController;
 import com.rds.observato.users.UsersController;
 import com.rds.observato.view.*;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.core.Application;
@@ -53,7 +54,7 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
     bootstrap.addBundle(new ExceptionsBundle());
     bootstrap.addBundle(new EnvironmentBundle());
     bootstrap.addBundle(new ObjectMapperBundle());
-    //    bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
+    bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
   }
 
   @Override

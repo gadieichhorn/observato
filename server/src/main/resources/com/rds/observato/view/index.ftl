@@ -59,11 +59,6 @@
                            class="nav-link active"
                            aria-current="page">Schedule</a>
                     </li>
-<#--                    <li id="spinner">-->
-<#--                        <div class="spinner-grow htmx-indicator" role="status">-->
-<#--                            <span class="sr-only"></span>-->
-<#--                        </div>-->
-<#--                    </li>-->
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -78,12 +73,13 @@
     <!doctype html>
     <html>
     <head>
+        <@page_head/>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
               crossorigin="anonymous">
-        <@page_head/>
+        <link rel="stylesheet" href="/styles.css">
     </head>
     <body>
     <div class="container">
@@ -91,7 +87,6 @@
         <div class="container" id="content">
             <@page_body/>
         </div>
-
         <script src="https://unpkg.com/htmx.org@1.9.10"
                 integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
                 crossorigin="anonymous"></script>
