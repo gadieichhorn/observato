@@ -25,7 +25,7 @@ public record ProjectsController(Repository repository) {
   }
 
   @GET
-  public ProjectsView getProjects(@Auth User user) throws InterruptedException {
+  public ProjectsView get(@Auth User user) throws InterruptedException {
     Authoriser.check(user, Role.ADMIN);
     Thread.sleep(100);
     return new ProjectsView(repository.projects().findAll(user.account()));

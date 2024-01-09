@@ -18,7 +18,7 @@ import jakarta.ws.rs.core.Response;
 public record TaskController(Repository repository) {
 
   @GET
-  public TaskView getProject(@Auth User user, @PathParam("task") long task) {
+  public TaskView get(@Auth User user, @PathParam("task") long task) {
     Authoriser.check(user, Role.ADMIN);
     return repository
         .tasks()

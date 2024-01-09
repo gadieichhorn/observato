@@ -2,6 +2,7 @@ package com.rds.observato.projects;
 
 import com.rds.observato.ControllerBaseTest;
 import com.rds.observato.auth.Role;
+import com.rds.observato.view.ProjectView;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.core.HttpHeaders;
 import java.util.UUID;
@@ -23,10 +24,11 @@ class ProjectControllerTest extends ControllerBaseTest {
             EXT.target("/projects/%d".formatted(project))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
-                .get(GetProjectResponse.class))
+//                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+                .get(ProjectView.class))
         .isNotNull()
-        .isInstanceOf(GetProjectResponse.class)
-        .hasFieldOrPropertyWithValue("id", project)
-        .hasFieldOrPropertyWithValue("name", "prj0001");
+        .isInstanceOf(ProjectView.class)
+        .hasFieldOrPropertyWithValue(
+            "project", new ProjectRecord(project, 0, account, "prj0001", "description"));
   }
 }

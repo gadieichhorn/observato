@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
 public record ProjectController(Repository repository) {
 
   @GET
-  public ProjectView getProject(@Auth User user, @PathParam("project") long project) {
+  public ProjectView get(@Auth User user, @PathParam("project") long project) {
     Authoriser.check(user, Role.ADMIN);
     return repository
         .projects()

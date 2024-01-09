@@ -26,7 +26,7 @@ public record TasksController(Repository repository) {
   }
 
   @GET
-  public TasksView getProjects(@Auth User user) {
+  public TasksView get(@Auth User user) {
     Authoriser.check(user, Role.ADMIN);
     return new TasksView(repository.tasks().findAll(user.account()));
   }

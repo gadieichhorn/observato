@@ -14,9 +14,9 @@ import jakarta.ws.rs.core.MediaType;
 @Path("accounts/{id}")
 @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 public record AccountController(Repository repository) {
-  
+
   @GET
-  public AccountView getProject(@Auth User user, @PathParam("id") long id) {
+  public AccountView get(@Auth User user, @PathParam("id") long id) {
     Authoriser.check(user, Role.ADMIN);
     return repository.accounts().findById(id).map(AccountView::new).orElseThrow();
   }

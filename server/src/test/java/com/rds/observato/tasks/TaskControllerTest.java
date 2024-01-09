@@ -2,13 +2,16 @@ package com.rds.observato.tasks;
 
 import com.rds.observato.ControllerBaseTest;
 import com.rds.observato.auth.Role;
+import com.rds.observato.view.TaskView;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import java.util.UUID;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.shaded.com.google.common.collect.ImmutableMap;
 
 class TaskControllerTest extends ControllerBaseTest {
 
@@ -31,11 +34,12 @@ class TaskControllerTest extends ControllerBaseTest {
             EXT.target("/tasks/%d".formatted(task))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
-                .get(GetTaskResponse.class))
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+                .get(TaskView.class))
         .isNotNull()
-        .isInstanceOf(GetTaskResponse.class)
-        .hasFieldOrPropertyWithValue("id", task)
-        .hasFieldOrPropertyWithValue("name", "tsk0001");
+        .isInstanceOf(TaskView.class)
+        .hasFieldOrPropertyWithValue(
+            "task", new TaskRecord(task, 0, account, "tsk0001", "description", ImmutableMap.of()));
   }
 
   @Test

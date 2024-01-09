@@ -2,6 +2,7 @@ package com.rds.observato.accounts;
 
 import com.rds.observato.ControllerBaseTest;
 import com.rds.observato.auth.Role;
+import com.rds.observato.view.AccountView;
 import io.dropwizard.testing.junit5.ResourceExtension;
 import jakarta.ws.rs.core.HttpHeaders;
 import org.assertj.core.api.Assertions;
@@ -21,10 +22,9 @@ class AccountControllerTest extends ControllerBaseTest {
             EXT.target("/accounts/%d".formatted(account))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
-                .get(GetAccountResponse.class))
+                .get(AccountView.class))
         .isNotNull()
-        .isInstanceOf(GetAccountResponse.class)
-        .hasFieldOrPropertyWithValue("name", "acc0001")
-        .hasFieldOrPropertyWithValue("owner", user);
+        .isInstanceOf(AccountView.class)
+        .hasFieldOrPropertyWithValue("account", new AccountRecord(account, 0, "acc0001", user));
   }
 }
