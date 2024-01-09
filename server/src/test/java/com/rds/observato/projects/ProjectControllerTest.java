@@ -24,7 +24,7 @@ class ProjectControllerTest extends ControllerBaseTest {
             EXT.target("/projects/%d".formatted(project))
                 .request()
                 .header(HttpHeaders.AUTHORIZATION, token)
-//                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
+                //                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON)
                 .get(ProjectView.class))
         .isNotNull()
         .isInstanceOf(ProjectView.class)
