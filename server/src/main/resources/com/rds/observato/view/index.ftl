@@ -90,7 +90,8 @@
     <body>
     <div class="container">
         <@page_nav/>
-        <div id="spinner" class="htmx-indicator spinner-border" role="status">
+        <div id="spinner" class="htmx-indicator spinner-border"
+             role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
         <div class="container" id="content">
