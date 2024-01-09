@@ -9,7 +9,7 @@
 <#macro page_nav>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/api/home/view">Observato</a>
+            <a class="navbar-brand" href="/api/home">Observato</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -90,6 +90,9 @@
     <body>
     <div class="container">
         <@page_nav/>
+        <div id="spinner" class="htmx-indicator spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
         <div class="container" id="content">
             <@page_body/>
         </div>

@@ -14,7 +14,8 @@
     <#list  tasks as x>
         <tr>
             <th scope="row">
-                <a hx-get="/api/tasks/view/${x.id()}"
+                <a hx-get="/api/tasks/${x.id()}"
+                   hx-headers='{"Accept": "text/html"}'
                    hx-target="#content"
                    placeholder="Search..."
                    class="nav-link active"

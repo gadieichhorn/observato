@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 
 @Timed
 @Path("tasks/{task}")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 public record TaskController(Repository repository) {
 
   @GET

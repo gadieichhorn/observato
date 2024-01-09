@@ -14,7 +14,8 @@
     <#list  resources as x>
         <tr>
             <th scope="row">
-                <a hx-get="/api/resources/view/${x.id()}"
+                <a hx-get="/api/resources/${x.id()}"
+                   hx-headers='{"Accept": "text/html"}'
                    hx-target="#content"
                    placeholder="Search..."
                    class="nav-link active"

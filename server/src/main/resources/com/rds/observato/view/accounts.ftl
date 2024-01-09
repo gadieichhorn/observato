@@ -13,6 +13,7 @@
         <tr>
             <th scope="row">
                 <a hx-get="/api/accounts/${x.account()}"
+                   hx-headers='{"Accept": "text/html"}'
                    hx-target="#content"
                    class="nav-link active"
                    aria-current="page">${x.account()}</a>

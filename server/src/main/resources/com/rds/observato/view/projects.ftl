@@ -14,7 +14,8 @@
     <#list  projects as x>
         <tr>
             <th scope="row">
-                <a hx-get="/api/projects/view/${x.id()}"
+                <a hx-get="/api/projects/${x.id()}"
+                   hx-headers='{"Accept": "text/html"}'
                    hx-target="#content"
                    placeholder="Search..."
                    class="nav-link active"
