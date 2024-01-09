@@ -6,14 +6,14 @@ import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import com.rds.observato.db.Repository;
 import com.rds.observato.validation.Validator;
+import com.rds.observato.view.TasksView;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import java.util.stream.Collectors;
 
 @Timed
 @Path("tasks")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 public record TasksController(Repository repository) {
 
   @POST
@@ -26,11 +26,8 @@ public record TasksController(Repository repository) {
   }
 
   @GET
-  public GetTasksResponse get(@Auth User user) {
+  public TasksView getProjects(@Auth User user) {
     Authoriser.check(user, Role.ADMIN);
-    return new GetTasksResponse(
-        repository.tasks().findAll(user.account()).stream()
-            .map(GetTaskResponse::from)
-            .collect(Collectors.toSet()));
+    return new TasksView(repository.tasks().findAll(user.account()));
   }
 }

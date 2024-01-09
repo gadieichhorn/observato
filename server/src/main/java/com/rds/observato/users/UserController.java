@@ -5,23 +5,25 @@ import com.rds.observato.auth.Authoriser;
 import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import com.rds.observato.db.Repository;
+import com.rds.observato.view.UserView;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.ws.rs.core.Response;
 
 @Timed
 @Path("users/{id}")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 public record UserController(Repository repository) {
-  private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
   @GET
-  public Optional<UserRecord> getOne(@Auth User user, @PathParam("id") long id) {
+  public UserView get(@Auth User user, @PathParam("id") long id) {
     Authoriser.check(user, Role.ADMIN);
-    log.info("ID: {}", id);
-    return repository.users().findById(id);
+    return repository
+        .users()
+        .findById(id)
+        .map(UserView::new)
+        .orElseThrow(
+            () -> new WebApplicationException("User not found", Response.Status.NOT_FOUND));
   }
 }

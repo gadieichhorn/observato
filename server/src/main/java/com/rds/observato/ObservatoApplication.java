@@ -7,6 +7,7 @@ import com.rds.observato.assignments.AssignmentsController;
 import com.rds.observato.auth.*;
 import com.rds.observato.db.Repository;
 import com.rds.observato.extentions.*;
+import com.rds.observato.home.HomeViewController;
 import com.rds.observato.projects.ProjectController;
 import com.rds.observato.projects.ProjectsController;
 import com.rds.observato.resources.ResourceController;
@@ -17,7 +18,6 @@ import com.rds.observato.tasks.TaskController;
 import com.rds.observato.tasks.TasksController;
 import com.rds.observato.users.UserController;
 import com.rds.observato.users.UsersController;
-import com.rds.observato.view.*;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
@@ -45,10 +45,6 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
   @Override
   public void initialize(Bootstrap<ObservatoConfiguration> bootstrap) {
     super.initialize(bootstrap);
-
-    //    bootstrap.addBundle(new AuthBundle());
-    //    bootstrap.addBundle(new SwaggerBundle());
-    //    bootstrap.addBundle(new PrometheusBundle());
     bootstrap.addBundle(new ViewBundle<>());
     bootstrap.addBundle(new MigrationBundle());
     bootstrap.addBundle(new ExceptionsBundle());
@@ -72,11 +68,9 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
             new AuthDynamicFeature(
                 new ObservatoAuthFilter.Builder()
                     .setAuthenticator(new ObservatoBasicAuthenticator(repository))
-                    //                    .setAuthorizer(new ObservatoAuthorizer())
                     .setRealm("OBSERVATO")
                     .buildAuthFilter()));
 
-    //    environment.jersey().register(RolesAllowedDynamicFeature.class);
     environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
 
     // CONTROLLERS
@@ -103,21 +97,7 @@ public class ObservatoApplication extends Application<ObservatoConfiguration> {
 
     // VIEWS
     environment.jersey().register(new HomeViewController(repository));
-    environment.jersey().register(new UserViewController(repository));
 
-    environment.jersey().register(new TaskViewController(repository));
-    environment.jersey().register(new TasksViewController(repository));
-
-    environment.jersey().register(new ProjectViewController(repository));
-    environment.jersey().register(new ProjectsViewController(repository));
-
-    environment.jersey().register(new AccountViewController(repository));
-    environment.jersey().register(new AccountsViewController(repository));
-
-    environment.jersey().register(new ResourceViewController(repository));
-    environment.jersey().register(new ResourcesViewController(repository));
-
-    environment.jersey().register(new ScheduleViewController(repository));
     // TASKS
     environment.admin().addTask(new GenerateDemoDataTask(repository, auth));
   }

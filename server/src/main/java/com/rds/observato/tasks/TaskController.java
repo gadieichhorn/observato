@@ -6,6 +6,7 @@ import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import com.rds.observato.db.Repository;
 import com.rds.observato.validation.Validator;
+import com.rds.observato.view.TaskView;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,15 +18,14 @@ import jakarta.ws.rs.core.Response;
 public record TaskController(Repository repository) {
 
   @GET
-  public GetTaskResponse get(@Auth User user, @PathParam("task") long task) {
+  public TaskView getProject(@Auth User user, @PathParam("task") long task) {
     Authoriser.check(user, Role.ADMIN);
     return repository
         .tasks()
         .finById(user.account(), task)
-        .map(GetTaskResponse::from)
+        .map(TaskView::new)
         .orElseThrow(
-            () ->
-                new WebApplicationException("Task %d".formatted(task), Response.Status.NOT_FOUND));
+            () -> new WebApplicationException("Task not found", Response.Status.NOT_FOUND));
   }
 
   @PUT

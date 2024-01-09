@@ -12,7 +12,7 @@
     <#list accounts as x>
         <tr>
             <th scope="row">
-                <a hx-get="/api/accounts/view/${x.account()}"
+                <a hx-get="/api/accounts/${x.account()}"
                    hx-target="#content"
                    class="nav-link active"
                    aria-current="page">${x.account()}</a>

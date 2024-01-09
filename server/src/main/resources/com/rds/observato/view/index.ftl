@@ -18,42 +18,48 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a hx-get="/api/accounts/view"
+                        <a hx-get="/api/accounts"
+                           hx-headers='{"Accept": "text/html"}'
                            hx-target="#content"
                            hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">Accounts</a>
                     </li>
                     <li class="nav-item">
-                        <a hx-get="/api/tasks/view"
+                        <a hx-get="/api/tasks"
+                           hx-headers='{"Accept": "text/html"}'
                            hx-target="#content"
                            hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">Tasks</a>
                     </li>
                     <li class="nav-item">
-                        <a hx-get="/api/resources/view"
+                        <a hx-get="/api/resources"
+                           hx-headers='{"Accept": "text/html"}'
                            hx-target="#content"
                            hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">Resources</a>
                     </li>
                     <li class="nav-item">
-                        <a hx-get="/api/users/view/2"
+                        <a hx-get="/api/users"
+                           hx-headers='{"Accept": "text/html"}'
                            hx-target="#content"
                            hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">User</a>
                     </li>
                     <li class="nav-item">
-                        <a hx-get="/api/projects/view"
+                        <a hx-get="/api/projects"
+                           hx-headers='{"Accept": "text/html"}'
                            hx-target="#content"
                            hx-indicator="#spinner"
                            class="nav-link active"
                            aria-current="page">Projects</a>
                     </li>
                     <li class="nav-item">
-                        <a hx-get="/api/schedule/view"
+                        <a hx-get="/api/schedule"
+                           hx-headers='{"Accept": "text/html"}'
                            hx-target="#content"
                            hx-indicator="#spinner"
                            class="nav-link active"

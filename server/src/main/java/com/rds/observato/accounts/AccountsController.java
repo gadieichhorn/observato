@@ -6,13 +6,14 @@ import com.rds.observato.auth.Role;
 import com.rds.observato.auth.User;
 import com.rds.observato.db.Repository;
 import com.rds.observato.validation.Validator;
+import com.rds.observato.view.AccountsView;
 import io.dropwizard.auth.Auth;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 @Timed
 @Path("accounts")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 public record AccountsController(Repository repository) {
 
   @POST
@@ -22,12 +23,10 @@ public record AccountsController(Repository repository) {
     return new CreateAccountResponse(repository.accounts().create(request.name(), request.owner()));
   }
 
-  //  @GET
-  //  public GetAccountsResponse get(@Auth User user, long account) {
-  //    Authoriser.check(user, Roles.ADMIN);
-  //    return new GetAccountsResponse(
-  //        repository.accounts().findById(account).stream()
-  //            .map(GetAccountResponse::from)
-  //            .collect(Collectors.toSet()));
-  //  }
+  @GET
+  public AccountsView getProjects(@Auth User user) throws InterruptedException {
+    Authoriser.check(user, Role.ADMIN);
+    Thread.sleep(1000);
+    return new AccountsView(repository.accounts().getAccountsByUser(user.id()));
+  }
 }
